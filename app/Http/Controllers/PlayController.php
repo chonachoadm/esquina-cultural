@@ -1,0 +1,126 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Play;
+use App\Models\Theater;
+use App\Models\User;
+use App\Models\Performance;
+use App\Http\Requests\StorePlayRequest;
+use App\Http\Requests\UpdatePlayRequest;
+
+class PlayController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $plays = Play::all();
+        return view('admin.plays.index', compact('plays'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $theaters = Theater::all();
+        $users = User::all();
+        return view('admin.plays.create', compact('theaters', 'users'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StorePlayRequest $request)
+    {
+        $imageName = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images/plays', 'public');
+            $imageName = basename($imagePath);
+        }
+
+        $play = Play::create([
+            'title' => $request->title,
+            'description' => $request->desc,
+            'cover_photo' => $imageName,
+            'theater_id' => $request->theater,
+            'ticket_price' => $request->ticket_price,
+            'duration' => $request->duration,
+            'is_published' => false,
+        ]);
+
+        $staffIds = $request->input('staff_ids', []);
+        $staffRoles = $request->input('staff_roles', []);
+        
+        foreach ($staffIds as $userId) {
+            $play->users()->attach($userId, [
+                'role' => $staffRoles[$userId] ?? null
+            ]);
+        }
+        // $play->users()->attach(auth()->user()->id, [
+        //     'role' => 'Productor'
+        // ]);
+        $start = \Carbon\Carbon::parse($request->start_date);
+        $end = \Carbon\Carbon::parse($request->end_date);
+        $performances = [];
+        foreach ($request->day_times as $dayOfWeek => $time) {
+            $current = $start->copy();
+
+            while ($current->lte($end)) {
+                if ($current->dayOfWeek == $dayOfWeek) {
+                    $performances[] = [
+                        'play_id' => $play->id,
+                        'start_time' => $current->format('Y-m-d') . ' ' . $time . ':00',
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ];
+                }
+                $current->addDay();
+            }
+        }
+        Performance::insert($performances);
+
+        return redirect()->route('plays.index');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Play $play)
+    {
+    $play->load([
+            'theater', 
+            'performances' => function ($query) {
+                $query->orderBy('start_time', 'asc');
+            }
+    ]);
+        return view('admin.plays.show', compact('play'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Play $play)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdatePlayRequest $request, Play $play)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Play $play)
+    {
+        $play->delete();
+        return redirect()->route('plays.index');
+    }
+}

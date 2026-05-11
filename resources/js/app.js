@@ -21,10 +21,12 @@ function initTheaterSelector() {
 
 // Function to generate performances start_times based on the start and end dates, the days of the week and the time of each day
 function initPerformanceGenerator() {
-    const days = document.querySelectorAll('[id^="day-"]');
-    const timeContainer = document.getElementById('perf-times-container');
     const startDateInput = document.getElementById('start-date');
     const endDateInput = document.getElementById('end-date');
+    if (!startDateInput || !endDateInput) return;
+
+    const days = document.querySelectorAll('[id^="day-"]');
+    const timeContainer = document.getElementById('perf-times-container');
 
     function generatePerformanceList() {
         timeContainer.innerHTML = '';   
@@ -51,9 +53,85 @@ function initPerformanceGenerator() {
     endDateInput.addEventListener('change', generatePerformanceList);
 }
 
+// Function to the edit performances form
+function initPerformanceEditor() {
+    const addPerformancesForm = document.getElementById('add-performances-form');
+    if (!addPerformancesForm) return;
+
+    let newPerformances = [];
+
+    const addPerformanceBtn = document.getElementById('btn-add-performance');
+    const performancesToAdd = document.getElementById('performances-to-add');
+    const newPerformancesListDiv = document.getElementById('new-performances-list');
+    const submitPerformancesBtn = document.getElementById('btn-submit-performances');
+    const perfDateInput = document.getElementById('perf-date');
+    const perfTimeInput = document.getElementById('perf-time');
+
+    if (!addPerformanceBtn) return;
+
+    function renderNewPerformances() {
+        performancesToAdd.innerHTML = '';
+        newPerformances.forEach((perf, index) => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <span>${perf.start_time}</span>
+                <button type="button" class="remove-perf-btn" data-index="${index}">X</button>
+            `;
+            performancesToAdd.append(li);
+        });
+        if (newPerformances.length > 0) {
+            newPerformancesListDiv.style.display = 'block';
+            submitPerformancesBtn.style.display = 'block';
+        } else {
+            newPerformancesListDiv.style.display = 'none';
+            submitPerformancesBtn.style.display = 'none';
+        }
+    }
+
+    addPerformanceBtn.addEventListener('click', function() {
+        const date = perfDateInput.value;
+        const time = perfTimeInput.value;
+        if (!date || !time) {
+            alert('Por favor completa la fecha y la hora');
+            return;
+        }
+        const startTime = `${date} ${time}:00`;
+        const exists = newPerformances.some(p => p.start_time === startTime);
+        if (exists) {
+            alert('Esta función ya ha sido agregada');
+            return;
+        }
+        newPerformances.push({ start_time: startTime });
+        renderNewPerformances();
+        perfDateInput.value = '';
+        perfTimeInput.value = '';
+    });
+
+    performancesToAdd.addEventListener('click', function(event) {
+        if (event.target.classList.contains('remove-perf-btn')) {
+            const index = parseInt(event.target.dataset.index);
+            newPerformances.splice(index, 1);
+            renderNewPerformances();
+        }
+    });
+
+    addPerformancesForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        newPerformances.forEach((perf, index) => {
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = `new_performances[${index}]`;
+            hiddenInput.value = perf.start_time;
+            this.append(hiddenInput);
+        });
+        this.submit();
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     initTheaterSelector();
     initPerformanceGenerator();
+    initPerformanceEditor();
     const el = document.getElementById('staff-search');
     if (el) {
         const tomSelectInstance = new TomSelect(el, {

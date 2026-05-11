@@ -8,7 +8,7 @@
         @method('PUT')
         <div>
             @if($user->profile->image)
-            <img src="{{ asset('storage/images/profiles/' . $user->profile->image) }}" alt="Foto de perfil de {{ $user->name }}" class="img-fluid w-50">
+            <img src="{{ asset('storage/images/profiles/' . $user->profile->image) }}" alt="Foto de perfil de {{ $user->name }}">
             @endif
             <label for="image">Cambiar foto de perfil</label>
             <input type="file" name="image" id="image">

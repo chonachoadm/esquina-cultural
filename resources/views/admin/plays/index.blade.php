@@ -10,6 +10,7 @@
             <img src="{{ asset('storage/images/plays/' . $play->cover_photo) }}" alt="Banner de {{ $play->title }}">
             <h3>{{ $play->title }}</h3>
             <p>$ {{ $play->ticket_price }}</p>
+            <p>$ {{ $play->duration }} minutos</p>
             <a href="{{ route('plays.show', $play) }}">Ver</a>
         </li>
         @endforeach

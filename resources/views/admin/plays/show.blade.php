@@ -21,6 +21,9 @@
         </select>
         <small> $ {{ $play->ticket_price }}</small>
     </div>
+    <a href="{{ route('plays.edit-info', $play) }}">Editar información</a>
+    <a href="{{ route('plays.edit-staff', $play) }}">Editar integrantes</a>
+    <a href="{{ route('plays.edit-performances', $play) }}">Editar fechas y fuciones</a>
     <form action="{{ route('plays.destroy', $play) }}" method="POST">
         @csrf
         @method('DELETE')

@@ -1,20 +1,15 @@
 import './bootstrap';
-
 import TomSelect from 'tom-select';
 
+// Function to get and show the max capacity of the selected theater
 function initTheaterSelector() {
     const theaterSelect = document.getElementById('theater');
     const capacityValue = document.getElementById('capacity-value');
-
     if (!theaterSelect) return;
-
-    // Show capacity for initially selected theater
     const selectedOption = theaterSelect.options[theaterSelect.selectedIndex];
     if (selectedOption.getAttribute('data-capacity')) {
         capacityValue.textContent = selectedOption.getAttribute('data-capacity');
     }
-
-    // Update capacity when selection changes
     theaterSelect.addEventListener('change', function() {
         const selectedOption = theaterSelect.options[theaterSelect.selectedIndex];
         const capacity = selectedOption.getAttribute('data-capacity');
@@ -24,85 +19,34 @@ function initTheaterSelector() {
     });
 }
 
-
-// function initPerformanceGenerator() {
-//     const performances = [];
-//     const days = document.querySelectorAll('[id^="day-"]');
-//     const timeContainer = document.getElementById('perf-times-container')
-//     console.log(days);
-//     function timeGenerator(event) {
-//         const checkbox = event.target; // The specific checkbox changed
-//         const dayValue = checkbox.value;
-//         const wrapperId = `wrapper-${dayValue}`;
-//         const dayName = checkbox.labels[0].textContent;
-
-//         if (checkbox.checked) {
-//             // Create a wrapper div to group the label and input
-//             let wrapper = document.createElement('div');
-//             wrapper.id = wrapperId;
-
-//             let dayLabel = document.createElement('label');
-//             dayLabel.textContent = `Horario para ${dayName}: `;
-//             dayLabel.htmlFor = `perf-time-${dayValue}`;
-
-//             let dayInput = document.createElement('input');
-//             dayInput.id = `perf-time-${dayValue}`;
-//             dayInput.name = `perf_times[${dayValue}]`; // Saves as ['Monday' => '12:00']
-//             dayInput.type = "time";
-
-//             wrapper.append(dayLabel, dayInput);
-//             timeContainer.append(wrapper);
-//         } else {
-//             // If unchecked, find that specific wrapper and kill it
-//             const wrapperToRemove = document.getElementById(wrapperId);
-//             if (wrapperToRemove) {
-//                 wrapperToRemove.remove();
-//             }
-//         }
-//     }
-//     for(const input of days) {
-//         input.addEventListener('change', timeGenerator)
-//     } 
-// }
+// Function to generate performances start_times based on the start and end dates, the days of the week and the time of each day
 function initPerformanceGenerator() {
     const days = document.querySelectorAll('[id^="day-"]');
     const timeContainer = document.getElementById('perf-times-container');
-    const startDateInput = document.getElementById('start-date'); // Assuming these IDs
+    const startDateInput = document.getElementById('start-date');
     const endDateInput = document.getElementById('end-date');
 
     function generatePerformanceList() {
-        // Clear previous results
-        timeContainer.innerHTML = '';
-        
+        timeContainer.innerHTML = '';   
         const start = new Date(startDateInput.value);
         const end = new Date(endDateInput.value);
-
-        if (isNaN(start) || isNaN(end)) return; // Don't run if dates aren't set
-
+        if (isNaN(start) || isNaN(end)) return;
         for (const checkbox of days) {
             if (checkbox.checked) {
-                const targetDay = parseInt(checkbox.value); // 0 = Sunday, 1 = Monday, etc.
+                const targetDay = parseInt(checkbox.value);
                 const dayName = checkbox.labels[0].textContent;
-
-                // Create a wrapper for this day's settings
                 let dayWrapper = document.createElement('div');
                 dayWrapper.innerHTML = `<h4>Funciones para los días ${dayName}</h4>`;
-                
-                // Add a time input for this specific weekday
                 let timeInput = document.createElement('input');
                 timeInput.type = "time";
                 timeInput.name = `day_times[${targetDay}]`;
                 timeInput.required = true;
-                
-                // When the time changes, we could technically pre-calculate the list
                 dayWrapper.append(timeInput);
                 timeContainer.append(dayWrapper);
             }
         }
     }
-
-    // Listen for changes on everything
-    days.forEach(d => d.addEventListener('change', generatePerformanceList));
+    days.forEach(day => day.addEventListener('change', generatePerformanceList));
     startDateInput.addEventListener('change', generatePerformanceList);
     endDateInput.addEventListener('change', generatePerformanceList);
 }
@@ -110,7 +54,6 @@ function initPerformanceGenerator() {
 document.addEventListener('DOMContentLoaded', function () {
     initTheaterSelector();
     initPerformanceGenerator();
-
     const el = document.getElementById('staff-search');
     if (el) {
         const tomSelectInstance = new TomSelect(el, {
@@ -118,7 +61,6 @@ document.addEventListener('DOMContentLoaded', function () {
             labelField: 'name',
             searchField: 'name',
             clearValueOnItemAdd: true,
-            // Fetch data from our Laravel API
             load: function(query, callback) {
                 const url = '/api/users/search?q=' + encodeURIComponent(query);
                 fetch(url)
@@ -129,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         callback();
                     });
             },
-            // This part creates the UI with the image
             render: {
                 option: function(item, escape) {
                     return `<div>
@@ -142,14 +83,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         });
-
-        // Listen for item additions and removals
         tomSelectInstance.on('item_add', function(value, item) {
             const container = document.getElementById('staff-roles-container');
-            // Get the full item data from Tom Select options
             const itemData = tomSelectInstance.options[value];
             const itemName = itemData ? itemData.name : 'Staff Member';
-            
             const roleInput = document.createElement('div');
             roleInput.id = `role-wrapper-${value}`;
             roleInput.innerHTML = `
@@ -157,14 +94,48 @@ document.addEventListener('DOMContentLoaded', function () {
                 <input type="text" id="staff_role_${value}" name="staff_roles[${value}]" placeholder="Ej: Actor, Director, Productor" />
             `;
             container.appendChild(roleInput);
-            
-            // Clear the search input
             tomSelectInstance.setTextboxValue('');
         });
-
         tomSelectInstance.on('item_remove', function(value) {
             const wrapper = document.getElementById(`role-wrapper-${value}`);
             if (wrapper) wrapper.remove();
         });
     }
 });
+
+// Function to edit staff form
+document.querySelectorAll('.remove-user-btn').forEach(button => {
+    button.addEventListener('click', function(event) {
+        const id = this.dataset.userId; 
+        if (confirm('¿Estás seguro?')) {
+            const listItem = document.querySelector(`li[data-user-id="${id}"]`);
+            if (listItem) listItem.remove();
+            const select = document.getElementById('staff-search');
+            const option = select.querySelector(`option[value="${id}"]`);
+            if (option) {
+                option.remove();
+            }
+        }
+    });
+});
+const staffForm = document.getElementById('staff-form');
+if (staffForm) {
+    staffForm.addEventListener('submit', function(event) {
+        const staffList = document.getElementById('current-staff-list');
+        const staffItems = staffList.querySelectorAll('li[data-user-id]');
+        staffItems.forEach(item => {
+            const userId = item.dataset.userId;
+            const role = item.querySelector('small').textContent;
+            const hiddenId = document.createElement('input');
+            hiddenId.type = 'hidden';
+            hiddenId.name = 'staff_ids[]';
+            hiddenId.value = userId;
+            this.append(hiddenId);
+            const hiddenRole = document.createElement('input');
+            hiddenRole.type = 'hidden';
+            hiddenRole.name = `staff_roles[${userId}]`;
+            hiddenRole.value = role;
+            this.append(hiddenRole);
+        });
+    });
+}

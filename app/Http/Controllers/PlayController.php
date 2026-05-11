@@ -7,7 +7,9 @@ use App\Models\Theater;
 use App\Models\User;
 use App\Models\Performance;
 use App\Http\Requests\StorePlayRequest;
-use App\Http\Requests\UpdatePlayRequest;
+use App\Http\Requests\UpdatePlayInfoRequest;
+use App\Http\Requests\UpdatePlayPerformancesRequest;
+use App\Http\Requests\UpdatePlayStaffRequest;
 
 class PlayController extends Controller
 {
@@ -100,19 +102,101 @@ class PlayController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing play information.
      */
-    public function edit(Play $play)
+    public function editInfo(Play $play)
     {
-        //
+        $theaters = Theater::all();
+        $play->load('theater');
+        return view('admin.plays.edit-info', compact('play', 'theaters'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update play information in storage.
      */
-    public function update(UpdatePlayRequest $request, Play $play)
+    public function updateInfo(UpdatePlayInfoRequest $request, Play $play)
     {
-        //
+        $imageName = $play->cover_photo;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images/plays', 'public');
+            $imageName = basename($imagePath);
+        }
+
+        $play->update([
+            'title' => $request->title,
+            'description' => $request->desc,
+            'cover_photo' => $imageName,
+            'theater_id' => $request->theater,
+            'ticket_price' => $request->ticket_price,
+            'duration' => $request->duration,
+        ]);
+
+        return redirect()->route('plays.show', $play);
+    }
+
+    /**
+     * Show the form for editing play performances.
+     */
+    public function editPerformances(Play $play)
+    {
+        $play->load([
+            'performances' => function ($query) {
+                $query->orderBy('start_time', 'asc');
+            }
+        ]);
+        return view('admin.plays.edit-performances', compact('play'));
+    }
+
+    /**
+     * Update play performances in storage.
+     */
+    public function updatePerformances(UpdatePlayPerformancesRequest $request, Play $play)
+    {
+        $performances = [];
+        $newPerformances = $request->input('new_performances', []);
+        
+        foreach ($newPerformances as $startTime) {
+            $performances[] = [
+                'play_id' => $play->id,
+                'start_time' => $startTime,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
+        
+        if (!empty($performances)) {
+            Performance::insert($performances);
+        }
+
+        return redirect()->route('plays.show', $play);
+    }
+
+    /**
+     * Show the form for editing play staff.
+     */
+    public function editStaff(Play $play)
+    {
+        $users = User::all();
+        $play->load('users');
+        return view('admin.plays.edit-staff', compact('play', 'users'));
+    }
+
+    /**
+     * Update play staff in storage.
+     */
+    public function updateStaff(UpdatePlayStaffRequest $request, Play $play)
+    {
+        $syncData = [];
+        $staffIds = $request->input('staff_ids', []);
+        $staffRoles = $request->input('staff_roles', []);
+
+        foreach ($staffIds as $userId) {
+            $syncData[$userId] = ['role' => $staffRoles[$userId] ?? null];
+        }
+
+        $play->users()->sync($syncData);
+
+        return redirect()->route('plays.show', $play);
     }
 
     /**

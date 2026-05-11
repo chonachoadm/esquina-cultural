@@ -61,6 +61,7 @@ class PerformanceController extends Controller
      */
     public function destroy(Performance $performance)
     {
-        //
+        $performance->delete();
+        return redirect()->back();
     }
 }

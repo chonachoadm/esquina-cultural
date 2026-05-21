@@ -7,11 +7,18 @@ use App\Models\User;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PlayController;
 use App\Http\Controllers\PerformanceController;
+use App\Http\Controllers\AuthController;
 
 // Ruta al layout
 Route::get('/', function () {
     return view('layouts.app');
 });
+
+// Rutas de autenticación
+Route::get('/login', [AuthController::class, 'showLogin'])->name('showLogin');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/register', [AuthController::class, 'showRegister'])->name('showRegister');
+Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 // Rutas de resource
 Route::resource('/users', UserController::class);
@@ -29,6 +36,9 @@ Route::put('/plays/{play}/performances', [PlayController::class, 'updatePerforma
 // Rutas de editar integrantes de obra
 Route::get('/plays/{play}/edit-staff', [PlayController::class, 'editStaff'])->name('plays.edit-staff');
 Route::put('/plays/{play}/staff', [PlayController::class, 'updateStaff'])->name('plays.update-staff');
+
+// Rutas de cartelera
+Route::get('/cartelera', [PlayController::class, 'billboard'])->name('billboard');
 
 
 // Ruta de Tom Select

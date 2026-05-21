@@ -207,4 +207,10 @@ class PlayController extends Controller
         $play->delete();
         return redirect()->route('plays.index');
     }
+
+    public function billboard()
+    {
+        $plays = Play::all();
+        return view('public-area.billboard', compact('plays'));
+    }
 }

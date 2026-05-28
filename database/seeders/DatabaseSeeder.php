@@ -103,5 +103,9 @@ class DatabaseSeeder extends Seeder
             'bio' => 'Professional Acrobat and Stage Actor specializing in aerial silke.',
             'image' => 'https://api.dicebear.com/7.x/avataaars/svg?seed=Juan',
             ]);
+
+            $this->call([
+                PurchaseSeeder::class,
+            ]);
     }
 }

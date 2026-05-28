@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PlayController;
 use App\Http\Controllers\PerformanceController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PurchaseController;
 
 // Ruta al layout
 Route::get('/', function () {
@@ -24,6 +25,7 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::resource('/users', UserController::class);
 Route::resource('/plays', PlayController::class)->except(['edit', 'update']);
 Route::resource('/performances', PerformanceController::class);
+Route::resource('/purchases', PurchaseController::class);
 
 // Rutas de editar info de obra
 Route::get('/plays/{play}/edit-info', [PlayController::class, 'editInfo'])->name('plays.edit-info');

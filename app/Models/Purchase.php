@@ -17,6 +17,7 @@ class Purchase extends Model
         'performance_id',
         'user_id',
         'ticket_amount',
+        'total_amount',
         'payment_status',
         'payment_gateway_id',
     ];

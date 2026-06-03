@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('verification_status');
             $table->integer('max_capacity');
-            $table->text('bio');
+            $table->text('bio')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

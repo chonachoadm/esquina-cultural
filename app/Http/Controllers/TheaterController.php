@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Theater;
+use App\Models\User;
 use App\Http\Requests\StoreTheaterRequest;
 use App\Http\Requests\UpdateTheaterRequest;
 
@@ -13,7 +14,8 @@ class TheaterController extends Controller
      */
     public function index()
     {
-        //
+        $theaters = Theater::all();
+        return view('admin.theaters.index', compact('theaters'));
     }
 
     /**
@@ -21,7 +23,8 @@ class TheaterController extends Controller
      */
     public function create()
     {
-        //
+        $users = User::all();
+        return view('admin.theaters.create', compact('users'));
     }
 
     /**
@@ -29,7 +32,20 @@ class TheaterController extends Controller
      */
     public function store(StoreTheaterRequest $request)
     {
-        //
+
+        $theater = Theater::create([
+            'user_id' => $request->user,
+            'name' => $request->name,
+            'bio' => $request->bio,
+            'address' => $request->address,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'max_capacity' => $request->capacity,
+            'verification_status' => 'verified',
+            ]);
+
+
+        return redirect()->route('theaters.index');
     }
 
     /**
@@ -37,7 +53,7 @@ class TheaterController extends Controller
      */
     public function show(Theater $theater)
     {
-        //
+        return view('admin.theaters.show', compact('theater'));
     }
 
     /**
@@ -45,7 +61,8 @@ class TheaterController extends Controller
      */
     public function edit(Theater $theater)
     {
-        //
+        $users = User::all();
+        return view('admin.theaters.edit', compact('theater', 'users'));
     }
 
     /**
@@ -53,7 +70,17 @@ class TheaterController extends Controller
      */
     public function update(UpdateTheaterRequest $request, Theater $theater)
     {
-        //
+        $theater->update([
+            'user_id' => $request->user,
+            'name' => $request->name,
+            'bio' => $request->bio,
+            'address' => $request->address,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'max_capacity' => $request->capacity,
+        ]);
+
+        return redirect()->route('theaters.index');
     }
 
     /**
@@ -61,6 +88,8 @@ class TheaterController extends Controller
      */
     public function destroy(Theater $theater)
     {
-        //
+        $theater->delete();
+
+        return redirect()->route('theaters.index');
     }
 }

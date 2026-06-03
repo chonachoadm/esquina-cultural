@@ -12,7 +12,7 @@ class UpdateTheaterRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,26 @@ class UpdateTheaterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+                'user' => 'required|integer|exists:users,id',
+                'name' => 'required|string|max:255',
+                'bio' => 'nullable|string|max:500',
+                'address' => 'required|string',
+                'latitude' => 'required|numeric',
+                'longitude' => 'required|numeric',
+                'capacity' => 'required|integer|min:1',
+            ];
+    }
+    public function messages(): array
+    {
+        return [
+            'user.required' => 'Este campo no puede quedar vacío.',
+            'user.exists' => 'Seleccioná un usuario registrado en nuestra plataforma.',
+            'name.required' => 'Este campo no puede quedar vacío.',
+            'name.max' => 'El nombre no puede superar los 255 caracteres.',
+            'bio.max' => 'La biografía no puede superar los 500 caracteres.',
+            'address.required' => 'Este campo no puede quedar vacío.',
+            'capacity.required' => 'Este campo no puede quedar vacío.',
+            'capacity.min' => 'La capacidad de la sala no puede ser menos que 1.',
         ];
     }
 }

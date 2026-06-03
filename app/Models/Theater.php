@@ -17,6 +17,8 @@ class Theater extends Model
         'user_id',
         'name',
         'address',
+        'latitude',
+        'longitude',
         'verification_status',
         'max_capacity',
         'bio',

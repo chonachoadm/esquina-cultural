@@ -9,6 +9,7 @@ use App\Http\Controllers\PlayController;
 use App\Http\Controllers\PerformanceController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\TheaterController;
 
 // Ruta al layout
 Route::get('/', function () {
@@ -26,6 +27,7 @@ Route::resource('/users', UserController::class);
 Route::resource('/plays', PlayController::class)->except(['edit', 'update']);
 Route::resource('/performances', PerformanceController::class);
 Route::resource('/purchases', PurchaseController::class);
+Route::resource('/theaters', TheaterController::class);
 
 // Rutas de editar info de obra
 Route::get('/plays/{play}/edit-info', [PlayController::class, 'editInfo'])->name('plays.edit-info');

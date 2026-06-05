@@ -12,7 +12,7 @@ class StoreCommentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,14 @@ class StoreCommentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
-        ];
+                'body' => 'required|string|max:500',
+            ];
+    }
+    public function messages(): array
+    {
+        return [
+            'body.required' => 'Este campo no puede quedar vacío.',
+            'body.max' => 'El comentario no puede superar los 500 caracteres.',        
+            ];
     }
 }

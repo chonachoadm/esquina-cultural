@@ -9,6 +9,20 @@
 
 <body>
     <header>
+        <nav>
+            <ul>
+                <li><a href="{{ route('billboard') }}">Cartelera</a></li>
+                <li><a href="">Mi perfil</a></li>
+                @auth
+                <li>
+                    <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                        <button type="submit">Cerrar sesión</button>
+                    </form>
+                </li>
+                @endauth
+            </ul>
+        </nav>
         <h1>Este es el header de layouts/app.blade.php</h1>
     </header>
     <main>

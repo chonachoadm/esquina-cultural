@@ -1,4 +1,5 @@
 @import "tom-select/dist/css/tom-select.css";
+@import 'bootstrap/dist/css/bootstrap.min.css';
 
 /* A little custom CSS to make the suggestions look like a "theatrical staff" list */
 .ts-wrapper .option {

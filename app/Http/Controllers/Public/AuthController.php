@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Public;
+
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\RegisterRequest;
@@ -20,7 +22,7 @@ class AuthController extends Controller
             return redirect()->route('billboard');
         }
         return back()->withErrors([
-        'email' => 'Invalid credentials.',
+        'email' => 'Credenciales incorrectas.',
         ]);
     }
 
@@ -56,5 +58,15 @@ class AuthController extends Controller
     public function showRegister()
     {
         return view('auth.register');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
     }
 }

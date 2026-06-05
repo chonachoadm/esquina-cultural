@@ -1,4 +1,5 @@
 import './bootstrap';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import TomSelect from 'tom-select';
 
 // Function to get and show the max capacity of the selected theater

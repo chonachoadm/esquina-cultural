@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\Play;
 use App\Models\Theater;
@@ -208,9 +210,5 @@ class PlayController extends Controller
         return redirect()->route('plays.index');
     }
 
-    public function billboard()
-    {
-        $plays = Play::all();
-        return view('public-area.billboard', compact('plays'));
-    }
+
 }

@@ -31,6 +31,7 @@
                 <small><em>{{ $comment->created_at->diffForHumans() }}</em></small>
                 <p>{{ $comment->comment_body }}</p>
                 @if($comment->user_id === auth()->user()->id)
+                
                 <form action="{{ route('comments.destroy', $comment) }}" method="POST">
                     @csrf
                     @method('DELETE')

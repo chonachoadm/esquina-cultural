@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Profile;
 use App\Http\Requests\StoreProfileRequest;
 use App\Http\Requests\UpdateProfileRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
@@ -15,7 +16,8 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        return view('public-area.users.profile', compact('user'));
     }
 
     /**
@@ -47,7 +49,7 @@ class ProfileController extends Controller
      */
     public function edit(Profile $profile)
     {
-        //
+
     }
 
     /**

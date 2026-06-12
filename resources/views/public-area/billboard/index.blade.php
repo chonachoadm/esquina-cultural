@@ -14,7 +14,7 @@
 <ul>
     @foreach($plays as $play)
     <li>
-        <a href="{{ route('plays.show', $play) }}">    
+        <a href="{{ route('obras.show', $play) }}">    
             <img src="{{ asset('storage/images/plays/' . $play->cover_photo) }}" alt="{{ $play->title }}">
         </a>
         <div>

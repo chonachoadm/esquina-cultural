@@ -14,7 +14,9 @@ class TheaterController extends Controller
      */
     public function index()
     {
-        //
+        $theaters = Theater::where('verification_status', 'verified')->get();
+
+        return view('public-area.theaters.index', compact('theaters'));
     }
 
     /**
@@ -57,7 +59,9 @@ class TheaterController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $theater = Theater::where('id', $id)->first();
+
+        return view('public-area.theaters.show', compact('theater'));
     }
 
     /**

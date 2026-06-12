@@ -80,4 +80,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Purchase::class);
     }
+
+    public function isAdmin()
+    {
+        return $this->role === 1;
+    }
 }

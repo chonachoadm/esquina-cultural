@@ -32,7 +32,10 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Rutas de cartelera
 Route::get('/cartelera', [PublicPlayController::class, 'index'])->name('billboard');
-Route::get('/obra/{play}', [PublicPlayController::class, 'show'])->name('plays.show');
+Route::get('/obra/{play}', [PublicPlayController::class, 'show'])->name('obras.show');
+
+// Rutas públicas de teatros
+Route::resource('/teatros', PublicTheaterController::class)->only(['index', 'show']);
 
 // Rutas de comentarios
 Route::post('/obra/{play}/comentario', [CommentController::class, 'store'])->name('comments.store');
@@ -45,7 +48,7 @@ Route::middleware('auth')->group(function() {
     Route::get('edit/{user}/profile', [PublicUserController::class, 'edit'])->name('public.user.edit');
     Route::put('edit/{user}/profile', [PublicUserController::class, 'update'])->name('public.user.update');
     
-    Route::resource('/teatros', PublicTheaterController::class);
+    Route::resource('/teatros', PublicTheaterController::class)->except(['index', 'show']);
 });
 
 
@@ -56,6 +59,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('/performances', PerformanceController::class);
     Route::resource('/purchases', PurchaseController::class);
     Route::resource('/theaters', AdminTheaterController::class);
+    Route::post('/theaters/{theater}/verify', [AdminTheaterController::class, 'verify'])->name('theaters.verify');
+    Route::post('/theaters/{theater}/reject', [AdminTheaterController::class, 'reject'])->name('theaters.reject');
 
     // Rutas de editar info de obra
     Route::get('/plays/{play}/edit-info', [AdminPlayController::class, 'editInfo'])->name('plays.edit-info');

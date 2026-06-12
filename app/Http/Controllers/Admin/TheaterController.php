@@ -94,4 +94,22 @@ class TheaterController extends Controller
 
         return redirect()->route('theaters.index');
     }
+
+    public function verify(Theater $theater)
+    {
+        $theater->update([
+            'verification_status' => 'verified',
+        ]);
+
+        return redirect()->route('theaters.index')->with('success', 'Teatro verificado.');
+    }
+
+    public function reject(Theater $theater)
+    {
+        $theater->update([
+            'verification_status' => 'rejected',
+        ]);
+
+        return redirect()->route('theaters.index')->with('success', 'Teatro rechazado.');
+    }
 }

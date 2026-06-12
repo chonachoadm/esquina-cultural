@@ -23,27 +23,38 @@
     </div>
     <div>
         <h5>Comentarios</h5>
-        @if($play->comments->isNotEmpty())
+
+        @if($play->comments)
         <ul>
+
             @foreach($play->comments as $comment)
-            <li>
+            <li class="border rounded-2xl px-4 py-2">
+                @if($comment->user)
                 <h6>{{ $comment->user->name }}</h6>
+                @else
+                <h6><em>Usuario inexistente</em></h6>
+                @endif
                 <small><em>{{ $comment->created_at->diffForHumans() }}</em></small>
                 <p>{{ $comment->comment_body }}</p>
-                @if($comment->user_id === auth()->user()->id)
-                
+
+                @auth
+                @if($comment->user_id === auth()->user()->id || auth()->user()->isAdmin())
                 <form action="{{ route('comments.destroy', $comment) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit" onclick="return confirm('¿Estás seguro de querer eliminar este comentario?')" class="text-danger">Eliminar</button>
                 </form>
                 @endif
+                @endauth
+
             </li>
             @endforeach
+
         </ul>
         @else
         <p><em>No hay comentarios aún.</em></p>
         @endif
+
         <form action="{{ route('comments.store', $play) }}" method="post" class="w-50">
             @csrf
             <div>

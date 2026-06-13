@@ -66,6 +66,12 @@ class User extends Authenticatable
                     ->withTimestamps();
     }
 
+    public function savedPlays()
+    {
+        return $this->belongsToMany(Play::class, 'users_save_plays')
+                    ->withTimestamps();
+    }
+
     public function tickets()
     {
         return $this->hasMany(Ticket::class);

@@ -1,5 +1,5 @@
-<nav>
-    <ul>
+<nav class="my-4">
+    <ul class="d-flex justify-content-around">
         <li><a href="{{ route('billboard') }}">Cartelera</a></li>
         <li><a href="{{ route('teatros.index') }}">Teatros</a></li>
         @auth

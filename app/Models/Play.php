@@ -46,6 +46,12 @@ class Play extends Model
                     ->withTimestamps();
     }
 
+    public function savedByUsers()
+    {
+        return $this->belongsToMany(User::class, 'users_save_plays')
+                    ->withTimestamps();
+    }
+
     public function tickets()
     {
         return $this->hasManyThrough(Ticket::class, Performance::class);

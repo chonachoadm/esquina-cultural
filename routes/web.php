@@ -15,6 +15,8 @@ use App\Http\Controllers\Admin\PurchaseController;
 use App\Http\Controllers\Admin\TheaterController as AdminTheaterController;
 use App\Http\Controllers\Public\TheaterController as PublicTheaterController;
 use App\Http\Controllers\Public\ProfileController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Public\UsersSavePlaysController;
 
 // Ruta al layout
 Route::get('/', function () {
@@ -35,25 +37,29 @@ Route::get('/cartelera', [PublicPlayController::class, 'index'])->name('billboar
 Route::get('/obra/{play}', [PublicPlayController::class, 'show'])->name('obras.show');
 
 // Rutas públicas de teatros
-Route::resource('/teatros', PublicTheaterController::class)->only(['index', 'show']);
 
 // Rutas de comentarios
 Route::post('/obra/{play}/comentario', [CommentController::class, 'store'])->name('comments.store');
 Route::delete('/obra/comentario/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
-// Rutas de perfil
+// Rutas de usuario autenticado
 Route::middleware('auth')->group(function() {
-    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-    Route::delete('/profile/delete', [PublicUserController::class, 'destroy'])->name('public.user.delete');
-    Route::get('edit/{user}/profile', [PublicUserController::class, 'edit'])->name('public.user.edit');
-    Route::put('edit/{user}/profile', [PublicUserController::class, 'update'])->name('public.user.update');
+    Route::get('/perfil', [ProfileController::class, 'index'])->name('profile');
+    Route::delete('/perfil/eliminar', [PublicUserController::class, 'destroy'])->name('public.user.delete');
+    Route::get('perfil/{user}/editar', [PublicUserController::class, 'edit'])->name('public.user.edit');
+    Route::put('perfil/{user}/editar', [PublicUserController::class, 'update'])->name('public.user.update');
+
+    Route::post('/obras/{play}/guardar', [UsersSavePlaysController::class, 'savePlay'])->name('save.play');
+    Route::post('/obras/{play}/eliminar', [UsersSavePlaysController::class, 'destroyPlay'])->name('unsave.play');
     
     Route::resource('/teatros', PublicTheaterController::class)->except(['index', 'show']);
 });
-
+    
+    Route::resource('/teatros', PublicTheaterController::class)->only(['index', 'show']);
 
 // Rutas de resource ADMIN
 Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::resource('/users', AdminUserController::class);
     Route::resource('/plays', AdminPlayController::class)->except(['edit', 'update']);
     Route::resource('/performances', PerformanceController::class);

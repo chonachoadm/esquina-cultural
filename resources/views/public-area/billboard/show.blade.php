@@ -1,9 +1,23 @@
 @extends('layouts.app')
 @section('content')
 
+<section>
+    @if(session('message'))
+    <div class="alert alert-warning">
+        <small>{{ session('message') }}</small>
+    </div>
+    @elseif(session('success'))
+    <div class="alert alert-success">
+        <small>{{ session('success') }}</small>
+    </div>
+    @elseif(session('error'))
+    <div class="alert alert-error">
+        <small>{{ session('error') }}</small>
+    </div>
+    @endif
 
-<a href="{{ route('billboard') }}">Volver</a>
-<h2>Página de {{ $play->title }}</h2>
+    <a href="{{ route('billboard') }}">Volver</a>
+    <h2>Página de {{ $play->title }}</h2>
 
     <img src="{{ asset('storage/images/plays/' . $play->cover_photo) }}" alt="{{ $play->title }}">
     <div>
@@ -12,6 +26,19 @@
     </div>
     <div>
         <small>{{ $play->duration }} minutos</small>
+    </div>
+    <div>
+        @if(auth()->user()->savedPlays->contains($play->id))
+        <form action="{{ route('unsave.play', $play) }}" method="post">
+            @csrf
+            <button>Quitar de guardados</button>
+        </form>
+        @else
+        <form action="{{ route('save.play', $play) }}" method="post">
+            @csrf
+            <button type="submit">Guardar</button>
+        </form>
+        @endif
     </div>
     <div>
         <h4>Integrantes</h4>
@@ -64,5 +91,6 @@
             </div>
         </form>
     </div>
+</section>
 
 @endsection

@@ -25,7 +25,7 @@ class TheaterController extends Controller
     public function create()
     {
         $user = auth()->user();
-        return view('public-area.theaters.create', compact('user'));
+        return view('public-area.theaters.create', compact('user'));    
     }
 
     /**
@@ -35,17 +35,33 @@ class TheaterController extends Controller
     {
         $user = auth()->user();
 
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'bio' => 'nullable|string|max:500',
+            'address' => 'required|string',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'capacity' => 'required|integer|min:1',
+        ], [
+            'name.required' => 'Este campo no puede quedar vacío.',
+            'name.max' => 'El nombre no puede superar los 255 caracteres.',
+            'bio.max' => 'La biografía no puede superar los 500 caracteres.',
+            'address.required' => 'Este campo no puede quedar vacío.',
+            'capacity.required' => 'Este campo no puede quedar vacío.',
+            'capacity.min' => 'La capacidad de la sala no puede ser menos que 1.',
+        ]);
+
         $theater = Theater::create([
             'user_id' => $user->id,
-            'name' => $request->name,
-            'bio' => $request->bio,
-            'address' => $request->address,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude,
-            'max_capacity' => $request->capacity,
+            'name' => $validatedData['name'],
+            'bio' => $validatedData['bio'],
+            'address' => $validatedData['address'],
+            'latitude' => $validatedData['latitude'],
+            'longitude' => $validatedData['longitude'],
+            'max_capacity' => $validatedData['capacity'],
             'verification_status' => 'pending',
-            ]);
-
+        ]);
+        
         $user->update([
             'role' => 2,
         ]);
@@ -69,7 +85,9 @@ class TheaterController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $theater = Theater::where('id', $id)->first();
+
+        return view('public-area.theaters.edit', compact('theater'));
     }
 
     /**
@@ -77,7 +95,35 @@ class TheaterController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'bio' => 'nullable|string|max:500',
+            'address' => 'required|string',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'capacity' => 'required|integer|min:1',
+        ], [
+            'name.required' => 'Este campo no puede quedar vacío.',
+            'name.max' => 'El nombre no puede superar los 255 caracteres.',
+            'bio.max' => 'La biografía no puede superar los 500 caracteres.',
+            'address.required' => 'Este campo no puede quedar vacío.',
+            'capacity.required' => 'Este campo no puede quedar vacío.',
+            'capacity.min' => 'La capacidad de la sala no puede ser menos que 1.',
+        ]);
+
+        $theater = Theater::where('id', $id)->first();
+
+        $theater->update([
+            'name' => $validatedData['name'],
+            'bio' => $validatedData['bio'],
+            'address' => $validatedData['address'],
+            'latitude' => $validatedData['latitude'],
+            'longitude' => $validatedData['longitude'],
+            'capacity' => $validatedData['capacity'],
+            'verification_status' => 'pending',
+        ]);
+
+        return redirect()->route('profile')->with('message', 'El administrador revisará los cambios hechos, te avisaremos cuando se verifique o se rechace la información del teatro.');
     }
 
     /**
@@ -85,6 +131,13 @@ class TheaterController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $theater = Theater::where('id', $id)->first();
+
+        $theater->update([
+            'verification_status' => 'deleted'
+        ]);
+        $theater->delete();
+
+        return redirect()->route('profile')->with('success', 'Teatro eliminado correctamente');
     }
 }

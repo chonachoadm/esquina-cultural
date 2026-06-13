@@ -17,7 +17,11 @@ class ProfileController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('public-area.users.profile', compact('user'));
+
+
+
+        $savedPlays = auth()->user()->savedPlays()->get();
+        return view('public-area.users.profile', compact('user', 'savedPlays'));
     }
 
     /**

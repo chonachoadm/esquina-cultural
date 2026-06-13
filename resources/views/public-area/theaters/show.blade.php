@@ -26,5 +26,12 @@
             (mapa)
         </div>
     </div>
+    @if(auth()->user()->theater->id === $theater->id)
+    <form action="{{ route('teatros.destroy', $theater->id) }}" method="post">
+        @csrf
+        @method('DELETE')
+        <button class="btn btn-danger" type="submit" onclick="return confirm('Estás segurx de querer eliminar {{ $theater->nombre }}?')">Eliminar teatro</button>
+    </form>
+    @endif
 </section>
 @endsection

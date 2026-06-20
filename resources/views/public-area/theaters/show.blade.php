@@ -26,7 +26,7 @@
             (mapa)
         </div>
     </div>
-    @if(auth()->user()->theater->id === $theater->id)
+    @if($theater->user === auth()->user())
     <form action="{{ route('teatros.destroy', $theater->id) }}" method="post">
         @csrf
         @method('DELETE')

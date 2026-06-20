@@ -27,6 +27,7 @@
     <div>
         <small>{{ $play->duration }} minutos</small>
     </div>
+    @auth
     <div>
         @if(auth()->user()->savedPlays->contains($play->id))
         <form action="{{ route('unsave.play', $play) }}" method="post">
@@ -40,6 +41,7 @@
         </form>
         @endif
     </div>
+    @endauth
     <div>
         <h4>Integrantes</h4>
         <ul>

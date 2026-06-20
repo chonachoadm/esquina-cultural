@@ -16,7 +16,11 @@
     </div>
     @endif
     
+    @if($user->profile->image === null)
+    <p><em>Sin foto de perfil</em></p>
+    @else
     <img src="{{ asset('storage/images/profiles/' . $user->profile->image) }}" alt="Foto de perfil de {{ auth()->user()->name }}">
+    @endif
     <h2> {{ $user->name }}</h2>
 
 

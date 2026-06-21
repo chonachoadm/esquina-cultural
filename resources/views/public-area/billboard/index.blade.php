@@ -1,28 +1,41 @@
 @extends('layouts.app')
 @section('content')
-
-@if(session('error'))
-<div>
-    <small>{{ session('error') }}</small>
-</div>
-@endif
-<h1>Esta es la cartelera</h1>
-
-@if(auth()->user())
-<h2>Bienvenidx {{ auth()->user()->name }}</h2>
-@endif
-<ul>
-    @foreach($plays as $play)
-    <li>
-        <a href="{{ route('obras.show', $play) }}">    
-            <img src="{{ asset('storage/images/plays/' . $play->cover_photo) }}" alt="{{ $play->title }}">
-        </a>
-        <div>
-            <h3>{{ $play->title }}</h3>
-            <p>{{ $play->description }}</p>
+<section class="py-5 section-public">
+    @if(session('error'))
+    <div>
+        <small>{{ session('error') }}</small>
+    </div>
+    @endif
+    <div class="d-flex flex-column align-items-center">
+        <h1 class="my-4 billboard-h1">Nuestra cartelera</h1>        
+        <div class="mt-4">
+            Buscador
         </div>
-    </li>
-    @endforeach
-</ul>
-
+        <div class="row gap-4 mx-2 my-4">
+            @foreach($plays as $play)
+            <div class="col-12 rounded-3xl billboard-card">
+                <div class="billboard-img-container">
+                    <img class="img-fluid" src="{{ asset('storage/images/plays/' . $play->cover_photo) }}" alt="{{ $play->title }}">
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="billboard-play-text">
+                        <div>
+                            <h2 class="billboard-play-title">{{ $play->title }}</h2>
+                            <p class="m-0">{{ $play->theater->name }}</p>
+                            <small class="billboard-theater-address">{{ $play->theater->short_address }}</small>
+                        </div>
+                        <div class="ps-3">
+                            @foreach($play->schedule_short_slots as $slot)
+                            <small class="billboard-play-schedule">{{ $slot['day'] }} {{ $slot['time'] }}</small>
+                            @endforeach
+                        </div>
+                    </div>
+                    <a class="d-flex align-items-center justify-content-center rounded billboard-ticket-button" href="{{ route('obras.show', $play) }}">Entradas</a>
+                </div>
+            </div>
+            @endforeach
+        </div>
+        
+    </div>
+</section>
 @endsection

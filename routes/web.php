@@ -17,16 +17,14 @@ use App\Http\Controllers\Public\TheaterController as PublicTheaterController;
 use App\Http\Controllers\Public\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Public\UsersSavePlaysController;
+use App\Http\Controllers\Public\LandingController;
 
-// Ruta al layout
-Route::get('/', function () {
-    return view('layouts.app');
-});
+// Ruta de la landing
+Route::get('/', LandingController::class)->name('landing');
 
 // Rutas de autenticación
-Route::get('/login', [AuthController::class, 'showLogin'])->name('showLogin');
+Route::get('/ingresar', [AuthController::class, 'showAuth'])->name('showAuth');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::get('/register', [AuthController::class, 'showRegister'])->name('showRegister');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -45,6 +43,7 @@ Route::delete('/obra/comentario/{comment}', [CommentController::class, 'destroy'
 // Rutas de usuario autenticado
 Route::middleware('auth')->group(function() {
     Route::get('/perfil', [ProfileController::class, 'index'])->name('profile');
+    Route::get('/perfil/ajustes', [ProfileController::class, 'settings'])->name('settings');
     Route::delete('/perfil/eliminar', [PublicUserController::class, 'destroy'])->name('public.user.delete');
     Route::get('perfil/{user}/editar', [PublicUserController::class, 'edit'])->name('public.user.edit');
     Route::put('perfil/{user}/editar', [PublicUserController::class, 'update'])->name('public.user.update');

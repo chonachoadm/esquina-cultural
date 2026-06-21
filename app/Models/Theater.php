@@ -38,4 +38,15 @@ class Theater extends Model
     {
         return $this->hasManyThrough(Performance::class, Play::class);
     }
+
+    public function getShortAddressAttribute()
+    {
+        $parts = collect(explode(',', $this->address))
+            ->map(fn($p) => trim($p));
+    
+        return collect([
+            ($parts[1] ?? null) . ' ' . ($parts[0] ?? null),
+            $parts[2] ?? null
+        ])->filter()->implode(', ');
+    }
 }

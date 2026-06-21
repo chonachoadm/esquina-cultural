@@ -86,7 +86,7 @@ class PlayController extends Controller
         }
         Performance::insert($performances);
 
-        return redirect()->route('plays.index');
+        return redirect()->route('plays.index')->with('success', 'Obra creada correctamente.');
     }
 
     /**
@@ -133,7 +133,7 @@ class PlayController extends Controller
             'duration' => $request->duration,
         ]);
 
-        return redirect()->route('plays.show', $play);
+        return redirect()->route('plays.show', $play)->with('success', 'Información actualizada correctamente.');
     }
 
     /**
@@ -170,7 +170,7 @@ class PlayController extends Controller
             Performance::insert($performances);
         }
 
-        return redirect()->route('plays.show', $play);
+        return redirect()->route('plays.show', $play)->with('success', 'Funciones actualizadas correctamente.');
     }
 
     /**
@@ -198,7 +198,7 @@ class PlayController extends Controller
 
         $play->users()->sync($syncData);
 
-        return redirect()->route('plays.show', $play);
+        return redirect()->route('plays.show', $play)->with('success', 'Integrantes actualizados correctamente.');
     }
 
     /**
@@ -207,7 +207,7 @@ class PlayController extends Controller
     public function destroy(Play $play)
     {
         $play->delete();
-        return redirect()->route('plays.index');
+        return redirect()->route('plays.index')->with('success', 'Obra eliminada correctamente.');
     }
 
 

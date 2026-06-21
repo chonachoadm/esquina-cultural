@@ -34,7 +34,7 @@ class UserController extends Controller
         ]);
         $user->profile()->update($profileData);
 
-        return redirect()->route('profile');
+        return redirect()->route('profile')->with('success', 'Tu información se actualizó correctamente.');
     }
 
     public function destroy(Request $request)
@@ -47,6 +47,6 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('billboard')->with('success', 'Your account has been deleted successfully.');
+        return redirect()->route('billboard')->with('success', 'Tu cuenta ha sido eliminada exitósamente.');
     }
 }

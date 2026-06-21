@@ -46,18 +46,13 @@ class AuthController extends Controller
             'image' => $imageName,
         ]);
 
-        return redirect('/login');
+        return redirect('/ingresar')->with('success', '¡Bienvenido! Ingresá a tu sesión para seguir navegando por nuestra plataforma.');
 
     }
 
-    public function showLogin()
+    public function showAuth()
     {
-        return view('auth.login');
-    }
-    
-    public function showRegister()
-    {
-        return view('auth.register');
+        return view('auth.forms');
     }
 
     public function logout(Request $request)
@@ -67,6 +62,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect('/ingresar');
     }
 }

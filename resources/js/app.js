@@ -2,7 +2,6 @@ import './bootstrap';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import TomSelect from 'tom-select';
 
-// Function to get and show the max capacity of the selected theater
 function initTheaterSelector() {
     const theaterSelect = document.getElementById('theater');
     const capacityValue = document.getElementById('capacity-value');
@@ -20,7 +19,6 @@ function initTheaterSelector() {
     });
 }
 
-// Function to generate performances start_times based on the start and end dates, the days of the week and the time of each day
 function initPerformanceGenerator() {
     const startDateInput = document.getElementById('start-date');
     const endDateInput = document.getElementById('end-date');
@@ -182,7 +180,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-// Function to edit staff form
 document.querySelectorAll('.remove-user-btn').forEach(button => {
     button.addEventListener('click', function(event) {
         const id = this.dataset.userId; 
@@ -218,3 +215,26 @@ if (staffForm) {
         });
     });
 }
+
+// Manejo de cambio de formulario de auth
+const loginTab = document.getElementById('login-tab');
+const registerTab = document.getElementById('register-tab');
+
+const loginForm = document.getElementById('login-form');
+const registerForm = document.getElementById('register-form');
+
+loginTab.addEventListener('click', () => {
+    loginForm.hidden = false;
+    registerForm.hidden = true;
+
+    loginTab.classList.add('active-form');
+    registerTab.classList.remove('active-form');
+});
+
+registerTab.addEventListener('click', () => {
+    loginForm.hidden = true;
+    registerForm.hidden = false;
+
+    registerTab.classList.add('active-form');
+    loginTab.classList.remove('active-form');
+});

@@ -71,4 +71,9 @@ class ProfileController extends Controller
     {
         //
     }
+
+    public function settings()
+    {
+        return view('public-area.users.settings');
+    }
 }

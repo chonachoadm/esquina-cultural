@@ -50,7 +50,7 @@ class PurchaseController extends Controller
             'payment_gateway_id' => fake()->numerify('###########'),
         ]);
 
-        return redirect()->route('purchases.index');
+        return redirect()->route('purchases.index')->with('success', 'Compra creada correctamente.');
     }
 
     /**
@@ -89,7 +89,7 @@ class PurchaseController extends Controller
             'payment_status' => $request->payment_status,
         ]);
         
-        return redirect()->route('purchases.index');
+        return redirect()->route('purchases.index')->with('success', 'Compra actualizada correctamente.');
     }
 
     /**
@@ -98,6 +98,6 @@ class PurchaseController extends Controller
     public function destroy(Purchase $purchase)
     {
         $purchase->delete();
-        return redirect()->route('purchases.index');
+        return redirect()->route('purchases.index')->with('success', 'Compra eliminada correctamente.');
     }
 }

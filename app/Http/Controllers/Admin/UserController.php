@@ -50,7 +50,7 @@ class UserController extends Controller
             'image' => $imageName,
         ]);
 
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success', 'Usuario creado correctamente.');
     }
 
     /**
@@ -90,7 +90,7 @@ class UserController extends Controller
         ]);
         $user->profile()->update($profileData);
 
-        return redirect()->route('users.show', $user);
+        return redirect()->route('users.show', $user)->with('success', 'Usuario actualizado correctamente.');
     }
 
     /**
@@ -99,6 +99,6 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success', 'Usuario eliminado.');
     }
 }

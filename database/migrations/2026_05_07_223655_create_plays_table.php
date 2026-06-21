@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->foreignId('theater_id')->nullable()->constrained('theaters')->onDelete('set null');
+            $table->foreignId('theater_id')->nullable()->constrained('theaters')->onDelete('cascade');
             $table->decimal('ticket_price', 10, 2); 
             $table->string('cover_photo')->nullable(); 
             $table->integer('duration'); 

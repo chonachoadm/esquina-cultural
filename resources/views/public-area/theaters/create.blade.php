@@ -1,55 +1,59 @@
 @extends('layouts.app')
 
 @section('content')
-<section>
-    <h2>Registrar nuevo teatro</h2>
-    <form action="{{ route('teatros.store', $user) }}" method="POST">
-        @csrf
-        <div>
-            <p>Administrador del teatro: <em>{{ $user->name ? $user->name : $user->email }}</em></p>
-        </div>
-        <div>
-            <label for="name">Nombre</label>
-            <input type="text" name="name" id="name" value="{{ old('name') }}" />
-            @error('name')
-            <div><small>{{ $message }}</small></div>
-            @enderror
-        </div>
-        <div>
-            <label for="bio">Biografía</label>
-            <textarea type="text" name="bio" id="bio">{{ old('bio') }}</textarea>
-            @error('bio')
-            <div><small>{{ $message }}</small></div>
-            @enderror
-        </div>
-        <div>
-            <label for="address">Ubicación</label>
-            <input type="text" id="address" name="address" autocomplete="off" value="{{ old('address') }}">
+<section class="section-personal">
+    <div class="my-4">
+        <a class="billboard-detail-back-button" href="{{ url()->previous() ?? route('profile') }}">
+            <img class="img-fluid" src="{{ asset('storage/images/icons/back-black-25.webp') }}" alt="Volver">
+        </a>
 
-            <input type="hidden" id="latitude" name="latitude" value="{{ old('latitude') }}">
-            <input type="hidden" id="longitude" name="longitude" value="{{ old('longitude') }}">
+        <div class="billboard-detail-copy">
+            <h2 class="billboard-detail-comment-title">Registrar nuevo teatro</h2>
 
-            <div id="suggestions"></div>
+            <form class="d-flex flex-column align-items-center gap-4 p-4 my-4 rounded-3xl auth-forms" action="{{ route('teatros.store', $user) }}" method="POST">
+                @csrf
+                <div class="d-flex flex-column w-100 mb-2">
+                    <label for="name">Nombre</label>
+                    <input class="rounded auth-form-input" type="text" name="name" id="name" value="{{ old('name') }}" />
+                    @error('name')
+                    <div><small>{{ $message }}</small></div>
+                    @enderror
+                </div>
+                <div class="d-flex flex-column w-100 mb-2">
+                    <label for="bio">Biografía</label>
+                    <textarea class="rounded auth-form-input" type="text" name="bio" id="bio">{{ old('bio') }}</textarea>
+                    @error('bio')
+                    <div><small>{{ $message }}</small></div>
+                    @enderror
+                </div>
+                <div class="d-flex flex-column w-100 mb-2">
+                    <label for="address">Ubicación</label>
+                    <input class="rounded auth-form-input" type="text" id="address" name="address" autocomplete="off" value="{{ old('address') }}">
 
-            <div id="map" style="height: 300px; width: 400px;"></div>
-            @error('address')
-            <div><small>{{ $message }}</small></div>
-            @enderror
+                    <input type="hidden" id="latitude" name="latitude" value="{{ old('latitude') }}">
+                    <input type="hidden" id="longitude" name="longitude" value="{{ old('longitude') }}">
+
+                    <div id="suggestions"></div>
+                    <div id="map"></div>
+                    @error('address')
+                    <div><small>{{ $message }}</small></div>
+                    @enderror
+                </div>
+                <div class="d-flex flex-column w-100 mb-2">
+                    <label for="capacity">Máxima capacidad de la sala</label>
+                    <input class="rounded auth-form-input" type="number" id="capacity" name="capacity" value="{{ old('capacity') }}">
+                    @error('capacity')
+                    <div><small>{{ $message }}</small></div>
+                    @enderror
+                </div>
+                    <button class="w-100 landing-auth-button" type="submit">Crear</button>
+            </form>
         </div>
-        <div>
-            <label for="capacity">Máxima capacidad de la sala</label>
-            <input type="number" id="capacity" name="capacity" value="{{ old('capacity') }}">
-            @error('capacity')
-            <div><small>{{ $message }}</small></div>
-            @enderror
-        </div>
-        <div>
-            <button type="submit">Crear</button>
-        </div>
-    </form>
+    </div>
+
 </section>
-@endsection
-
+    @endsection
+    
 
 
 
@@ -90,8 +94,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const response = await fetch(url);
         const data = await response.json();
         suggestions.innerHTML = '';
-        data.forEach(place => {
+        data.slice(0, 5).forEach(place => {
             const item = document.createElement('div');
+            item.classList.add('suggestion-item')
             item.textContent = place.display_name;
             item.addEventListener('click', () => {
 

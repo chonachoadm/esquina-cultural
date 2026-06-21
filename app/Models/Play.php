@@ -56,4 +56,27 @@ class Play extends Model
     {
         return $this->hasManyThrough(Ticket::class, Performance::class);
     }
+
+    public function getScheduleShortSlotsAttribute()
+    {
+        return $this->performances
+            ->filter(fn($p) => $p->start_time)
+            ->map(fn($p) => [
+                'day' => $p->start_time->locale('es')->isoFormat('ddd'),
+                'time' => $p->start_time->format('H:i'),
+            ])
+            ->unique(fn($item) => $item['day'].'-'.$item['time'])
+            ->values();
+    }
+    public function getScheduleSlotsAttribute()
+    {
+        return $this->performances
+            ->filter(fn($p) => $p->start_time)
+            ->map(fn($p) => [
+                'day' => $p->start_time->locale('es')->isoFormat('dddd'),
+                'time' => $p->start_time->format('H:i'),
+            ])
+            ->unique(fn($item) => $item['day'].'-'.$item['time'])
+            ->values();
+    }
 }

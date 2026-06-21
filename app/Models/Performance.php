@@ -19,6 +19,9 @@ class Performance extends Model
         'price_override',
         'status',
     ];
+    protected $casts = [
+        'start_time' => 'datetime',
+    ];
 
     public function play()
     {

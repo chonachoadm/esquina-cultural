@@ -47,7 +47,7 @@ class TheaterController extends Controller
             ]);
 
 
-        return redirect()->route('theaters.index');
+        return redirect()->route('theaters.index')->with('success', 'Teatro creado correctamente.');
     }
 
     /**
@@ -82,7 +82,7 @@ class TheaterController extends Controller
             'max_capacity' => $request->capacity,
         ]);
 
-        return redirect()->route('theaters.index');
+        return redirect()->route('theaters.index')->with('success', 'Teatro actualizado correctamente.');
     }
 
     /**
@@ -92,7 +92,7 @@ class TheaterController extends Controller
     {
         $theater->delete();
 
-        return redirect()->route('theaters.index');
+        return redirect()->route('theaters.index')->with('success', 'Teatro eliminado correctamente.');
     }
 
     public function verify(Theater $theater)

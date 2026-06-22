@@ -17,8 +17,7 @@
                 </li>
                 @endauth
                 @guest
-                <li class="nav-item m-2"><a class="nav-link" href="{{ route('showLogin') }}">Iniciar sesión</a></li>
-                <li class="nav-item m-2"><a class="nav-link" href="{{ route('showRegister') }}">Crear cuenta</a></li>
+                <li class="nav-item m-2"><a class="nav-link" href="{{ route('login') }}">Ingresar a tu cuenta</a></li>
                 @endguest
             </ul>
         </div>

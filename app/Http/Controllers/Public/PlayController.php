@@ -15,7 +15,11 @@ class PlayController extends Controller
      */
     public function index()
     {
-        $plays = Play::with('performances')->where('status', 'verified')->get();
+        $plays = Play::with('performances')
+            ->where('status', 'verified')
+            ->whereHas('performances', function ($query) {
+                $query->where('start_time', '>', now());
+            })->get();
 
         return view('public-area.billboard.index', compact('plays'));
     }

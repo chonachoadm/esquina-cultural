@@ -4,20 +4,20 @@
 <section class="billboard-detail-copy">
     <div class="d-flex flex-column justify-content-center settings-list-container">
         <div class="w-25 my-4">
-            <a href="{{ url()->previous() ?? route('profile') }}">
+            <a href="{{ route('profile') }}">
                 <img class="img-fluid w-25" src="{{ asset('storage/images/icons/back-black.webp') }}" alt="Volver">
             </a>
         </div>
         <ul class="list-unstyled m-0">
             <li class="mb-4">
-                <a class="text-black text-decoration-none" href="">Editar perfil</a>
+                <a class="text-black text-decoration-none" href="{{ route('public.user.edit', auth()->user()) }}">Editar perfil</a>
             </li>
             <li class="mb-4">
                 <a class="text-black text-decoration-none" href="">Cambiar contraseña</a>
             </li>
             @if(auth()->user()->theater)
             <li class="mb-4">
-                <a class="text-black text-decoration-none" href="">Mi teatro</a>
+                <a class="text-black text-decoration-none" href="{{ auth()->user()->theater->verification_status === 'verified' ? route('teatros.show', auth()->user()->theater) : route('teatros.index') }}">Mi teatro</a>
             </li>
             @else
             <li class="mb-4">
@@ -28,7 +28,7 @@
                 <a class="text-black text-decoration-none" href="">Publicar una obra</a>
             </li>
             <li class="mb-4">
-                <a class="text-black text-decoration-none" href="">Obras guardadas</a>
+                <a class="text-black text-decoration-none" href="{{ route('showSavedPlays', auth()->user()) }}">Obras guardadas</a>
             </li>
             <li>
                 <a class="text-black text-decoration-none" href="">Reportar un problema</a>

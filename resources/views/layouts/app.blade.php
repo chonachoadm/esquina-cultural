@@ -12,7 +12,9 @@
         @if(auth()->user()?->isAdmin())
         @include('partials.nav-admin')
         @else
-        @include('partials.nav')
+        @unless(isset($hideNavbar) && $hideNavbar)
+            @include('partials.nav')
+        @endunless
         @endif
     </header>
     <main>

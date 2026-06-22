@@ -60,10 +60,10 @@ class Play extends Model
     public function getScheduleShortSlotsAttribute()
     {
         return $this->performances
-            ->filter(fn($p) => $p->start_time)
-            ->map(fn($p) => [
-                'day' => $p->start_time->locale('es')->isoFormat('ddd'),
-                'time' => $p->start_time->format('H:i'),
+            ->filter(fn($performance) => $performance->start_time)
+            ->map(fn($performance) => [
+                'day' => $performance->start_time->locale('es')->isoFormat('ddd'),
+                'time' => $performance->start_time->format('H:i'),
             ])
             ->unique(fn($item) => $item['day'].'-'.$item['time'])
             ->values();
@@ -71,12 +71,18 @@ class Play extends Model
     public function getScheduleSlotsAttribute()
     {
         return $this->performances
-            ->filter(fn($p) => $p->start_time)
-            ->map(fn($p) => [
-                'day' => $p->start_time->locale('es')->isoFormat('dddd'),
-                'time' => $p->start_time->format('H:i'),
+            ->filter(fn($performance) => $performance->start_time)
+            ->map(fn($performance) => [
+                'day' => $performance->start_time->locale('es')->isoFormat('dddd'),
+                'time' => $performance->start_time->format('H:i'),
             ])
             ->unique(fn($item) => $item['day'].'-'.$item['time'])
             ->values();
+    }
+
+    public function getIsFinishedAttribute()
+    {
+        return $this->performances
+            ->every(fn($performance) => $performance->start_time->isPast());
     }
 }

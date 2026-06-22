@@ -16,10 +16,10 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (!auth()->check()) {
-            return redirect('/login');
+            return redirect('/ingresar');
         }
 
-        if (auth()->user()->role !== 1) {
+        if (!auth()->user()->isAdmin()) {
             abort(403);
         }
 

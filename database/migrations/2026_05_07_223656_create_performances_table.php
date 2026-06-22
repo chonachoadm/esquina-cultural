@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('performances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('play_id')->constrained('plays')->onDelete('cascade');
+            $table->foreignId('play_id')->constrained('plays')->cascadeOnDelete();
             $table->dateTime('start_time');
             $table->decimal('price_override', 10, 2)->nullable();
             $table->string('status')->default('scheduled');

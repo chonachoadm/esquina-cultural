@@ -23,8 +23,8 @@ use App\Http\Controllers\Public\LandingController;
 Route::get('/', LandingController::class)->name('landing');
 
 // Rutas de autenticación
-Route::get('/ingresar', [AuthController::class, 'showAuth'])->name('showAuth');
-Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/ingresar', [AuthController::class, 'showAuth'])->name('login');
+Route::post('/ingresar', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -44,6 +44,7 @@ Route::delete('/obra/comentario/{comment}', [CommentController::class, 'destroy'
 Route::middleware('auth')->group(function() {
     Route::get('/perfil', [ProfileController::class, 'index'])->name('profile');
     Route::get('/perfil/ajustes', [ProfileController::class, 'settings'])->name('settings');
+    Route::get('perfil/{user}/obrasguardadas', [ProfileController::class, 'showSavedPlays'])->name('showSavedPlays');
     Route::delete('/perfil/eliminar', [PublicUserController::class, 'destroy'])->name('public.user.delete');
     Route::get('perfil/{user}/editar', [PublicUserController::class, 'edit'])->name('public.user.edit');
     Route::put('perfil/{user}/editar', [PublicUserController::class, 'update'])->name('public.user.update');
@@ -51,7 +52,9 @@ Route::middleware('auth')->group(function() {
     Route::post('/obras/{play}/guardar', [UsersSavePlaysController::class, 'savePlay'])->name('save.play');
     Route::post('/obras/{play}/eliminar', [UsersSavePlaysController::class, 'destroyPlay'])->name('unsave.play');
     
+    Route::get('/teatros/confirmacion', [PublicTheaterController::class, 'showTheaterConfirmation'])->name('theaterConfirmation');
     Route::resource('/teatros', PublicTheaterController::class)->except(['index', 'show']);
+
 });
     
     Route::resource('/teatros', PublicTheaterController::class)->only(['index', 'show']);

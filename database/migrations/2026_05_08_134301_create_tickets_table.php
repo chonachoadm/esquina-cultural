@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('purchase_id')->constrained('purchases')->onDelete('cascade');
+            $table->foreignId('purchase_id')->constrained('purchases')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->onDelete('restrict');
             $table->foreignId('performance_id')->constrained('performances')->onDelete('restrict');
             $table->string('ticket_code')->unique();

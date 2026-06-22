@@ -76,4 +76,9 @@ class ProfileController extends Controller
     {
         return view('public-area.users.settings');
     }
+
+    public function showSavedPlays()
+    {
+        return view('public-area.users.saved-plays');
+    }
 }

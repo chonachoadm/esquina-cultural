@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<section>
-    <h2>Editar {{ $theater->name }}</h2>
+<!-- <section>
     <form action="{{ route('teatros.update', $theater->id) }}" method="POST">
         @csrf
         @method('PUT')
@@ -45,6 +44,56 @@
             <button type="submit">Guardar</button>
         </div>
     </form>
+</section> -->
+
+<section class="section-personal">
+    <div class="my-4">
+        <a class="billboard-detail-back-button" href="{{ route('teatros.index') }}">
+            <img class="img-fluid" src="{{ asset('storage/images/icons/back-black-25.webp') }}" alt="Volver">
+        </a>
+
+        <div class="billboard-detail-copy">
+            <form class="d-flex flex-column align-items-center gap-4 p-4 my-4 rounded-3xl auth-forms" action="{{ route('teatros.store', auth()->user()) }}" method="POST">
+                @csrf
+                <div class="d-flex flex-column w-100 mb-2">
+                    <label for="name">Nombre</label>
+                    <input class="p-1 rounded auth-form-input" type="text" name="name" id="name" value="{{ old('name', $theater->name) }}" />
+                    @error('name')
+                    <div><small>{{ $message }}</small></div>
+                    @enderror
+                </div>
+                <div class="d-flex flex-column w-100 mb-2">
+                    <label for="bio">Biografía</label>
+                    <textarea class="p-1 rounded auth-form-input" type="text" name="bio" id="bio">{{ old('bio', $theater->bio) }}</textarea>
+                    @error('bio')
+                    <div><small>{{ $message }}</small></div>
+                    @enderror
+                </div>
+                <div class="d-flex flex-column w-100 mb-2">
+                    <label for="address">Ubicación</label>
+                    <input class="p-1 rounded auth-form-input" type="text" id="address" name="address" autocomplete="off" value="{{ old('address', $theater->address) }}">
+
+                    <input type="hidden" id="latitude" name="latitude" value="{{ old('latitude', $theater->latitude) }}">
+                    <input type="hidden" id="longitude" name="longitude" value="{{ old('longitude', $theater->longitude) }}">
+
+                    <div id="suggestions"></div>
+                    <div id="map"></div>
+                    @error('address')
+                    <div><small>{{ $message }}</small></div>
+                    @enderror
+                </div>
+                <div class="d-flex flex-column w-100 mb-2">
+                    <label for="capacity">Máxima capacidad de la sala</label>
+                    <input class="p-1 rounded auth-form-input" type="number" id="capacity" name="capacity" value="{{ old('capacity', $theater->max_capacity) }}">
+                    @error('capacity')
+                    <div><small>{{ $message }}</small></div>
+                    @enderror
+                </div>
+                    <button class="w-100 landing-auth-button" type="submit">Enviar a revisión</button>
+            </form>
+        </div>
+    </div>
+
 </section>
 @endsection
 

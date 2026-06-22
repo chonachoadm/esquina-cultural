@@ -20,92 +20,640 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
-        $admin = User::create([
-            'name' => 'Admin User',
-            'email' => 'admin@teatro.com',
-            'password' => Hash::make('password'),
+        // USUARIOS
+        $user1 = User::create([
+            'name' => 'Nacho Lopez',
+            'email' => 'nacho@lopez.com',
+            'password' => Hash::make('asdasd'),
             'role' => 1, // Admin
         ]);
         
-        $manager = User::create([
-            'name' => 'Theater Manager',
-            'email' => 'manager@teatro.com',
-            'password' => Hash::make('password'),
-            'role' => 2, // Manager
-        ]);
-        
-        $customer = User::create([
+        $user2 = User::create([
             'name' => 'Juan Perez',
-            'email' => 'juan@example.com',
+            'email' => 'juan.perez@example.com',
             'password' => Hash::make('password'),
-            'role' => 3, // Customer
+            'role' => 3,
         ]);
-        
-        // 2. Create a Theater
-        $theater = Theater::create([
-            'user_id' => $manager->id,
-            'name' => 'Teatro Gran Rex',
-            'address' => 'Av. Corrientes 857, CABA',
+
+        $user3 = User::create([
+            'name' => 'Maria Gonzalez',
+            'email' => 'maria.gonzalez@example.com',
+            'password' => Hash::make('password'),
+            'role' => 3,
+        ]);
+
+        $user4 = User::create([
+            'name' => 'Carlos Rodriguez',
+            'email' => 'carlos.rodriguez@example.com',
+            'password' => Hash::make('password'),
+            'role' => 2,
+        ]);
+
+        $user5 = User::create([
+            'name' => 'Lucia Fernandez',
+            'email' => 'lucia.fernandez@example.com',
+            'password' => Hash::make('password'),
+            'role' => 3,
+        ]);
+
+        $user6 = User::create([
+            'name' => 'Martin Lopez',
+            'email' => 'martin.lopez@example.com',
+            'password' => Hash::make('password'),
+            'role' => 3,
+        ]);
+
+        $user7 = User::create([
+            'name' => 'Valeria Martinez',
+            'email' => 'valeria.martinez@example.com',
+            'password' => Hash::make('password'),
+            'role' => 3,
+        ]);
+
+        $user8 = User::create([
+            'name' => 'Diego Romero',
+            'email' => 'diego.romero@example.com',
+            'password' => Hash::make('password'),
+            'role' => 3,
+        ]);
+
+        $user9 = User::create([
+            'name' => 'Sofia Herrera',
+            'email' => 'sofia.herrera@example.com',
+            'password' => Hash::make('password'),
+            'role' => 3,
+        ]);
+
+        $user10 = User::create([
+            'name' => 'Federico Castro',
+            'email' => 'federico.castro@example.com',
+            'password' => Hash::make('password'),
+            'role' => 2,
+        ]);
+
+        $user11 = User::create([
+            'name' => 'Camila Torres',
+            'email' => 'camila.torres@example.com',
+            'password' => Hash::make('password'),
+            'role' => 3,
+        ]);
+
+        $user12 = User::create([
+            'name' => 'Nicolas Diaz',
+            'email' => 'nicolas.diaz@example.com',
+            'password' => Hash::make('password'),
+            'role' => 3,
+        ]);
+
+        $user13 = User::create([
+            'name' => 'Agustina Ruiz',
+            'email' => 'agustina.ruiz@example.com',
+            'password' => Hash::make('password'),
+            'role' => 3,
+        ]);
+
+        $user14 = User::create([
+            'name' => 'Joaquin Alvarez',
+            'email' => 'joaquin.alvarez@example.com',
+            'password' => Hash::make('password'),
+            'role' => 3,
+        ]);
+
+        $user15 = User::create([
+            'name' => 'Florencia Medina',
+            'email' => 'florencia.medina@example.com',
+            'password' => Hash::make('password'),
+            'role' => 3,
+        ]);
+
+        $user16 = User::create([
+            'name' => 'Gabriel Vega',
+            'email' => 'gabriel.vega@example.com',
+            'password' => Hash::make('password'),
+            'role' => 3,
+        ]);
+
+        $user17 = User::create([
+            'name' => 'Paula Rios',
+            'email' => 'paula.rios@example.com',
+            'password' => Hash::make('password'),
+            'role' => 3,
+        ]);
+
+        $user18 = User::create([
+            'name' => 'Leonardo Morales',
+            'email' => 'leonardo.morales@example.com',
+            'password' => Hash::make('password'),
+            'role' => 2,
+        ]);
+
+        $user19 = User::create([
+            'name' => 'Julieta Silva',
+            'email' => 'julieta.silva@example.com',
+            'password' => Hash::make('password'),
+            'role' => 3,
+        ]);
+
+        $user20 = User::create([
+            'name' => 'Matias Acosta',
+            'email' => 'matias.acosta@example.com',
+            'password' => Hash::make('password'),
+            'role' => 3,
+        ]);
+
+        $user21 = User::create([
+            'name' => 'Carolina Benitez',
+            'email' => 'carolina.benitez@example.com',
+            'password' => Hash::make('password'),
+            'role' => 3,
+        ]);
+
+        //TEATROS
+        $theater1 = Theater::create([
+            'user_id' => $user4->id,
+            'name' => 'Espacio Escena Sur',
+            'address' => '1428, Av. Caseros, CABA',
+            'latitude' => '-34.6338',
+            'longitude' => '-58.3955',
             'verification_status' => 'verified',
-            'max_capacity' => 3000,
-            'bio' => 'One of the most iconic theaters in Buenos Aires.',
+            'max_capacity' => 180,
+            'bio' => 'Sala independiente orientada al teatro contemporáneo, con una programación diversa que combina dramaturgia nacional, ciclos de formación y espectáculos experimentales.',
         ]);
-        
-        // 3. Create a Play
-        $play = Play::create([
-            'title' => 'Esperando la Carroza',
-            'description' => 'A classic Argentine comedy about family dynamics and a missing grandmother.',
-            'theater_id' => $theater->id,
-            'ticket_price' => 15000.00,
+
+        $theater2 = Theater::create([
+            'user_id' => $user10->id,
+            'name' => 'La Candileja Teatro',
+            'address' => '356, Gascón, CABA',
+            'latitude' => '-34.6048',
+            'longitude' => '-58.4201',
+            'verification_status' => 'verified',
+            'max_capacity' => 120,
+            'bio' => 'Espacio cultural dedicado a la producción de obras emergentes y proyectos de investigación escénica. Cuenta con una sala íntima ideal para propuestas de cercanía con el público.',
+        ]);
+
+        $theater3 = Theater::create([
+            'user_id' => $user18->id,
+            'name' => 'Teatro El Umbral',
+            'address' => '987, Virrey Arredondo, CABA',
+            'latitude' => '-34.5734',
+            'longitude' => '-58.4457',
+            'verification_status' => 'verified',
+            'max_capacity' => 250,
+            'bio' => 'Centro teatral ubicado en el corazón de la ciudad, especializado en producciones independientes, festivales y ciclos dedicados a nuevas voces de la escena argentina.',
+        ]);
+
+        // OBRAS
+        $play1 = Play::create([
+            'title' => 'Las Horas Quietas',
+            'description' => 'Un drama íntimo sobre los vínculos familiares y los secretos que atraviesan generaciones.',
+            'theater_id' => $theater1->id,
+            'ticket_price' => 12000.00,
+            'cover_photo' => 'https://placehold.co/600x400',
+            'duration' => 85,
+            'is_published' => true,
+            'status' => 'verified',
+        ]);
+
+        $play2 = Play::create([
+            'title' => 'La Última Función',
+            'description' => 'Una compañía teatral se enfrenta a su despedida definitiva.',
+            'theater_id' => $theater1->id,
+            'ticket_price' => 14000.00,
+            'cover_photo' => 'https://placehold.co/600x400',
+            'duration' => 100,
+            'is_published' => true,
+            'status' => 'verified',
+        ]);
+
+        $play3 = Play::create([
+            'title' => 'Habitación 23',
+            'description' => 'Suspenso psicológico ambientado en un viejo hotel porteño.',
+            'theater_id' => $theater1->id,
+            'ticket_price' => 13000.00,
+            'cover_photo' => 'https://placehold.co/600x400',
+            'duration' => 95,
+            'is_published' => true,
+            'status' => 'verified',
+        ]);
+
+        $play4 = Play::create([
+            'title' => 'El Silencio de las Cosas',
+            'description' => 'Una obra poética sobre la memoria y el paso del tiempo.',
+            'theater_id' => $theater1->id,
+            'ticket_price' => 11000.00,
+            'cover_photo' => 'https://placehold.co/600x400',
+            'duration' => 75,
+            'is_published' => true,
+            'status' => 'pending',
+        ]);
+
+        $play5 = Play::create([
+            'title' => 'Crónicas de un Ascensor',
+            'description' => 'Historias cruzadas de vecinos atrapados en un edificio.',
+            'theater_id' => $theater1->id,
+            'ticket_price' => 12500.00,
+            'cover_photo' => 'https://placehold.co/600x400',
+            'duration' => 80,
+            'is_published' => true,
+            'status' => 'verified',
+        ]);
+
+        $play6 = Play::create([
+            'title' => 'Manual para Perderse',
+            'description' => 'Comedia contemporánea sobre la búsqueda de identidad.',
+            'theater_id' => $theater2->id,
+            'ticket_price' => 10000.00,
+            'cover_photo' => 'https://placehold.co/600x400',
+            'duration' => 70,
+            'is_published' => true,
+            'status' => 'verified',
+        ]);
+
+        $play7 = Play::create([
+            'title' => 'Después del Ensayo',
+            'description' => 'Las tensiones de un elenco salen a la luz tras una función.',
+            'theater_id' => $theater2->id,
+            'ticket_price' => 11500.00,
+            'cover_photo' => 'https://placehold.co/600x400',
+            'duration' => 85,
+            'is_published' => true,
+            'status' => 'verified',
+        ]);
+
+        $play8 = Play::create([
+            'title' => 'El Club de los Martes',
+            'description' => 'Cinco desconocidos comparten historias inesperadas.',
+            'theater_id' => $theater2->id,
+            'ticket_price' => 10500.00,
             'cover_photo' => 'https://placehold.co/600x400',
             'duration' => 90,
             'is_published' => true,
-            'status' => 'verified', // Verified so it shows up on your site!
-        ]);
-        
-        // 4. Create a few Performances (Showtimes)
-        Performance::create([
-            'play_id' => $play->id,
-            'start_time' => now()->addDays(7)->setHour(20)->setMinute(0),
-            'status' => 'scheduled',
-        ]);
-        
-        Performance::create([
-            'play_id' => $play->id,
-            'start_time' => now()->addDays(8)->setHour(21)->setMinute(30),
-            'status' => 'scheduled',
-            'price_override' => 18000.00, // Weekend special price
+            'status' => 'verified',
         ]);
 
+        $play9 = Play::create([
+            'title' => 'Pequeñas Catástrofes',
+            'description' => 'Comedia negra sobre las crisis cotidianas de una familia.',
+            'theater_id' => $theater2->id,
+            'ticket_price' => 12000.00,
+            'cover_photo' => 'https://placehold.co/600x400',
+            'duration' => 95,
+            'is_published' => true,
+            'status' => 'verified',
+        ]);
+
+        $play10 = Play::create([
+            'title' => 'La Noche del Meteorito',
+            'description' => 'Una historia fantástica ambientada en un barrio porteño.',
+            'theater_id' => $theater2->id,
+            'ticket_price' => 13000.00,
+            'cover_photo' => 'https://placehold.co/600x400',
+            'duration' => 100,
+            'is_published' => true,
+            'status' => 'pending',
+        ]);
+
+        $play11 = Play::create([
+            'title' => 'Bajo la Misma Lluvia',
+            'description' => 'Drama coral sobre encuentros y despedidas.',
+            'theater_id' => $theater3->id,
+            'ticket_price' => 13500.00,
+            'cover_photo' => 'https://placehold.co/600x400',
+            'duration' => 95,
+            'is_published' => true,
+            'status' => 'verified',
+        ]);
+
+        $play12 = Play::create([
+            'title' => 'Los Días de Invierno',
+            'description' => 'Un relato sensible sobre amistades que sobreviven al tiempo.',
+            'theater_id' => $theater3->id,
+            'ticket_price' => 12500.00,
+            'cover_photo' => 'https://placehold.co/600x400',
+            'duration' => 85,
+            'is_published' => true,
+            'status' => 'verified',
+        ]);
+
+        $play13 = Play::create([
+            'title' => 'El Inventor de Recuerdos',
+            'description' => 'Ficción dramática sobre la memoria y la imaginación.',
+            'theater_id' => $theater3->id,
+            'ticket_price' => 14500.00,
+            'cover_photo' => 'https://placehold.co/600x400',
+            'duration' => 100,
+            'is_published' => true,
+            'status' => 'verified',
+        ]);
+
+        $play14 = Play::create([
+            'title' => 'La Ciudad Invisible',
+            'description' => 'Una mirada fantástica sobre la vida urbana.',
+            'theater_id' => $theater3->id,
+            'ticket_price' => 15000.00,
+            'cover_photo' => 'https://placehold.co/600x400',
+            'duration' => 110,
+            'is_published' => true,
+            'status' => 'verified',
+        ]);
+
+        $play15 = Play::create([
+            'title' => 'Final de Temporada',
+            'description' => 'Comedia dramática sobre un grupo de artistas en crisis.',
+            'theater_id' => $theater3->id,
+            'ticket_price' => 12000.00,
+            'cover_photo' => 'https://placehold.co/600x400',
+            'duration' => 90,
+            'is_published' => true,
+            'status' => 'verified',
+        ]);
+
+        // USUARIOS PARA OBRAS
+        $play1->users()->attach([
+            $user4->id => ['role' => 'director'],
+            $user2->id => ['role' => 'actor'],
+            $user3->id => ['role' => 'actor'],
+            $user5->id => ['role' => 'actor'],
+        ]);
+
+        $play2->users()->attach([
+            $user4->id => ['role' => 'director'],
+            $user6->id => ['role' => 'actor'],
+            $user7->id => ['role' => 'actor'],
+            $user8->id => ['role' => 'actor'],
+        ]);
+
+        $play3->users()->attach([
+            $user4->id => ['role' => 'director'],
+            $user2->id => ['role' => 'actor'],
+            $user9->id => ['role' => 'actor'],
+        ]);
+
+        $play4->users()->attach([
+            $user4->id => ['role' => 'director'],
+            $user5->id => ['role' => 'actor'],
+            $user7->id => ['role' => 'actor'],
+            $user8->id => ['role' => 'actor'],
+        ]);
+
+        $play5->users()->attach([
+            $user4->id => ['role' => 'director'],
+            $user3->id => ['role' => 'actor'],
+            $user6->id => ['role' => 'actor'],
+            $user9->id => ['role' => 'actor'],
+        ]);
+
+
+        $play6->users()->attach([
+            $user10->id => ['role' => 'director'],
+            $user11->id => ['role' => 'actor'],
+            $user12->id => ['role' => 'actor'],
+            $user13->id => ['role' => 'actor'],
+        ]);
+
+        $play7->users()->attach([
+            $user10->id => ['role' => 'director'],
+            $user14->id => ['role' => 'actor'],
+            $user15->id => ['role' => 'actor'],
+        ]);
+
+        $play8->users()->attach([
+            $user10->id => ['role' => 'director'],
+            $user11->id => ['role' => 'actor'],
+            $user13->id => ['role' => 'actor'],
+            $user16->id => ['role' => 'actor'],
+        ]);
+
+        $play9->users()->attach([
+            $user10->id => ['role' => 'director'],
+            $user12->id => ['role' => 'actor'],
+            $user15->id => ['role' => 'actor'],
+            $user17->id => ['role' => 'actor'],
+        ]);
+
+        $play10->users()->attach([
+            $user10->id => ['role' => 'director'],
+            $user11->id => ['role' => 'actor'],
+            $user14->id => ['role' => 'actor'],
+        ]);
+
+        $play11->users()->attach([
+            $user18->id => ['role' => 'director'],
+            $user19->id => ['role' => 'actor'],
+            $user20->id => ['role' => 'actor'],
+            $user21->id => ['role' => 'actor'],
+        ]);
+
+        $play12->users()->attach([
+            $user18->id => ['role' => 'director'],
+            $user19->id => ['role' => 'actor'],
+            $user20->id => ['role' => 'actor'],
+        ]);
+
+        $play13->users()->attach([
+            $user18->id => ['role' => 'director'],
+            $user21->id => ['role' => 'actor'],
+            $user2->id => ['role' => 'actor'],
+            $user6->id => ['role' => 'actor'],
+        ]);
+
+        $play14->users()->attach([
+            $user18->id => ['role' => 'director'],
+            $user3->id => ['role' => 'actor'],
+            $user12->id => ['role' => 'actor'],
+            $user20->id => ['role' => 'actor'],
+        ]);
+
+        $play15->users()->attach([
+            $user18->id => ['role' => 'director'],
+            $user5->id => ['role' => 'actor'],
+            $user14->id => ['role' => 'actor'],
+            $user21->id => ['role' => 'actor'],
+        ]);
+
+        // PERFORMANCES
+        $schedules = [
+            $play1->id => [
+                ['Friday', 20, 0],
+                ['Saturday', 20, 0],
+            ],
+            $play2->id => [
+                ['Saturday', 21, 0],
+            ],
+            $play3->id => [
+                ['Friday', 22, 0],
+                ['Sunday', 19, 0],
+            ],
+            $play4->id => [
+                ['Thursday', 21, 0],
+            ],
+            $play5->id => [
+                ['Saturday', 18, 30],
+                ['Sunday', 18, 30],
+            ],
+            $play6->id => [
+                ['Friday', 21, 0],
+            ],
+            $play7->id => [
+                ['Saturday', 20, 30],
+            ],
+            $play8->id => [
+                ['Thursday', 20, 0],
+                ['Friday', 20, 0],
+            ],
+            $play9->id => [
+                ['Sunday', 20, 0],
+            ],
+            $play10->id => [
+                ['Saturday', 22, 0],
+            ],
+
+            $play11->id => [
+                ['Friday', 20, 30],
+                ['Saturday', 20, 30],
+            ],
+            $play12->id => [
+                ['Wednesday', 21, 0],
+            ],
+            $play13->id => [
+                ['Thursday', 21, 30],
+                ['Sunday', 19, 30],
+            ],
+            $play14->id => [
+                ['Saturday', 19, 0],
+            ],
+            $play15->id => [
+                ['Friday', 21, 0],
+                ['Sunday', 18, 0],
+            ],
+        ];
+
+        foreach ($schedules as $playId => $slots) {
+
+            foreach ($slots as [$day, $hour, $minute]) {
+
+                $firstDate = now()->next($day);
+
+                for ($i = 0; $i < 8; $i++) {
+
+                    Performance::create([
+                        'play_id' => $playId,
+                        'start_time' => $firstDate
+                            ->copy()
+                            ->addWeeks($i)
+                            ->setHour($hour)
+                            ->setMinute($minute),
+                        'status' => 'scheduled',
+                    ]);
+                }
+            }
+        }
+
+        // PROFILES
         Profile::create([
-            'user_id' => $admin->id,
+            'user_id' => $user1->id,
             'bio' => 'General Administrator and theater enthusiast with 10 years of experience.',
-            'image' => 'https://api.dicebear.com/7.x/avataaars/svg?seed=Admin',
         ]);
 
-        // 2. Profile for the Theater Manager
         Profile::create([
-            'user_id' => $manager->id,
-            'bio' => 'Manager of Teatro Gran Rex. Focused on bringing high-quality circus arts to the stage.',
-            'image' => 'https://api.dicebear.com/7.x/avataaars/svg?seed=Manager',
-            ]);
-
-        // 3. Profile for the Customer/Actor (The one you'll use for staff tagging tests)
+            'user_id' => $user2->id,
+            'bio' => 'Amante del teatro independiente y de las propuestas experimentales. Disfruto descubrir nuevas obras y espacios culturales de la ciudad.',
+        ]);
+        
         Profile::create([
-            'user_id' => $customer->id,
-            'bio' => 'Professional Acrobat and Stage Actor specializing in aerial silke.',
-            'image' => 'https://api.dicebear.com/7.x/avataaars/svg?seed=Juan',
-            ]);
+            'user_id' => $user3->id,
+            'bio' => 'Espectadora habitual de comedias y musicales. Siempre estoy buscando recomendaciones para mi próxima salida teatral.',
+        ]);
+        
+        Profile::create([
+            'user_id' => $user4->id,
+            'bio' => 'Productor teatral con experiencia en espectáculos de pequeño y mediano formato. Apasionado por conectar artistas con nuevas audiencias.',
+        ]);
+        
+        Profile::create([
+            'user_id' => $user5->id,
+            'bio' => 'Actriz aficionada y estudiante de artes escénicas. Me interesa conocer proyectos innovadores y talentos emergentes.',
+        ]);
+        
+        Profile::create([
+            'user_id' => $user6->id,
+            'bio' => 'Fanático del teatro clásico y contemporáneo. Disfruto compartir opiniones y reseñas sobre las obras que veo.',
+        ]);
+        
+        Profile::create([
+            'user_id' => $user7->id,
+            'bio' => 'Gestora cultural con interés en promover espacios artísticos accesibles para toda la comunidad.',
+        ]);
+        
+        Profile::create([
+            'user_id' => $user8->id,
+            'bio' => 'Asisto regularmente a funciones de teatro independiente y circo. Siempre dispuesto a apoyar nuevas producciones.',
+        ]);
+        
+        Profile::create([
+            'user_id' => $user9->id,
+            'bio' => 'Docente y espectadora frecuente. Considero al teatro una herramienta fundamental para la reflexión y el encuentro.',
+        ]);
+        
+        Profile::create([
+            'user_id' => $user10->id,
+            'bio' => 'Director y productor teatral con varios años de experiencia organizando espectáculos en salas independientes.',
+        ]);
+        
+        Profile::create([
+            'user_id' => $user11->id,
+            'bio' => 'Apasionada por las artes escénicas y los eventos culturales. Me encanta descubrir propuestas originales.',
+        ]);
+        
+        Profile::create([
+            'user_id' => $user12->id,
+            'bio' => 'Estudiante universitario y consumidor habitual de actividades culturales. Busco experiencias que sorprendan y emocionen.',
+        ]);
+        
+        Profile::create([
+            'user_id' => $user13->id,
+            'bio' => 'Interesada en el teatro físico, la danza y las expresiones artísticas contemporáneas. Siempre abierta a nuevas experiencias.',
+        ]);
+        
+        Profile::create([
+            'user_id' => $user14->id,
+            'bio' => 'Actor en formación y entusiasta de los festivales de teatro. Disfruto conocer el trabajo de compañías emergentes.',
+        ]);
+        
+        Profile::create([
+            'user_id' => $user15->id,
+            'bio' => 'Amante de las historias bien contadas. Frecuento salas alternativas y espacios culturales de distintos barrios.',
+        ]);
+        
+        Profile::create([
+            'user_id' => $user16->id,
+            'bio' => 'Espectador curioso que disfruta tanto de los clásicos como de las propuestas más arriesgadas de la cartelera.',
+        ]);
+        
+        Profile::create([
+            'user_id' => $user17->id,
+            'bio' => 'Vinculada al ámbito cultural desde hace años. Me interesa apoyar proyectos independientes y de creación colectiva.',
+        ]);
+        
+        Profile::create([
+            'user_id' => $user18->id,
+            'bio' => 'Productor de espectáculos y coordinador de eventos artísticos. Creo en el poder transformador del teatro.',
+        ]);
+        
+        Profile::create([
+            'user_id' => $user19->id,
+            'bio' => 'Disfruto asistir a funciones con amigos y descubrir nuevas salas. Siempre atento a las novedades de la cartelera.',
+        ]);
+        
+        Profile::create([
+            'user_id' => $user20->id,
+            'bio' => 'Aficionado al teatro, el cine y la literatura. Valoro especialmente las obras con propuestas originales y arriesgadas.',
+        ]);
+        
+        Profile::create([
+            'user_id' => $user21->id,
+            'bio' => 'Participante activo de la comunidad teatral local. Me gusta difundir eventos y apoyar a artistas emergentes.',
+        ]);
 
-            $this->call([
-                PurchaseSeeder::class,
-            ]);
     }
 }

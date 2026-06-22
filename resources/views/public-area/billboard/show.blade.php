@@ -2,6 +2,7 @@
 @section('content')
 
 <section class="section-public">
+    
     @if(session('message'))
     <div class="alert alert-warning">
         <small>{{ session('message') }}</small>
@@ -16,20 +17,24 @@
     </div>
     @endif
 
-    <a class="billboard-detail-back-button" href="{{ url()->previous() ?? route('billboard') }}">
+    <a class="billboard-detail-back-button" href="{{ route('billboard') }}">
         <img class="img-fluid" src="{{ asset('storage/images/icons/back-black-25.webp') }}" alt="Volver">
     </a>
     @auth
-    <div class="billboard-detail-save-play-button">
+    <div>
         @if(auth()->user()->savedPlays->contains($play->id))
         <form action="{{ route('unsave.play', $play) }}" method="post">
             @csrf
-            <button>Quitar de guardados</button>
+            <button class="billboard-detail-save-play-button" type="submit">
+                <img class="img-fluid" src="{{ asset('storage/images/icons/saved-icon.webp') }}" alt="Quitar obra de guardados">
+            </button>
         </form>
         @else
         <form action="{{ route('save.play', $play) }}" method="post">
             @csrf
-            <button type="submit">Guardar</button>
+            <button class="billboard-detail-save-play-button" type="submit">
+                <img class="img-fluid" src="{{ asset('storage/images/icons/not-saved-icon.webp') }}" alt="Guardar obra">
+            </button>
         </form>
         @endif
     </div>

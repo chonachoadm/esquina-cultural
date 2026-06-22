@@ -67,7 +67,7 @@ class TheaterController extends Controller
         ]);
 
 
-        return redirect()->route('profile');
+        return redirect()->route('theaterConfirmation');
     }
 
     /**
@@ -139,5 +139,10 @@ class TheaterController extends Controller
         $theater->delete();
 
         return redirect()->route('profile')->with('success', 'Teatro eliminado correctamente');
+    }
+
+    public function showTheaterConfirmation()
+    {
+        return view('public-area.theaters.confirmation');
     }
 }

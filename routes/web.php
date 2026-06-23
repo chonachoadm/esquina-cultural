@@ -69,6 +69,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('/theaters', AdminTheaterController::class);
     Route::post('/theaters/{theater}/verify', [AdminTheaterController::class, 'verify'])->name('theaters.verify');
     Route::post('/theaters/{theater}/reject', [AdminTheaterController::class, 'reject'])->name('theaters.reject');
+    Route::post('/plays/{play}/verify', [AdminPlayController::class, 'verify'])->name('plays.verify');
+    Route::post('/plays/{play}/reject', [AdminPlayController::class, 'reject'])->name('plays.reject');
 
     // Rutas de editar info de obra
     Route::get('/plays/{play}/edit-info', [AdminPlayController::class, 'editInfo'])->name('plays.edit-info');

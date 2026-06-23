@@ -4,15 +4,15 @@
 <section class="section-public">
     
     @if(session('message'))
-    <div class="alert alert-warning">
+    <div class="mt-4 alert alert-warning">
         <small>{{ session('message') }}</small>
     </div>
     @elseif(session('success'))
-    <div class="alert alert-success">
+    <div class="mt-4 alert alert-success">
         <small>{{ session('success') }}</small>
     </div>
     @elseif(session('error'))
-    <div class="alert alert-error">
+    <div class="mt-4 alert alert-error">
         <small>{{ session('error') }}</small>
     </div>
     @endif
@@ -40,38 +40,40 @@
     </div>
     @endauth
 
-    <img class="img-fluid w-100" src="{{ asset('storage/images/plays/' . $play->cover_photo) }}" alt="{{ $play->title }}">
+    <img class="mx-auto mt-4 img-fluid" src="{{ asset('storage/images/plays/' . $play->cover_photo) }}" alt="{{ $play->title }}">
     
-    <div class="billboard-detail-copy">
-        <button class="w-100 mt-4 d-flex align-items-center justify-content-center rounded billboard-detail-buy-ticket-button">Comprar entradas</button>
-        <div class="d-flex flex-column align-items-center my-4">
-            <h1 class="billboard-detail-h1">{{ $play->title }}</h1>
-            <small>{{ $play->duration }} minutos</small>
-            <div class="text-center my-4">
-                <p class="m-0">{{ $play->theater->name }}</p>
-                <small class="billboard-detail-theater-address">{{ $play->theater->short_address }}</small>
-            </div>
-            <div class="d-flex gap-4">
-                @foreach($play->schedule_slots as $slot)
-                <p class="rounded-pill border p-2 billboard-detail-play-schedule">{{ $slot['day'] }} {{ $slot['time'] }}</p>
-                @endforeach
-            </div>
-            <p><strong>Precio por entrada:</strong> $ {{ $play->ticket_price }}</p>
-        </div>
-        
-        <hr>
-        
-        <div class="my-4">
-            <p>
-                {{ $play->description }}
-            </p>
-            <div class="p-4 rounded-3xl billboard-detail-tech-container">
-                <h2 class="text-center billboard-detail-tech-title">Ficha técnica</h2>
-                <ul class="list-unstyled">
-                    @foreach($play->users as $user)
-                    <li><p><strong>{{ $user->pivot->role }}: </strong>{{ $user->name }}</p></li>
+    <div class="row justify-content-center billboard-detail-copy">
+        <button class="col-12 col-md-6 col-lg-4 mt-4 d-flex align-items-center justify-content-center rounded billboard-detail-buy-ticket-button">Comprar entradas</button>
+        <div class="row justify-content-around my-4">
+            <div class="col-12 col-lg-4 d-flex flex-column align-items-center my-4">
+                <h1 class="billboard-detail-h1">{{ $play->title }}</h1>
+                <small>{{ $play->duration }} minutos</small>
+                <div class="text-center my-4">
+                    <a class="text-black text-decoration-none" href="{{ route('teatros.show', $play->theater) }}"><p class="m-0">{{ $play->theater->name }}</p></a>
+                    <small class="billboard-detail-theater-address">{{ $play->theater->short_address }}</small>
+                </div>
+                <div class="d-flex gap-4">
+                    @foreach($play->schedule_slots as $slot)
+                    <p class="rounded-pill border p-2 billboard-detail-play-schedule">{{ $slot['day'] }} {{ $slot['time'] }}</p>
                     @endforeach
-                </ul>
+                </div>
+                <p><strong>Precio por entrada:</strong> $ {{ $play->ticket_price }}</p>
+            </div>
+            
+            <hr class="d-block d-lg-none">
+            
+            <div class="col-12 col-lg-4 my-4">
+                <p>
+                    {{ $play->description }}
+                </p>
+                <div class="p-4 rounded-3xl billboard-detail-tech-container">
+                    <h2 class="text-center billboard-detail-tech-title">Ficha técnica</h2>
+                    <ul class="list-unstyled">
+                        @foreach($play->users as $user)
+                        <li><p><strong>{{ $user->pivot->role }}: </strong>{{ $user->name }}</p></li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
         </div>
         
@@ -80,13 +82,15 @@
         <div>
             @auth
             <h2 class="billboard-detail-comment-title">¡Dejanos tu opinión!</h2>
-            <form action="{{ route('comments.store', $play) }}" method="post">
-                @csrf
-                <div class="d-flex flex-column">
-                    <textarea aria-label="Escribí tu comentario acá" name="body" id="body" class="p-2 w-100 rounded-2xl billboard-detail-comment-input" placeholder="Escribí tu comentario acá..."></textarea>
-                    <button type="submit" class="align-self-end billboard-detail-comment-submit-button">Enviar</button>
-                </div>
-            </form>
+            <div class="row justify-content-center">
+                <form class="col-12 col-md-6" action="{{ route('comments.store', $play) }}" method="post">
+                    @csrf
+                    <div class="d-flex flex-column">
+                        <textarea aria-label="Escribí tu comentario acá" name="body" id="body" class="p-2 w-100 rounded-2xl billboard-detail-comment-input" placeholder="Escribí tu comentario acá..."></textarea>
+                        <button type="submit" class="align-self-end billboard-detail-comment-submit-button">Enviar</button>
+                    </div>
+                </form>
+            </div>
             @endauth
             @guest
             <h2 class="billboard-detail-comment-title">Chequeá las opiniones de nuestro público!</h2>

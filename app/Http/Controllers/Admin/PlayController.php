@@ -211,4 +211,23 @@ class PlayController extends Controller
     }
 
 
+        public function verify(Play $play)
+    {
+        $play->update([
+            'status' => 'verified',
+        ]);
+
+        return redirect()->route('plays.index')->with('success', 'Obra verificada.');
+    }
+
+    public function reject(Play $play)
+    {
+        $play->update([
+            'status' => 'rejected',
+        ]);
+
+        return redirect()->route('plays.index')->with('success', 'Obra rechazada.');
+    }
+
+
 }

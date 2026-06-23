@@ -7,10 +7,10 @@
     </a>
     <div class="my-4 billboard-detail-copy">
         <h1 class="billboard-detail-comment-title">Obras guardadas</h1>
-        <div class="d-flex flex-column gap-4 py-4">
+        <div class="row justify-content-center gap-4 py-4">
             @if(auth()->user()->savedPlays->count() > 0)
             @foreach(auth()->user()->savedPlays as $play)
-            <div class="d-flex align-items-center justify-content-between p-2 rounded-3xl billboard-card">
+            <div class="col-12 col-sm-6 col-md-4 d-flex align-items-center justify-content-between p-2 rounded-3xl billboard-card">
                 <div class="w-50">
                     <a href="{{ route('obras.show', $play) }}" class="text-black text-decoration-none"><h3 class="fw-bold">{{ $play->title }}</h3></a>
                     <p class="m-0">{{ $play->theater->name }}</p>

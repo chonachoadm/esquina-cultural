@@ -62,6 +62,9 @@ class TheaterController extends Controller
             'verification_status' => 'pending',
         ]);
         
+        if($user->isAdmin()) {
+            return redirect()->route('theaterConfirmation');
+        }
         $user->update([
             'role' => 2,
         ]);

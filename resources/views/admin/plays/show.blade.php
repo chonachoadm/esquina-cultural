@@ -21,9 +21,20 @@
         </select>
         <small> $ {{ $play->ticket_price }}</small>
     </div>
+    @if($play->status === 'verified')
     <a href="{{ route('plays.edit-info', $play) }}">Editar información</a>
     <a href="{{ route('plays.edit-staff', $play) }}">Editar integrantes</a>
     <a href="{{ route('plays.edit-performances', $play) }}">Editar fechas y fuciones</a>
+    @elseif($play->status === 'pending')
+    <form action="{{ route('plays.verify', $play) }}" method="post">
+        @csrf
+        <button type="submit" class="btn btn-success">Aprobar</button>
+    </form>
+    <form action="{{ route('plays.reject', $play) }}" method="post">
+        @csrf
+        <button type="submit" class="btn btn-danger">Rechazar</button>
+    </form>
+    @endif
     <form action="{{ route('plays.destroy', $play) }}" method="POST">
         @csrf
         @method('DELETE')

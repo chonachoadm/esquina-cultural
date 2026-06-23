@@ -16,7 +16,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (!auth()->check()) {
-            return redirect('/ingresar');
+            return redirect('/ingresar')->with('error', 'No tenés permiso para entrar a esa sección.');
         }
 
         if (!auth()->user()->isAdmin()) {

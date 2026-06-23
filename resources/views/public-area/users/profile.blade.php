@@ -4,15 +4,15 @@
 <section class="section-personal">
     <div class="billboard-detail-copy">
         @if(session('message'))
-        <div class="alert alert-warning">
+        <div class="mt-4 alert alert-warning">
             <small>{{ session('message') }}</small>
         </div>
         @elseif(session('success'))
-        <div class="alert alert-success">
+        <div class="mt-4 alert alert-success">
             <small>{{ session('success') }}</small>
         </div>
         @elseif(session('error'))
-        <div class="alert alert-error">
+        <div class="mt-4 alert alert-error">
             <small>{{ session('error') }}</small>
         </div>
         @endif
@@ -36,13 +36,17 @@
             @endif
         </div>
 
-        <p>{{ $user->profile->bio }}</p>
+        <div class="row justify-content-center">
+            <p class="col-12 col-md-6">{{ $user->profile->bio }}</p>
+        </div>
 
 
-        <div class="my-4">
-            <h3 class="billboard-detail-comment-subtitle">Tickets</h3>
-            <div>
-                <p class="text-center"><em>No tenés tickets adquiridos aún.</em></p>
+        <div class="row justify-content-center my-4">
+            <div class="col-12 col-md-6">
+                <h3 class="billboard-detail-comment-subtitle">Tickets</h3>
+                <div>
+                    <p class="text-center"><em>No tenés tickets adquiridos aún.</em></p>
+                </div>
             </div>
         </div>
 
@@ -52,7 +56,7 @@
             <div class="rounded-3xl p-4 billboard-detail-tech-container">
                 <div>
                     @foreach(auth()->user()->plays as $play)
-                    <div class="profile-play-container">
+                    <div class="my-4 profile-play-container">
                         <h4><strong>{{ $play->title }}</strong></h4>
                         <p><em>{{ $play->pivot->role }}</em></p>
                     </div>

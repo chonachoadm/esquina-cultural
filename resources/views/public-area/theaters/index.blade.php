@@ -8,9 +8,9 @@
         <div class="text-center">
             Buscador
         </div>
-            <div class="d-flex flex-column align-items-center w-100">
+            <div class="row justify-content-center mb-4">
                 @foreach($theaters as $theater)
-                <a href="{{ route('teatros.show', $theater->id) }}" class="w-100 text-black text-decoration-none">
+                <a href="{{ route('teatros.show', $theater->id) }}" class="col-12 col-md-6 col-lg-4 text-black text-decoration-none">
                     <div class="rounded-3xl my-2 p-2 billboard-card">
                         <h3 class="fw-bold">{{ $theater->name }}</h3>
                         <p><em>{{ $theater->short_address }}</em></p>

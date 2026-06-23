@@ -2,11 +2,25 @@
 @section('content')
 <section class="section-personal py-4">
 
-    <div class="my-4 billboard-detail-copy">
+    @if(session('message'))
+    <div class="alert alert-warning">
+        <small>{{ session('message') }}</small>
+    </div>
+    @elseif(session('success'))
+    <div class="alert alert-success">
+        <small>{{ session('success') }}</small>
+    </div>
+    @elseif(session('error'))
+    <div class="alert alert-error">
+        <small>{{ session('error') }}</small>
+    </div>
+    @endif
+
+    <div class="row my-4 billboard-detail-copy">
         <h2 class=" my-4 billboard-detail-comment-title">Ingresá a tu cuenta</h2>
         
-        <div class="d-flex flex-column align-items-center gap-4 py-4 rounded-3xl auth-forms">
-            <div role="tablist" class="w-100 d-flex justify-content-around">
+        <div class="col-12 col-md-6 col-xxl-3 d-flex flex-column align-items-center gap-4 mx-auto py-4 rounded-3xl auth-forms">
+            <div role="tablist" class="w-100 w-md-50 d-flex justify-content-around">
                 <button type="button" id="login-tab" class="w-50 auth-form-tab active-form">Iniciar sesión</button>
                 <button type="button" id="register-tab" class="w-50 auth-form-tab">Crear cuenta</button>
             </div>

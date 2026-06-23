@@ -124,6 +124,15 @@
     color: var(--white);
     box-shadow: 0px 5px 5px #00000032;
     z-index: 10000;
+    height: 100px;
+}
+
+.nav-admin {
+    background-color: var(--yellow);
+    color: var(--black);
+    box-shadow: 0px 5px 5px #00000032;
+    z-index: 10000;
+    height: 100px;
 }
 
 .nav a {
@@ -143,33 +152,17 @@ hr {
 .section-public {
     position: relative;
     z-index: 0;
-}
-
-.section-public::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url(../../storage/app/public/images/background-tramas/trama-1.png);
+    background-image: url(../../storage/app/public/images/background-tramas/trama-1.webp);
     background-repeat: repeat;
     background-size: contain;
-    opacity: 5%;
-    z-index: -1;
 }
 
 .section-personal {
     position: relative;
     z-index: 0;
-}
-
-.section-personal::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url(../../storage/app/public/images/background-tramas/trama-2.png);
+    background-image: url(../../storage/app/public/images/background-tramas/trama-2.webp);
     background-repeat: repeat;
     background-size: contain;
-    opacity: 5%;
-    z-index: -1;
 }
 
 /* SECCIONES */
@@ -249,18 +242,20 @@ hr {
 .billboard-card {
     box-shadow: 0px 5px 5px #00000032;
     background-color: white;
+    overflow: hidden;
 }
 
 .billboard-img-container {
     height: 120px;
+    overflow: hidden;
 }
 
 .billboard-play-text {
-    width: 60%;
+    width: 70%;
 }
 
 .billboard-play-title {
-    font-size: 2em;
+    font-size: 1.8em;
     font-weight: bold;
 }
 
@@ -294,7 +289,7 @@ hr {
 
 .billboard-detail-back-button {
     position: fixed;
-    top: 60px;
+    top: 100px;
     left: 20px;
     background-color: rgba(255, 255, 255, 0.4);
     padding: .8em;
@@ -304,7 +299,7 @@ hr {
 
 .billboard-detail-save-play-button {
     position: fixed;
-    top: 60px;
+    top: 100px;
     right: 20px;
     background-color: rgba(255, 255, 255, 0.4);
     padding: .8em;
@@ -461,7 +456,6 @@ hr {
     top: 60px;
     left: 20px;
     width: fit-content;
-    /* background-color: rgba(255, 255, 255, 0.4); */
     padding: .8em;
     border-radius: 50%;
     z-index: 1;
@@ -488,7 +482,6 @@ hr {
 
 /* THEATER DETAIL */
 #map-view{
-    width: 100%;
     height: 20em;
     z-index: 0;
 }

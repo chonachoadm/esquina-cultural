@@ -36,9 +36,9 @@
                 <h1 class="text-center fw-bold">{{ $theater->name }}</h1>
                 <p class="text-center">{{ $theater->bio }}</p>
             </div>
-            <div class="d-flex flex-column align-items-center py-4">
+            <div class="row flex-column align-items-center py-4">
                 <small class="fst-italic text-center">{{ $theater->short_address }}</small>
-                <div id="map-view"></div>
+                <div id="map-view" class="col-12 col-md-6"></div>
 
                 <input type="hidden" id="lat" value="{{ $theater->latitude }}">
                 <input type="hidden" id="lng" value="{{ $theater->longitude }}">
@@ -48,14 +48,14 @@
                 <h2 class="fs-4 fw-bold text-center mt-4">
                     Obras encartelera
                 </h2>
-                <div>
+                <div class="row justify-content-center">
                     @foreach($theater->plays as $play)
-                    <div class="mx-2 rounded-3xl billboard-card">
+                    <div class="col-11 col-sm-6 col-md-4 col-lg-3 m-4 p-0 rounded-3xl billboard-card">
                         <div class="billboard-img-container">
                             <img class="img-fluid" src="{{ asset('storage/images/plays/' . $play->cover_photo) }}" alt="{{ $play->title }}">
                         </div>
                         <div class="p-2 d-flex align-items-center justify-content-between">
-                            <div class="billboard-play-text">
+                            <div class="d-flex flex-column billboard-play-text">
                                 <div>
                                     <h2 class="fs-4 fw-bold">{{ $play->title }}</h2>
                                 </div>

@@ -52,8 +52,8 @@
             <img class="img-fluid" src="{{ asset('storage/images/icons/back-black-25.webp') }}" alt="Volver">
         </a>
 
-        <div class="billboard-detail-copy">
-            <form class="d-flex flex-column align-items-center gap-4 p-4 my-4 rounded-3xl auth-forms" action="{{ route('teatros.store', auth()->user()) }}" method="POST">
+        <div class="row justify-content-center billboard-detail-copy">
+            <form class="col-12 col-md-6 col-lg-4d-flex flex-column align-items-center gap-4 p-4 my-4 rounded-3xl auth-forms" action="{{ route('teatros.store', auth()->user()) }}" method="POST">
                 @csrf
                 <div class="d-flex flex-column w-100 mb-2">
                     <label for="name">Nombre</label>

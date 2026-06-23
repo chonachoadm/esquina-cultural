@@ -4,17 +4,30 @@
 <section>
     <h2>Todas las obras (admin)</h2>
     <a href="{{ route('plays.create') }}">Crear Obra</a>
-    <ul>
-        @foreach($plays as $play)
-        <li>
-            <img src="{{ asset('storage/images/plays/' . $play->cover_photo) }}" alt="Banner de {{ $play->title }}">
-            <h3>{{ $play->title }}</h3>
-            <p>$ {{ $play->ticket_price }}</p>
-            <p>$ {{ $play->duration }} minutos</p>
-            <a href="{{ route('plays.show', $play) }}">Ver</a>
-        </li>
-        @endforeach
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Duracion</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($plays as $play)
+            <tr>
+                <td>{{ $play->id }}</td>
+                <td>{{ $play->title }}</td>
+                <td>{{ $play->total_price }}</td>
+                <td>{{ $play->duration }}</td>
+                <td>{{ $play->status }}</td>
+                <td><a href="{{ route('plays.show', $play) }}">Ver</a></td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
 </section>
 
 @endsection

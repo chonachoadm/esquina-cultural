@@ -123,20 +123,72 @@
     background-color: var(--red);
     color: var(--white);
     box-shadow: 0px 5px 5px #00000032;
-    z-index: 10000;
-    height: 100px;
+    z-index: 10001;
 }
+
 
 .nav-admin {
     background-color: var(--yellow);
     color: var(--black);
     box-shadow: 0px 5px 5px #00000032;
-    z-index: 10000;
-    height: 100px;
+    z-index: 10001;
+
 }
 
 .nav a {
     color: var(--white);
+    transition: all .2s ease;
+}
+.nav a:hover,
+.nav a:focus{
+    color: var(--yellow);
+}
+
+.mobile-nav-open {
+    position: fixed;
+    inset: 0;
+    height: 100vh;
+    width: 100%;
+    overflow-y: auto;
+    z-index: 10000;
+    color: white;
+    background-color: var(--red);
+}
+.mobile-nav-admin-open {
+    position: fixed;
+    inset: 0;
+    height: 100vh;
+    width: 100%;
+    overflow-y: auto;
+    z-index: 10000;
+    color: black;
+    background-color: var(--yellow);
+}
+
+.nav-menu-button{
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-left: 1em;
+}
+
+#nav-close{
+    position: fixed;
+    top: 20%;
+    left: 10%;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+#nav-admin-close{
+    position: fixed;
+    top: 20%;
+    left: 10%;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.footer{
+    background-color: var(--red);
+    color: white;
 }
 
 hr {
@@ -171,6 +223,7 @@ hr {
 .landing-video {
     height: 100vh;
     box-shadow: 0px 5px 5px #00000032;
+    background-color: black;
 }
 
 .landing-play-title {

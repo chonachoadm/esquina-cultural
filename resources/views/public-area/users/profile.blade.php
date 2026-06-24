@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-<section class="section-personal">
+<section class="section-personal flex-grow-1">
     <div class="billboard-detail-copy">
         @if(session('message'))
         <div class="mt-4 alert alert-warning">

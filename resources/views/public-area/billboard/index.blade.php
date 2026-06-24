@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<section class="py-5 section-public">
+<section class="py-5 section-public flex-grow-1">
 
     @if(session('message'))
     <div class="alert alert-warning">

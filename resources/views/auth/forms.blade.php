@@ -1,18 +1,18 @@
 @extends('layouts.app')
 @section('content')
-<section class="section-personal py-4">
+<section class="section-personal py-4 flex-grow-1">
 
     @if(session('message'))
     <div class="alert alert-warning">
-        <small>{{ session('message') }}</small>
+        <small class="text-danger">{{ session('message') }}</small>
     </div>
     @elseif(session('success'))
     <div class="alert alert-success">
-        <small>{{ session('success') }}</small>
+        <small class="text-danger">{{ session('success') }}</small>
     </div>
     @elseif(session('error'))
     <div class="alert alert-error">
-        <small>{{ session('error') }}</small>
+        <small class="text-danger">{{ session('error') }}</small>
     </div>
     @endif
 
@@ -31,7 +31,7 @@
                     <label for="email">Correo electrónico</label>
                     <input class="rounded auth-form-input" type="email" id="login-email" name="email" value="{{ old('email') }}" />
                     @error('email')
-                    <div><small>{{ $message }}</small></div>
+                    <div><small class="text-danger">{{ $message }}</small></div>
                     @enderror  
                 </div>
                 <div class="d-flex flex-column w-100 mb-4">
@@ -49,21 +49,21 @@
                     <label for="name">Nombre completo</label>
                     <input class="rounded auth-form-input" type="text" id="name" name="name" value="{{ old('name') }}" />
                     @error('name')
-                    <div><small>{{ $message }}</small></div>
+                    <div><small class="text-danger">{{ $message }}</small></div>
                     @enderror
                 </div>
                 <div class="d-flex flex-column w-100 mb-4">
                     <label for="email">Correo electrónico</label>
                     <input class="rounded auth-form-input" type="email" id="register-email" name="email" value="{{ old('email') }}" />
                     @error('email')
-                    <div><small>{{ $message }}</small></div>
+                    <div><small class="text-danger">{{ $message }}</small></div>
                     @enderror
                 </div>
                 <div class="d-flex flex-column w-100 mb-4">
                     <label for="password">Contraseña</label>
                     <input class="rounded auth-form-input" type="password" id="register-password" name="password" />
                     @error('password')
-                    <div><small>{{ $message }}</small></div>
+                    <div><small class="text-danger">{{ $message }}</small></div>
                     @enderror
                 </div>
                 <div class="d-flex flex-column w-100 mb-4">
@@ -74,14 +74,14 @@
                     <label for="image">Foto de perfil</label>
                     <input class="rounded auth-form-image-input" type="file" name="image" id="image">
                     @error('image')
-                    <div><small>{{ $message }}</small></div>
+                    <div><small class="text-danger">{{ $message }}</small></div>
                     @enderror
                 </div>
                 <div class="d-flex flex-column w-100 mb-4">
                     <label for="bio">Biografía</label>
                     <textarea class="rounded auth-form-input" type="text" id="bio" name="bio">{{ old('bio') }}</textarea>
                     @error('bio')
-                    <div><small>{{ $message }}</small></div>
+                    <div><small class="text-danger">{{ $message }}</small></div>
                     @enderror
                 </div>
                 <div>

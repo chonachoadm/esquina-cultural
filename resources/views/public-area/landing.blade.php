@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<section class="section-public">
+<section class="section-public flex-grow-1">
     @if(session('message'))
     <div class="alert alert-warning">
         <small>{{ session('message') }}</small>
@@ -15,14 +15,14 @@
     </div>
     @endif
     
-    <div class="w-100 bg-dark d-flex align-items-center justify-content-center landing-video">
-        <h1 class="text-white">Video</h1>
-    </div>
+        <div class="d-flex align-items-center justify-content-center landing-video">
+            <img class="img-fluid col-10 col-md-6 col-lg-4" src="{{ asset('storage/images/isologo/isologo-blanco.webp') }}" alt="Esquina Cultural">
+        </div>
 
     <section class="my-4 pt-4 billboard-detail-copy">
-        <h2 class="billboard-detail-comment-title">
+        <h1 class="billboard-detail-comment-title">
             Obras en cartelera
-        </h2>
+        </h1>
         <div class="d-block d-md-none">
             <div id="carouselExampleDark" class="carousel carousel-dark slide">
                 <div class="carousel-inner py-2 mx-auto">
@@ -149,12 +149,15 @@
                         <label for="email">Correo electrónico</label>
                         <input class="p-1 rounded auth-form-input" type="email" id="login-email" name="email" value="{{ old('email') }}" />
                         @error('email')
-                        <div><small>{{ $message }}</small></div>
+                        <div><small class="text-danger">{{ $message }}</small></div>
                         @enderror  
                     </div>
                     <div class="d-flex flex-column w-100 mb-4">
                         <label for="password">Contraseña</label>
                         <input class="p-1 rounded auth-form-input" type="password" name="password" id="login-password" />
+                        @error('password')
+                        <div><small class="text-danger">{{ $message }}</small></div>
+                        @enderror      
                     </div>
                     <div>
                         <button class="w-100 landing-auth-button" type="submit">Ingresar</button>
@@ -167,21 +170,21 @@
                         <label for="name">Nombre completo</label>
                         <input class="p-1 rounded auth-form-input" type="text" id="name" name="name" value="{{ old('name') }}" />
                         @error('name')
-                        <div><small>{{ $message }}</small></div>
+                        <div><small class="text-danger">{{ $message }}</small></div>
                         @enderror
                     </div>
                     <div class="d-flex flex-column w-100 mb-4">
                         <label for="email">Correo electrónico</label>
                         <input class="p-1 rounded auth-form-input" type="email" id="register-email" name="email" value="{{ old('email') }}" />
                         @error('email')
-                        <div><small>{{ $message }}</small></div>
+                        <div><small class="text-danger">{{ $message }}</small></div>
                         @enderror
                     </div>
                     <div class="d-flex flex-column w-100 mb-4">
                         <label for="password">Contraseña</label>
                         <input class="p-1 rounded auth-form-input" type="password" id="register-password" name="password" />
                         @error('password')
-                        <div><small>{{ $message }}</small></div>
+                        <div><small class="text-danger">{{ $message }}</small></div>
                         @enderror
                     </div>
                     <div class="d-flex flex-column w-100 mb-4">
@@ -192,14 +195,14 @@
                         <label for="image">Foto de perfil</label>
                         <input class="p-1 rounded auth-form-image-input" type="file" name="image" id="image">
                         @error('image')
-                        <div><small>{{ $message }}</small></div>
+                        <div><small class="text-danger">{{ $message }}</small></div>
                         @enderror
                     </div>
                     <div class="d-flex flex-column w-100 mb-4">
                         <label for="bio">Biografía</label>
                         <textarea class="p-1 rounded auth-form-input" type="text" id="bio" name="bio">{{ old('bio') }}</textarea>
                         @error('bio')
-                        <div><small>{{ $message }}</small></div>
+                        <div><small class="text-danger">{{ $message }}</small></div>
                         @enderror
                     </div>
                     <div>

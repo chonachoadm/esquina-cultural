@@ -28,6 +28,19 @@ class AuthController extends Controller
 
     public function register(RegisterRequest $request)
     {
+        $validatedRequest([
+            'name' => 'required|string',
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required|min:6',
+        ],[
+            'name.required' => 'Este campo es obligatorio.',
+            'email.required' => 'Este campo es obligatorio.',
+            'email.email' => 'El correo tiene un formato incorrecto.',
+            'email.exists' => 'Ya hay un usuario con este correo.',
+            'password.required' => 'Este campo es obligatorio.',
+            'password.min' => 'La contraseña debe tener mínimo 6 caracteres.',
+        ]);
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,

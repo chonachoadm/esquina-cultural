@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="section-public">
+<section class="section-public flex-grow-1">
     <div class="my-4 billboard-detail-copy">
         <h1 class="billboard-detail-comment-title">Teatros</h1>
 

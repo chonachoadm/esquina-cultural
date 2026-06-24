@@ -1,52 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<!-- <section>
-    <form action="{{ route('teatros.update', $theater->id) }}" method="POST">
-        @csrf
-        @method('PUT')
-        <div>
-            <label for="name">Nombre</label>
-            <input type="text" name="name" id="name" value="{{ old('name', $theater->name) }}" />
-            @error('name')
-            <div><small>{{ $message }}</small></div>
-            @enderror
-        </div>
-        <div>
-            <label for="bio">Biografía</label>
-            <textarea type="text" name="bio" id="bio">{{ old('bio', $theater->bio) }}</textarea>
-            @error('bio')
-            <div><small>{{ $message }}</small></div>
-            @enderror
-        </div>
-        <div>
-            <label for="address">Ubicación</label>
-            <input type="text" id="address" name="address" autocomplete="off" value="{{ old('address', $theater->address) }}">
-
-            <input type="hidden" id="latitude" name="latitude" value="{{ old('latitude', $theater->latitude) }}">
-            <input type="hidden" id="longitude" name="longitude" value="{{ old('longitude', $theater->longitude) }}">
-
-            <div id="suggestions"></div>
-
-            <div id="map" style="height: 300px; width: 400px;"></div>
-            @error('address')
-            <div><small>{{ $message }}</small></div>
-            @enderror
-        </div>
-        <div>
-            <label for="capacity">Máxima capacidad de la sala</label>
-            <input type="number" id="capacity" name="capacity" value="{{ old('capacity', $theater->max_capacity) }}">
-            @error('capacity')
-            <div><small>{{ $message }}</small></div>
-            @enderror
-        </div>
-        <div>
-            <button type="submit">Guardar</button>
-        </div>
-    </form>
-</section> -->
-
-<section class="section-personal">
+<section class="section-personal flex-grow-1">
     <div class="my-4">
         <a class="billboard-detail-back-button" href="{{ route('teatros.index') }}">
             <img class="img-fluid" src="{{ asset('storage/images/icons/back-black-25.webp') }}" alt="Volver">
@@ -96,10 +51,6 @@
 
 </section>
 @endsection
-
-
-
-
 
 <link
     rel="stylesheet"

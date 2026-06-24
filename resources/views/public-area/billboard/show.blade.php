@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-<section class="section-public">
+<section class="section-public flex-grow-1">
     
     @if(session('message'))
     <div class="mt-4 alert alert-warning">

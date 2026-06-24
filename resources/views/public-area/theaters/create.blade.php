@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="section-personal">
+<section class="section-personal flex-grow-1">
     <div class="my-4">
         <a class="billboard-detail-back-button" href="{{ route('profile') }}">
             <img class="img-fluid" src="{{ asset('storage/images/icons/back-black-25.webp') }}" alt="Volver">
@@ -17,34 +17,34 @@
                         <label for="name">Nombre</label>
                         <input class="p-1 rounded auth-form-input" type="text" name="name" id="name" value="{{ old('name') }}" />
                         @error('name')
-                        <div><small>{{ $message }}</small></div>
+                        <div><small class="text-danger">{{ $message }}</small></div>
                         @enderror
                     </div>
                     <div class="d-flex flex-column w-100 mb-2">
                         <label for="bio">Biografía</label>
                         <textarea class="p-1 rounded auth-form-input" type="text" name="bio" id="bio">{{ old('bio') }}</textarea>
                         @error('bio')
-                        <div><small>{{ $message }}</small></div>
+                        <div><small class="text-danger">{{ $message }}</small></div>
                         @enderror
                     </div>
                     <div class="d-flex flex-column w-100 mb-2">
                         <label for="address">Ubicación</label>
                         <input class="p-1 rounded auth-form-input" type="text" id="address" name="address" autocomplete="off" value="{{ old('address') }}">
+                        @error('address')
+                        <div><small class="text-danger">{{ $message }}</small></div>
+                        @enderror
 
                         <input type="hidden" id="latitude" name="latitude" value="{{ old('latitude') }}">
                         <input type="hidden" id="longitude" name="longitude" value="{{ old('longitude') }}">
 
                         <div id="suggestions"></div>
                         <div id="map"></div>
-                        @error('address')
-                        <div><small>{{ $message }}</small></div>
-                        @enderror
                     </div>
                     <div class="d-flex flex-column w-100 mb-2">
                         <label for="capacity">Máxima capacidad de la sala</label>
                         <input class="p-1 rounded auth-form-input" type="number" id="capacity" name="capacity" value="{{ old('capacity') }}">
                         @error('capacity')
-                        <div><small>{{ $message }}</small></div>
+                        <div><small class="text-danger">{{ $message }}</small></div>
                         @enderror
                     </div>
                     <button class="w-100 landing-auth-button" type="submit">Enviar a revisión</button>

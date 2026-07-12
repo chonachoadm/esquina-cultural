@@ -8,6 +8,7 @@ use App\Models\Purchase;
 use App\Models\User;
 use App\Models\Play;
 use App\Models\Performance;
+use App\Models\Guest;
 use App\Http\Requests\StorePurchaseRequest;
 use App\Http\Requests\UpdatePurchaseRequest;
 
@@ -38,12 +39,12 @@ class PurchaseController extends Controller
      */
     public function store(StorePurchaseRequest $request)
     {
-        $play = Play::where('id', $request->play)->first();
+        $play = Play::where('id', $request->play_id)->first();
         $totalAmount = $request->ticket_amount * $play->ticket_price;
 
         Purchase::create([
-            'user_id' => $request->user,
-            'performance_id' => $request->performance,
+            'user_id' => $request->user_id,
+            'performance_id' => $request->performance_id,
             'ticket_amount' => $request->ticket_amount,
             'total_amount' => $totalAmount,
             'payment_status' => $request->payment_status,
@@ -78,16 +79,37 @@ class PurchaseController extends Controller
     public function update(UpdatePurchaseRequest $request, Purchase $purchase)
     {
 
-        $play = Play::where('id', $request->play)->first();
+        $play = Play::where('id', $request->play_id)->first();
         $totalAmount = $request->ticket_amount * $play->ticket_price;
 
-        $purchase->update([
-            'user_id' => $request->user,
-            'performance_id' => $request->performance,
-            'ticket_amount' => $request->ticket_amount,
-            'total_amount' => $totalAmount,
-            'payment_status' => $request->payment_status,
-        ]);
+        if($purchase->user) {
+            $purchase->update([
+                'user_id' => $request->user_id,
+                'guest_id' => null,
+                'performance_id' => $request->performance_id,
+                'ticket_amount' => $request->ticket_amount,
+                'total_amount' => $totalAmount,
+                'payment_status' => $request->payment_status,
+                'play_id' => $play->id,
+            ]);
+        } else {
+            $guest = Guest::where('id', $purchase->guest_id)->first();
+
+            $guest->update([
+                'name' => $request->name,
+                'email' => $request->email,
+            ]);
+
+            $purchase->update([
+                'user_id' => null,
+                'guest_id' => $purchase->guest_id,
+                'performance_id' => $request->performance_id,
+                'ticket_amount' => $request->ticket_amount,
+                'total_amount' => $totalAmount,
+                'payment_status' => $request->payment_status,
+                'play_id' => $play->id,
+            ]);
+        } 
         
         return redirect()->route('purchases.index')->with('success', 'Compra actualizada correctamente.');
     }

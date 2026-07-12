@@ -29,6 +29,7 @@
       <span class="navbar-toggler-icon">X</span>
     </button>
     <ul class="d-flex flex-column justify-content-center align-items-center p-0 m-0">
+        <li class="m-2"><a class="nav-link" href="{{ route('landing') }}">Inicio</a></li>
         <li class="m-2"><a class="nav-link" href="{{ route('billboard') }}">Cartelera</a></li>
         <li class="m-2"><a class="nav-link" href="{{ route('teatros.index') }}">Teatros</a></li>
         @auth

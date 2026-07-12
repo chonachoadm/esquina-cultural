@@ -17,7 +17,7 @@
     @endif
 
     <div class="row my-4 billboard-detail-copy">
-        <h2 class=" my-4 billboard-detail-comment-title">Ingresá a tu cuenta</h2>
+        <h1 class=" my-4 billboard-detail-comment-title">Ingresá a tu cuenta</h1>
         
         <div class="col-12 col-md-6 col-xxl-3 d-flex flex-column align-items-center gap-4 mx-auto py-4 rounded-3xl auth-forms">
             <div role="tablist" class="w-100 w-md-50 d-flex justify-content-around">
@@ -79,7 +79,7 @@
                 </div>
                 <div class="d-flex flex-column w-100 mb-4">
                     <label for="bio">Biografía</label>
-                    <textarea class="rounded auth-form-input" type="text" id="bio" name="bio">{{ old('bio') }}</textarea>
+                    <textarea class="rounded auth-form-input" id="bio" name="bio">{{ old('bio') }}</textarea>
                     @error('bio')
                     <div><small class="text-danger">{{ $message }}</small></div>
                     @enderror

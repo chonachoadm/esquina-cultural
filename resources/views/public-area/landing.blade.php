@@ -59,16 +59,18 @@
                     <div class="billboard-img-container">
                         <img class="img-fluid" src="{{ asset('storage/images/plays/' . $play->cover_photo) }}" alt="{{ $play->title }}">
                     </div>
-                    <div class="d-flex align-items-center justify-content-between p-2">
-                        <div class="billboard-play-text">
+                    <div class="h-auto d-flex align-items-center justify-content-between p-4">
+                        <div class="d-flex flex-column justify-content-between billboard-play-text">
                             <div>
                                 <h2 class="landing-play-title">{{ $play->title }}</h2>
-                                <p class="m-0">{{ $play->theater->name }}</p>
-                                <small class="billboard-theater-address">{{ $play->theater->short_address }}</small>
+                                <div>
+                                    <p class="m-0">{{ $play->theater->name }}</p>
+                                    <small class="billboard-theater-address">{{ $play->theater->short_address }}</small>
+                                </div>
                             </div>
-                            <div class="ps-3">
+                            <div class="mt-4">
                                 @foreach($play->schedule_short_slots as $slot)
-                                <small class="billboard-play-schedule">{{ $slot['day'] }} {{ $slot['time'] }}</small>
+                                <small class="rounded-pill bg-gray-100 px-2 py-1 billboard-play-schedule">{{ $slot['day'] }} {{ $slot['time'] }}</small>
                                 @endforeach
                             </div>
                         </div>
@@ -117,11 +119,13 @@
         </h2>
         <div class="row flex-wrap justify-content-center gap-4">
             @foreach($theaters as $theater)
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex flex-column justify-content-around p-3 rounded-3xl billboard-card">
-                <h3><strong>{{ $theater->name }}</strong></h3>
-                <p>{{ $theater->short_address }}</p>
-                <small class="billboard-play-schedule">{{ $theater->user->name }}</small>
-            </div>
+            <a href="{{ route('teatros.show', $theater->id) }}" class="col-12 col-sm-6 col-md-4 col-lg-3 text-black text-decoration-none">
+                <div class="d-flex flex-column justify-content-around p-3 rounded-3xl billboard-card">
+                    <h3><strong>{{ $theater->name }}</strong></h3>
+                    <p>{{ $theater->short_address }}</p>
+                    <small class="billboard-play-schedule">{{ $theater->user->name }}</small>
+                </div>
+            </a>
             @endforeach
         </div>
         <div class="row justify-content-center">
@@ -130,12 +134,10 @@
         <hr>
     </section>
 
-    
     <section class="my-4 billboard-detail-copy">
         <h3 class="billboard-detail-comment-title">
             Ingresá a tu cuenta para enterarte de todo lo que ofrecemos.
         </h3>
-
         <div class="row justify-content-center">
             <div class="col-12 col-md-6 col-lg-4 d-flex flex-column align-items-center gap-4 py-4 rounded-3xl auth-forms">
                 <div role="tablist" class="w-100 d-flex justify-content-around">
@@ -200,7 +202,7 @@
                     </div>
                     <div class="d-flex flex-column w-100 mb-4">
                         <label for="bio">Biografía</label>
-                        <textarea class="p-1 rounded auth-form-input" type="text" id="bio" name="bio">{{ old('bio') }}</textarea>
+                        <textarea class="p-1 rounded auth-form-input" id="bio" name="bio">{{ old('bio') }}</textarea>
                         @error('bio')
                         <div><small class="text-danger">{{ $message }}</small></div>
                         @enderror

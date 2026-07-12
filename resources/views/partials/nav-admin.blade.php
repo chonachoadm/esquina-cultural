@@ -15,6 +15,7 @@
                     <li class="dropdown-item"><a class="nav-link text-black" href="{{ route('plays.index') }}">Lista obras</a></li>
                     <li class="dropdown-item"><a class="nav-link text-black" href="{{ route('theaters.index') }}">Lista teatros</a></li>
                     <li class="dropdown-item"><a class="nav-link text-black" href="{{ route('users.index') }}">Lista usuarios</a></li>
+                    <li class="dropdown-item"><a class="nav-link text-black" href="{{ route('purchases.index') }}">Lista compras</a></li>
                 </ul>
             </li>
             <li class="m-2 d-flex align-items-center">

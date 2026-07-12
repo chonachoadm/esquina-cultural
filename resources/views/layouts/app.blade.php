@@ -18,7 +18,7 @@
         @endunless
         @endif
     </header>
-    <main class="flex-grow-1 d-flex">
+    <main class="">
         @yield('content')
     </main>
     <footer>

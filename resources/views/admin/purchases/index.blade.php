@@ -22,7 +22,11 @@
             @foreach($purchases as $purchase)
             <tr>
                 <td>{{ $purchase->id }}</td>
+                @if($purchase->user)
                 <td>{{ $purchase->user->name }}</td>
+                @elseif($purchase->guest)
+                <td>{{ $purchase->guest->name }} <em>(Invitado)</em></td>
+                @endif
                 <td>{{ $purchase->performance->play->title }}</td>
                 <td>{{ $purchase->performance->start_time }}</td>
                 <td>$ {{ $purchase->performance->play->ticket_price * $purchase->ticket_amount }} ARS</td>

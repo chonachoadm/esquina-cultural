@@ -11,7 +11,11 @@
             <p><strong>Estado de la transacción:</strong> {{ $purchase->payment_status }}</p>
         </li>
         <li>
+            @if($purchase->user)
             <p><strong>Usuario:</strong> {{ $purchase->user->name }} ({{ $purchase->user->email }})</p>
+            @elseif($purchase->guest)
+            <p><strong>Invitado:</strong> {{ $purchase->guest->name }} ({{ $purchase->guest->email }})</p>
+            @endif
         </li>
         <li>
             <p><strong>Cantidad de entradas adquiridas:</strong> {{ $purchase->ticket_amount }}</p>

@@ -6,35 +6,35 @@
     <form action="{{ route('purchases.store') }}" method="POST">
         @csrf
         <div>
-            <label for="user">Seleccionar usuario</label>
-            <select name="user" id="user">
+            <label for="user_id">Seleccionar usuario</label>
+            <select name="user_id" id="user_id">
                 @foreach($users as $user)
                 <option value="{{ $user->id }}">{{ $user->name ? $user->name : $user->email }}</option>
                 @endforeach
             </select>
-            @error('user')
+            @error('user_id')
             <div><small>{{ $message }}</small></div>
             @enderror
         </div>
         <div>
-            <label for="play">Seleccionar obra</label>
-            <select name="play" id="play">
+            <label for="play_id">Seleccionar obra</label>
+            <select name="play_id" id="play_id">
                 @foreach($plays as $play)
                 <option value="{{ $play->id }}">{{ $play->title }}</option>
                 @endforeach
             </select>
-            @error('play')
+            @error('play_id')
             <div><small>{{ $message }}</small></div>
             @enderror
         </div>
         <div>
-            <label for="performance">Seleccionar función</label>
-            <select name="performance" id="performance" >
+            <label for="performance_id">Seleccionar función</label>
+            <select name="performance_id" id="performance_id" >
                 @foreach($performances as $performance)
                 <option value="{{ $performance->id }}" data-play="{{ $performance->play_id }}">{{ $performance->start_time }}</option>
                 @endforeach
             </select>
-            @error('performance')
+            @error('performance_id')
             <div><small>{{ $message }}</small></div>
             @enderror
         </div>
@@ -66,8 +66,8 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-    const playSelect = document.getElementById('play');
-    const performanceSelect = document.getElementById('performance');
+    const playSelect = document.getElementById('play_id');
+    const performanceSelect = document.getElementById('performance_id');
     
     function filterPerformances() {
         const selectedPlay = playSelect.value;
@@ -85,8 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     playSelect.addEventListener('change', filterPerformances);
-    
-    // ejecutar al cargar
+
     filterPerformances();
 })
-    </script>
+</script>

@@ -16,6 +16,7 @@ class Purchase extends Model
     protected $fillable = [
         'performance_id',
         'user_id',
+        'guest_id',
         'ticket_amount',
         'total_amount',
         'payment_status',
@@ -30,6 +31,11 @@ class Purchase extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    
+    public function guest()
+    {
+        return $this->belongsTo(Guest::class);
     }
 
     public function tickets()

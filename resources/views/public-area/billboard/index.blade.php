@@ -18,9 +18,9 @@
     
     <div class="d-flex flex-column align-items-center">
         <h1 class="my-4 billboard-h1">Nuestra cartelera</h1>        
-        <div class="mt-4">
+        <!-- <div class="mt-4">
             Buscador
-        </div>
+        </div> -->
         <div class="row justify-content-center mx-2 gap-4 my-4">
             @foreach($plays as $play)
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 mx-1 p-0 rounded-3xl billboard-card">

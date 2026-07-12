@@ -11,7 +11,8 @@ use App\Http\Controllers\Public\PlayController as PublicPlayController;
 use App\Http\Controllers\Admin\PerformanceController;
 use App\Http\Controllers\Public\AuthController;
 use App\Http\Controllers\Public\CommentController;
-use App\Http\Controllers\Admin\PurchaseController;
+use App\Http\Controllers\Admin\PurchaseController as AdminPurchaseController;
+use App\Http\Controllers\Public\PurchaseController as PublicPurchaseController;
 use App\Http\Controllers\Admin\TheaterController as AdminTheaterController;
 use App\Http\Controllers\Public\TheaterController as PublicTheaterController;
 use App\Http\Controllers\Public\ProfileController;
@@ -33,6 +34,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Rutas de cartelera
 Route::get('/cartelera', [PublicPlayController::class, 'index'])->name('billboard');
 Route::get('/obra/{play}', [PublicPlayController::class, 'show'])->name('obras.show');
+Route::get('/obra/{play}/compra', [PublicPurchaseController::class, 'create'])->name('compra.create');
+Route::get('/compra/{purchase}/checkout', [PublicPurchaseController::class, 'checkout'])->name('compra.checkout');
+Route::post('/obra/{play}/compra', [PublicPurchaseController::class, 'store'])->name('compra.store');
 
 // Rutas públicas de teatros
 
@@ -65,7 +69,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('/users', AdminUserController::class);
     Route::resource('/plays', AdminPlayController::class)->except(['edit', 'update']);
     Route::resource('/performances', PerformanceController::class);
-    Route::resource('/purchases', PurchaseController::class);
+    Route::resource('/purchases', AdminPurchaseController::class);
     Route::resource('/theaters', AdminTheaterController::class);
     Route::post('/theaters/{theater}/verify', [AdminTheaterController::class, 'verify'])->name('theaters.verify');
     Route::post('/theaters/{theater}/reject', [AdminTheaterController::class, 'reject'])->name('theaters.reject');

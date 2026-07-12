@@ -43,7 +43,7 @@
     <img class="mx-auto mt-4 img-fluid" src="{{ asset('storage/images/plays/' . $play->cover_photo) }}" alt="{{ $play->title }}">
     
     <div class="row justify-content-center billboard-detail-copy">
-        <button class="col-12 col-md-6 col-lg-4 mt-4 d-flex align-items-center justify-content-center rounded billboard-detail-buy-ticket-button">Comprar entradas</button>
+        <a class="col-12 col-md-6 col-lg-4 mt-4 d-flex align-items-center justify-content-center rounded billboard-detail-buy-ticket-button" href="{{ route('compra.create', $play) }}">Comprar entradas</a>
         <div class="row justify-content-around my-4">
             <div class="col-12 col-lg-4 d-flex flex-column align-items-center my-4">
                 <h1 class="billboard-detail-h1">{{ $play->title }}</h1>

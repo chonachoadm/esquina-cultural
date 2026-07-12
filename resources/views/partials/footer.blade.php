@@ -17,7 +17,7 @@
         @endguest
     </ul>
     <div class="d-flex flex-column justify-content-center align-items-center footer">
-        <h5>© {{ now()->format('Y') }} <strong>Esquina Cultural</strong></h5>
+        <p class="fs-5">© {{ now()->format('Y') }} <strong>Esquina Cultural</strong></p>
     </div>
 </div>
     

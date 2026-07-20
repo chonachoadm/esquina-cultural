@@ -24,6 +24,10 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'mercadopago_user_id',
+        'mercadopago_access_token',
+        'mercadopago_refresh_token',
+        'mercadopago_connected_at',
     ];
 
     /**
@@ -66,6 +70,11 @@ class User extends Authenticatable
                     ->withTimestamps();
     }
 
+    public function createdPlays()
+    {
+        return $this->hasMany(Play::class, 'user_id');
+    }
+
     public function savedPlays()
     {
         return $this->belongsToMany(Play::class, 'users_save_plays')
@@ -90,5 +99,51 @@ class User extends Authenticatable
     public function isAdmin()
     {
         return $this->role === 1;
+    }
+
+    public function hasMercadoPagoConnected()
+    {
+        return !empty($this->mercadopago_access_token)
+            && !empty($this->mercadopago_user_id)
+            && !empty($this->mercadopago_connected_at);
+    }
+
+    public function getPurchaseStreak(): int
+    {
+        $purchases = $this->purchases()
+            ->where('status', 'confirmed')
+            ->orderByDesc('created_at')
+            ->get();
+
+        if ($purchases->isEmpty()) {
+            return 0;
+        }
+
+        $streak = 0;
+        $previousPurchase = null;
+        $countedPerformances = [];
+
+        foreach ($purchases as $purchase) {
+            if (isset($countedPerformances[$purchase->performance_id])) {
+                continue;
+            }
+
+            if ($previousPurchase === null) {
+                $streak++;
+                $previousPurchase = $purchase;
+                $countedPerformances[$purchase->performance_id] = true;
+                continue;
+            }
+
+            if ($purchase->created_at->lt($previousPurchase->created_at->copy()->subMonth())) {
+                break;
+            }
+
+            $streak++;
+            $previousPurchase = $purchase;
+            $countedPerformances[$purchase->performance_id] = true;
+        }
+
+        return $streak;
     }
 }

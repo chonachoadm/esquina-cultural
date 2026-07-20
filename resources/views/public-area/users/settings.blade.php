@@ -26,7 +26,7 @@
                 </li>
                 @endif
                 <li class="mb-4">
-                    <a class="text-black text-decoration-none" href="">Publicar una obra</a>
+                    <a class="text-black text-decoration-none" href="{{ route('obras.create') }}">Publicar una obra</a>
                 </li>
                 <li class="mb-4">
                     <a class="text-black text-decoration-none" href="{{ route('showSavedPlays', auth()->user()) }}">Obras guardadas</a>

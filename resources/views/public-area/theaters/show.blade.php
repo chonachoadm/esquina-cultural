@@ -8,7 +8,7 @@
         <small>{{ session('message') }}</small>
     </div>
     @elseif(session('success'))
-    <div class="alert alert-success">
+    <div class="w-50 mx-auto alert alert-success mt-4">
         <small>{{ session('success') }}</small>
     </div>
     @elseif(session('error'))
@@ -16,6 +16,8 @@
         <small>{{ session('error') }}</small>
     </div>
     @endif
+
+
 
     <a class="billboard-detail-back-button" href="{{ route('teatros.index') }}">
         <img class="img-fluid" src="{{ asset('storage/images/icons/back-black-25.webp') }}" alt="Volver">
@@ -50,6 +52,7 @@
                 </h2>
                 <div class="row justify-content-center">
                     @foreach($theater->plays as $play)
+                    @if($play->status === 'verified')
                     <div class="col-11 col-sm-6 col-md-4 col-lg-3 m-4 p-0 rounded-3xl billboard-card">
                         <div class="billboard-img-container">
                             <img class="img-fluid" src="{{ asset('storage/images/plays/' . $play->cover_photo) }}" alt="{{ $play->title }}">
@@ -68,13 +71,50 @@
                             <a class="d-flex align-items-center justify-content-center rounded billboard-ticket-button" href="{{ route('obras.show', $play) }}">Entradas</a>
                         </div>
                     </div>
+                    @endif
                     @endforeach
                 </div>
             </div>
-
+            <div>
+            @if($theater->user->id === auth()->user()->id)
+            @php
+                $pendingPlays = $theater->plays->where('status', 'pending');
+            @endphp
+            @if($pendingPlays->count() > 0)
+                <h2 class="fs-4 fw-bold text-center mt-4">
+                    Obras esperando revisión
+                </h2>
+                @foreach($theater->plays as $play)
+                    @if($play->status === 'pending')
+                        <div class="w-100 d-flex flex-column flex-lg-row align-items-center justify-content-between my-4">
+                            <h4 class="col-12 col-lg-2 mb-2 m-lg-0 text-center">{{ $play->title }}</h4>
+                            <div class="w-100 row flex-column flex-lg-row align-items-center justify-content-center gap-4">
+                                <form class="col-12 col-lg-2" action="{{ route('obras.check', $play) }}" method="get">
+                                    @csrf
+                                    <button type="submit" class="w-100 d-flex align-items-center justify-content-center rounded py-2 theater-check-button">Revisar</button>
+                                </form>
+                                <form class="col-12 col-lg-2" action="{{ route('obras.verify', $play) }}" method="post">
+                                    @csrf
+                                    <button type="submit" class="w-100 btn btn-success py-2">Aprobar</button>
+                                </form>
+                                <form class="col-12 col-lg-2" action="{{ route('obras.reject', $play) }}" method="post">
+                                    @csrf
+                                    <button type="submit" class="w-100 btn btn-danger py-2">Rechazar</button>
+                                </form>
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
+            @else
+            <h2 class="fs-4 fw-bold text-center mt-4">
+                <em>No hay obras pendientes de revisión</em>
+            </h2>
+            @endif
+            @endif
+            </div>
         </div>
     </div>
-    @if($theater->user === auth()->user())
+    @if($theater->user->id === auth()->user()->id)
     <form action="{{ route('teatros.destroy', $theater->id) }}" method="post">
         @csrf
         @method('DELETE')

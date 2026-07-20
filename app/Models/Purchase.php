@@ -18,9 +18,11 @@ class Purchase extends Model
         'user_id',
         'guest_id',
         'ticket_amount',
+        'subtotal',
+        'platform_fee_rate',
+        'platform_fee_amount',
         'total_amount',
-        'payment_status',
-        'payment_gateway_id',
+        'status',
     ];
 
     public function performance()
@@ -41,5 +43,10 @@ class Purchase extends Model
     public function tickets()
     {
         return $this->hasMany(Ticket::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
     }
 }

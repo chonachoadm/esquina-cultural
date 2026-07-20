@@ -45,10 +45,13 @@
                     <li><p><strong>Fecha: </strong>{{ $purchase->performance->start_time->translatedFormat('l d/m/Y') }}</p></li>
                     <li><p><strong>Hora: </strong>{{ $purchase->performance->start_time->translatedFormat('H:i') }}</p></li>
                     <li><p><strong>Cantidad de entradas: </strong>{{ $purchase->ticket_amount }}</p></li>
+                    <li><p><strong>Subtotal: </strong>$ {{ $subtotal }} ARS</p></li>
+                    <li><p><strong>Costo de servicio: </strong>$ {{ $feeAmount }} ARS</p></li>
                     <li><p><strong>Monto total: </strong>$ {{ $purchase->total_amount }} ARS</p></li>
                 </ul>
             </div>
         </div>
+        <a href="{{ route('payment.checkout', $purchase) }}">Pagar con Mercado Pago</a>
     </div>
 </section>
 @endsection

@@ -20,7 +20,7 @@
             <tr>
                 <td>{{ $play->id }}</td>
                 <td>{{ $play->title }}</td>
-                <td>{{ $play->total_price }}</td>
+                <td>$ {{ $play->ticket_price }}</td>
                 <td>{{ $play->duration }}</td>
                 <td>{{ $play->status }}</td>
                 <td><a href="{{ route('plays.show', $play) }}">Ver</a></td>

@@ -547,4 +547,11 @@ hr {
     height: 20em;
     z-index: 0;
 }
+
+.theater-check-button {
+    /* background-color: yellow; */
+    background-color: var(--yellow);
+    box-shadow: 0px 3px 5px #0000001b;
+    /* border: 1px solid black; */
+}
 /* THEATER DETAIL */

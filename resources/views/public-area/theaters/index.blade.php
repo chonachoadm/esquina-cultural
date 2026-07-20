@@ -17,7 +17,7 @@
                     @if($theater->user_id !== auth()->id())
                     <small>{{ $theater->user->name }}</small>
                     @else
-                    <small>{{ $theater->user->name }} (vos)</small>
+                    <small>{{ $theater->user->name }} <em>(vos)</em></small>
                     @endif
                 </div>
             </a>

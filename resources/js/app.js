@@ -10,18 +10,18 @@ function initTheaterSelector() {
     if (!theaterSelect) return;
     const selectedOption = theaterSelect.options[theaterSelect.selectedIndex];
     if (selectedOption.getAttribute('data-capacity')) {
-        capacityValue.textContent = selectedOption.getAttribute('data-capacity');
+        capacityValue.textContent = "Capacidad: " + selectedOption.getAttribute('data-capacity') + " localidades";
     }
     theaterSelect.addEventListener('change', function() {
         const selectedOption = theaterSelect.options[theaterSelect.selectedIndex];
         const capacity = selectedOption.getAttribute('data-capacity');
         if (capacity) {
-            capacityValue.textContent = capacity;
+            capacityValue.textContent = "Capacidad: " + capacity + " localidades";
         }
     });
 }
 
-function initPerformanceGenerator() {
+function initPerformanceGeneratorAdmin() {
     const startDateInput = document.getElementById('start-date');
     const endDateInput = document.getElementById('end-date');
     if (!startDateInput || !endDateInput) return;
@@ -54,7 +54,42 @@ function initPerformanceGenerator() {
     endDateInput.addEventListener('change', generatePerformanceList);
 }
 
-// Function to the edit performances form
+function initPerformanceGeneratorPublic() {
+    const startDateInput = document.getElementById('start_date');
+    const endDateInput = document.getElementById('end_date');
+    if (!startDateInput || !endDateInput) return;
+
+    const days = document.querySelectorAll('[id^="day-"]');
+    // const timeContainer = document.getElementById('perf_times_container');
+
+    function generatePerformanceList() {
+        // timeContainer.innerHTML = '';   
+        const start = new Date(startDateInput.value);
+        const end = new Date(endDateInput.value);
+        if (isNaN(start) || isNaN(end)) return;
+
+        days.forEach(checkbox => {
+            const targetDay = parseInt(checkbox.value);
+            const container = document.getElementById(`times_${targetDay}`);
+
+            container.innerHTML = '';
+            if (checkbox.checked) {
+                const timeInput = document.createElement('input');
+                timeInput.type = "time";
+                timeInput.name = `day_times[${targetDay}]`;
+                timeInput.required = true;
+
+                container.append(timeInput);
+            }
+        });
+    }
+    days.forEach(day => 
+        day.addEventListener('change', generatePerformanceList)
+    );
+    startDateInput.addEventListener('change', generatePerformanceList);
+    endDateInput.addEventListener('change', generatePerformanceList);
+}
+
 function initPerformanceEditor() {
     const addPerformancesForm = document.getElementById('add-performances-form');
     if (!addPerformancesForm) return;
@@ -131,9 +166,11 @@ function initPerformanceEditor() {
 
 document.addEventListener('DOMContentLoaded', function () {
     initTheaterSelector();
-    initPerformanceGenerator();
+    initPerformanceGeneratorAdmin();
+    initPerformanceGeneratorPublic();
     initPerformanceEditor();
     const el = document.getElementById('staff-search');
+    
     if (el) {
         const tomSelectInstance = new TomSelect(el, {
             valueField: 'id',
@@ -167,18 +204,31 @@ document.addEventListener('DOMContentLoaded', function () {
             const itemData = tomSelectInstance.options[value];
             const itemName = itemData ? itemData.name : 'Staff Member';
             const roleInput = document.createElement('div');
+            roleInput.classList.add('role-wrapper')
             roleInput.id = `role-wrapper-${value}`;
             roleInput.innerHTML = `
-                <label for="staff_role_${value}">Rol para ${itemName}</label>
-                <input type="text" id="staff_role_${value}" name="staff_roles[${value}]" placeholder="Ej: Actor, Director, Productor" />
+                <div class="d-flex justify-content-between align-items-end mb-4">
+                    <div>
+                        <label for="staff_role_${value}">¿Rol de ${itemName}?</label>
+                        <input class="p-1 mt-2 rounded auth-form-input" type="text" id="staff_role_${value}" name="staff_roles[${value}]" placeholder="Ej: Actor, Director, Productor" />
+                    </div>
+                    <button type="button" class="p-1 text-danger remove-role-btn"><strong>X</strong></button>
+                </div>
             `;
-            container.appendChild(roleInput);
+            container.append(roleInput);
             tomSelectInstance.setTextboxValue('');
+            
+            const removeButton = roleInput.querySelector('.remove-role-btn');
+
+            removeButton.addEventListener('click', () => {
+                tomSelectInstance.removeItem(value);
+            });
         });
         tomSelectInstance.on('item_remove', function(value) {
             const wrapper = document.getElementById(`role-wrapper-${value}`);
             if (wrapper) wrapper.remove();
         });
+        el.nextElementSibling.firstChild.classList.add('border-0');
     }
 });
 

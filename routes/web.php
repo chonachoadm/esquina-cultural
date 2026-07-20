@@ -19,6 +19,8 @@ use App\Http\Controllers\Public\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Public\UsersSavePlaysController;
 use App\Http\Controllers\Public\LandingController;
+use App\Http\Controllers\Public\MercadoPagoController;
+use App\Http\Controllers\Public\PaymentController;
 
 // Ruta de la landing
 Route::get('/', LandingController::class)->name('landing');
@@ -30,21 +32,6 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
-
-// Rutas de cartelera
-Route::get('/cartelera', [PublicPlayController::class, 'index'])->name('billboard');
-Route::get('/obra/{play}', [PublicPlayController::class, 'show'])->name('obras.show');
-Route::get('/obra/{play}/compra', [PublicPurchaseController::class, 'create'])->name('compra.create');
-Route::get('/compra/{purchase}/checkout', [PublicPurchaseController::class, 'checkout'])->name('compra.checkout');
-Route::post('/obra/{play}/compra', [PublicPurchaseController::class, 'store'])->name('compra.store');
-
-// Rutas públicas de teatros
-
-// Rutas de comentarios
-Route::post('/obra/{play}/comentario', [CommentController::class, 'store'])->name('comments.store');
-Route::delete('/obra/comentario/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
-
-// Rutas de usuario autenticado
 Route::middleware('auth')->group(function() {
     Route::get('/perfil', [ProfileController::class, 'index'])->name('profile');
     Route::get('/perfil/ajustes', [ProfileController::class, 'settings'])->name('settings');
@@ -52,16 +39,46 @@ Route::middleware('auth')->group(function() {
     Route::delete('/perfil/eliminar', [PublicUserController::class, 'destroy'])->name('public.user.delete');
     Route::get('perfil/{user}/editar', [PublicUserController::class, 'edit'])->name('public.user.edit');
     Route::put('perfil/{user}/editar', [PublicUserController::class, 'update'])->name('public.user.update');
-
+    
+    Route::get('/obra/crear', [PublicPlayController::class, 'create'])->name('obras.create');
+    Route::post('/obra/crear', [PublicPlayController::class, 'store'])->name('obras.store');
     Route::post('/obras/{play}/guardar', [UsersSavePlaysController::class, 'savePlay'])->name('save.play');
     Route::post('/obras/{play}/eliminar', [UsersSavePlaysController::class, 'destroyPlay'])->name('unsave.play');
     
     Route::get('/teatros/confirmacion', [PublicTheaterController::class, 'showTheaterConfirmation'])->name('theaterConfirmation');
     Route::resource('/teatros', PublicTheaterController::class)->except(['index', 'show']);
 
+    Route::get('/mercadopago/conectar', [MercadoPagoController::class, 'connect'])->name('mercadopago.connect');
+    Route::get('/mercadopago/callback', [MercadoPagoController::class, 'callback'])->name('mercadopago.callback');
+
+    Route::get('/obras/{play}/revisar', [PublicPlayController::class, 'check'])->name('obras.check');
+    Route::post('/obras/{play}/verificar', [PublicPlayController::class, 'verify'])->name('obras.verify');
+    Route::post('/obras/{play}/rechazar', [PublicPlayController::class, 'reject'])->name('obras.reject');
+
 });
+
+// Rutas de cartelera
+Route::get('/cartelera', [PublicPlayController::class, 'index'])->name('billboard');
+Route::get('/obra/{play}', [PublicPlayController::class, 'show'])->name('obras.show');
+
+// Rutas de compra de entrada
+Route::get('/obra/{play}/compra', [PublicPurchaseController::class, 'create'])->name('compra.create');
+Route::post('/obra/{play}/compra', [PublicPurchaseController::class, 'store'])->name('compra.store');
+Route::get('/compra/{purchase}/checkout', [PublicPurchaseController::class, 'showCheckout'])->name('compra.checkout');
+Route::get('/payment/{purchase}/checkout',[PaymentController::class, 'checkout'])->name('payment.checkout');
+Route::get('/payment/success',[PaymentController::class, 'success'])->name('payment.success');
+Route::get('/payment/failure',[PaymentController::class, 'failure'])->name('payment.failure');
+Route::get('/payment/pending',[PaymentController::class, 'pending'])->name('payment.pending');
+
+// Rutas públicas de teatros
+Route::resource('/teatros', PublicTheaterController::class)->only(['index', 'show']);
+
+// Rutas de comentarios
+Route::post('/obra/{play}/comentario', [CommentController::class, 'store'])->name('comments.store');
+Route::delete('/obra/comentario/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+
+// Rutas de usuario autenticado
     
-    Route::resource('/teatros', PublicTheaterController::class)->only(['index', 'show']);
 
 // Rutas de resource ADMIN
 Route::middleware(['auth', 'admin'])->group(function () {

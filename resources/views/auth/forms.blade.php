@@ -29,14 +29,14 @@
                 @csrf
                 <div class="d-flex flex-column w-100 mb-4">
                     <label for="email">Correo electrónico</label>
-                    <input class="rounded auth-form-input" type="email" id="login-email" name="email" value="{{ old('email') }}" />
+                    <input class="p-1 rounded auth-form-input" type="email" id="login-email" name="email" value="{{ old('email') }}" />
                     @error('email')
                     <div><small class="text-danger">{{ $message }}</small></div>
                     @enderror  
                 </div>
                 <div class="d-flex flex-column w-100 mb-4">
                     <label for="password">Contraseña</label>
-                    <input class="rounded auth-form-input" type="password" name="password" id="login-password" />
+                    <input class="p-1 rounded auth-form-input" type="password" name="password" id="login-password" />
                 </div>
                 <div>
                     <button class="w-100 landing-auth-button" type="submit">Ingresar</button>
@@ -47,39 +47,39 @@
                 @csrf
                 <div class="d-flex flex-column w-100 mb-4">
                     <label for="name">Nombre completo</label>
-                    <input class="rounded auth-form-input" type="text" id="name" name="name" value="{{ old('name') }}" />
+                    <input class="p-1 rounded auth-form-input" type="text" id="name" name="name" value="{{ old('name') }}" />
                     @error('name')
                     <div><small class="text-danger">{{ $message }}</small></div>
                     @enderror
                 </div>
                 <div class="d-flex flex-column w-100 mb-4">
                     <label for="email">Correo electrónico</label>
-                    <input class="rounded auth-form-input" type="email" id="register-email" name="email" value="{{ old('email') }}" />
+                    <input class="p-1 rounded auth-form-input" type="email" id="register-email" name="email" value="{{ old('email') }}" />
                     @error('email')
                     <div><small class="text-danger">{{ $message }}</small></div>
                     @enderror
                 </div>
                 <div class="d-flex flex-column w-100 mb-4">
                     <label for="password">Contraseña</label>
-                    <input class="rounded auth-form-input" type="password" id="register-password" name="password" />
+                    <input class="p-1 rounded auth-form-input" type="password" id="register-password" name="password" />
                     @error('password')
                     <div><small class="text-danger">{{ $message }}</small></div>
                     @enderror
                 </div>
                 <div class="d-flex flex-column w-100 mb-4">
                     <label for="password_confirmation">Confirmar contraseña</label>
-                    <input class="rounded auth-form-input" type="password" id="password_confirmation" name="password_confirmation" />
+                    <input class="p-1 rounded auth-form-input" type="password" id="password_confirmation" name="password_confirmation" />
                 </div>
                 <div class="d-flex flex-column w-100 mb-4">
                     <label for="image">Foto de perfil</label>
-                    <input class="rounded auth-form-image-input" type="file" name="image" id="image">
+                    <input class="p-1 rounded auth-form-image-input" type="file" name="image" id="image">
                     @error('image')
                     <div><small class="text-danger">{{ $message }}</small></div>
                     @enderror
                 </div>
                 <div class="d-flex flex-column w-100 mb-4">
                     <label for="bio">Biografía</label>
-                    <textarea class="rounded auth-form-input" id="bio" name="bio">{{ old('bio') }}</textarea>
+                    <textarea class="p-1 rounded auth-form-input" id="bio" name="bio">{{ old('bio') }}</textarea>
                     @error('bio')
                     <div><small class="text-danger">{{ $message }}</small></div>
                     @enderror

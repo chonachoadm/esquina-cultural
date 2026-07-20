@@ -63,8 +63,15 @@
                 <div class="d-flex flex-column w-100 mb-2">
                     <label for="performance">Seleccionar función</label>
                     <select class="p-1 rounded auth-form-input"  name="performance_id" id="performance_id" >
-                        @foreach($play->performances as $performance)
-                        <option value="{{ $performance->id }}">{{ $performance->start_time->translatedFormat('l d \d\e F - H:i') }}</option>
+                        @foreach($play->performances->sortBy('start_time') as $performance)
+                        @if($performance->start_time > now())
+                        <option value="{{ $performance->id }}" data-available="{{ $performance->available_tickets }}" @disabled($performance->available_tickets <= 0) >
+                        @endif
+                            {{ $performance->start_time->translatedFormat('l d \d\e F - H:i') }}
+                            @if($performance->available_tickets <= 0)
+                                - Agotado
+                            @endif
+                        </option>
                         @endforeach
                     </select>
                     @error('performance_id')
@@ -73,7 +80,7 @@
                 </div>
                 <div class="d-flex flex-column w-100 mb-2">
                     <label for="ticket_amount">Cantidad de entradas</label>
-                    <input class="p-1 rounded auth-form-input"  type="number" name="ticket_amount" id="ticket_amount">
+                    <input class="p-1 rounded auth-form-input" type="number" min="1" name="ticket_amount" id="ticket_amount">
                     @error('ticket_amount')
                     <div><small class="text-danger">{{ $message }}</small></div>
                     @enderror
@@ -84,3 +91,22 @@
     </div>
 </section>
 @endsection
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const performanceSelect = document.getElementById('performance_id');
+        const ticketInput = document.getElementById('ticket_amount');
+
+        function updateMaxTickets() {
+            const selectedOption = performanceSelect.options[performanceSelect.selectedIndex];
+            const available = selectedOption.dataset.available;
+            ticketInput.max = available;
+
+            if (ticketInput.value > available) {
+                ticketInput.value = available;
+            }
+        }
+        performanceSelect.addEventListener('change', updateMaxTickets);
+        updateMaxTickets();
+    });
+</script>

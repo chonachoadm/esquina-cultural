@@ -8,9 +8,11 @@
         @if($play->users->count() > 0)
         <ul id="current-staff-list">
             @foreach($play->users as $user)
-            <li data-user-id="{{ $user->id }}">
-                <p>{{ $user->name }}</p>
-                <small>{{ $user->pivot->role }}</small>
+            <li class="mb-2 d-flex gap-4" data-user-id="{{ $user->id }}">
+                <div class="d-flex gap-4">
+                    <p class="m-0">{{ $user->name }}</p>
+                    <small><em>{{ $user->pivot->role }}</em></small>
+                </div>
                 <button type="button" class="remove-user-btn" data-user-id="{{ $user->id }}">X</button>
             </li>
             @endforeach

@@ -37,4 +37,9 @@ class Performance extends Model
     {
         return $this->hasMany(Purchase::class);
     }
+
+    public function getAvailableTicketsAttribute()
+    {
+        return $this->play->theater->max_capacity - $this->purchases()->count();
+    }
 }

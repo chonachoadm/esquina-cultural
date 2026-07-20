@@ -25,12 +25,12 @@
             @foreach($plays as $play)
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 mx-1 p-0 rounded-3xl billboard-card">
                 <div class="billboard-img-container">
-                    <img class="mx-auto img-fluid" src="{{ asset('storage/images/plays/' . $play->cover_photo) }}" alt="{{ $play->title }}">
+                    <a href="{{ route('obras.show', $play) }}"><img class="mx-auto img-fluid" src="{{ asset('storage/images/plays/' . $play->cover_photo) }}" alt="{{ $play->title }}"></a>
                 </div>
                 <div class="d-flex align-items-center justify-content-between px-2 py-1">
                     <div class="billboard-play-text">
                         <div>
-                            <h2 class="billboard-play-title">{{ $play->title }}</h2>
+                            <h2 class="billboard-play-title"><a class="text-black text-decoration-none" href="{{ route('obras.show', $play) }}">{{ $play->title }}</a></h2>
                             <p class="m-0">{{ $play->theater->name }}</p>
                             <small class="billboard-theater-address">{{ $play->theater->short_address }}</small>
                         </div>
@@ -40,7 +40,7 @@
                             @endforeach
                         </div>
                     </div>
-                    <a class="d-flex align-items-center justify-content-center rounded billboard-ticket-button" href="{{ route('obras.show', $play) }}">Entradas</a>
+                    <a class="d-flex align-items-center justify-content-center rounded billboard-ticket-button" href="{{ route('compra.create', $play) }}">Entradas</a>
                 </div>
             </div>
             @endforeach

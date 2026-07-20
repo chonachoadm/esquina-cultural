@@ -17,11 +17,16 @@ class Play extends Model
         'title',
         'description',
         'theater_id',
+        'user_id',
         'ticket_price',
         'cover_photo',
         'duration',
         'is_published',
         'status',
+    ];
+
+    protected $casts = [
+        'ticket_price' => 'float',
     ];
 
     public function theater()
@@ -44,6 +49,11 @@ class Play extends Model
         return $this->belongsToMany(User::class, 'plays_have_users')
                     ->withPivot('role')
                     ->withTimestamps();
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function savedByUsers()

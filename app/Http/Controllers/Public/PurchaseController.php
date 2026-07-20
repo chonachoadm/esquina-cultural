@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Public;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Play;
+use App\Models\Performance;
 use App\Models\Purchase;
 use App\Models\User;
 use App\Models\Guest;
@@ -13,6 +14,7 @@ class PurchaseController extends Controller
 {
     public function create(Play $play)
     {
+
         return view('public-area.purchase-process.purchase-form', compact('play'));
     }
 
@@ -22,7 +24,7 @@ class PurchaseController extends Controller
             'performance_id' => 'required|exists:performances,id', 
             'name' => 'required|string|max:255', 
             'email' => 'required|email|max:255', 
-            'ticket_amount' => 'required|integer|min:1', 
+            'ticket_amount' => 'required|integer|min:1|max:10', 
             ],
             [ 
                 'performance_id.required' => 'Este campo no puede quedar vacío.', 
@@ -32,8 +34,19 @@ class PurchaseController extends Controller
                 'email.required' => 'Este campo no puede quedar vacío.', 
                 'ticket_amount.required' => 'Este campo no puede quedar vacío.', 
                 'ticket_amount.min' => 'Debe haber al menos 1 entrada por compra.', 
+                'ticket_amount.max' => 'No podés comprar más de 10 entradas a la vez.', 
             ]);
-        $totalAmount = $validatedData['ticket_amount'] * $play->ticket_price;
+        $subtotal = $validatedData['ticket_amount'] * $play->ticket_price;
+        $feeRate = 10;
+        $feeAmount = $feeRate * $subtotal / 100;
+        $totalAmount = $subtotal + $feeAmount;
+
+        $performance = Performance::where('id', $validatedData['performance_id'])->first();
+        
+        
+        if($validatedData['ticket_amount'] > $performance->available_tickets) {
+            return back()->withInput()->with('error', 'Quedan ' . $performance->available_tickets . ' para esa función.');
+        };
 
         $user = auth()->user();
 
@@ -43,9 +56,11 @@ class PurchaseController extends Controller
                 'guest_id' => null,
                 'performance_id' => $validatedData['performance_id'],
                 'ticket_amount' => $validatedData['ticket_amount'],
+                'subtotal' => $subtotal,
+                'platform_fee_rate' => $feeRate,
+                'platform_fee_amount' => $feeAmount,
                 'total_amount' => $totalAmount,
-                'payment_status' => 'pending',
-                'payment_gateway_id' => fake()->numerify('###########'),
+                'status' => 'pending',
             ]);
         } else {
                 $guest = Guest::firstOrCreate(
@@ -62,18 +77,24 @@ class PurchaseController extends Controller
                     'guest_id' => $guest->id,
                     'performance_id' => $validatedData['performance_id'],
                     'ticket_amount' => $validatedData['ticket_amount'],
+                    'subtotal' => $subtotal,
+                    'platform_fee_rate' => $feeRate,
+                    'platform_fee_amount' => $feeAmount,
                     'total_amount' => $totalAmount,
-                    'payment_status' => 'pending',
-                    'payment_gateway_id' => fake()->numerify('###########'),
+                    'status' => 'pending',                
                 ]);
             };
 
         return redirect()->route('compra.checkout', compact('purchase'));
     }
 
-    public function checkout(Purchase $purchase)
+    public function showCheckout(Purchase $purchase)
     {
         $play = Play::where('id', $purchase->performance->play->id)->first();
-        return view('public-area.purchase-process.purchase-checkout', compact('purchase', 'play'));
+        $subtotal = $purchase->ticket_amount * $play->ticket_price;
+        $feeRate = 10;
+        $feeAmount = $feeRate * $subtotal / 100;
+     
+        return view('public-area.purchase-process.purchase-checkout', compact('purchase', 'play', 'subtotal', 'feeAmount'));
     }
 }

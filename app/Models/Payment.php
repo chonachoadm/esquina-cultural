@@ -15,7 +15,11 @@ class Payment extends Model
         'metadata',
     ];
 
-    public function purchases()
+    protected $casts = [
+        'metadata' => 'array',
+    ];
+
+    public function purchase()
     {
         return $this->belongsTo(Purchase::class);
     }

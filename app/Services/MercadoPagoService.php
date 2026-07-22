@@ -3,8 +3,11 @@
 namespace App\Services;
 
 use App\Models\Purchase;
+use Illuminate\Http\Request;
 use MercadoPago\MercadoPagoConfig;
 use MercadoPago\Client\Preference\PreferenceClient;
+use MercadoPago\Client\Payment\PaymentClient;
+use MercadoPago\Resources\Payment;
 
 class MercadoPagoService
 {
@@ -45,6 +48,7 @@ class MercadoPagoService
                     'failure' => route('payment.failure'),
                     'pending' => route('payment.pending'),
                 ],
+                'notification_url' => route('payment.webhook'),
 
                 'auto_return' => 'approved',
             ]);
@@ -61,5 +65,62 @@ class MercadoPagoService
 
             throw new \RuntimeException('No se pudo crear la preferencia de pago');
         }
+    }
+
+    /**
+     * Valida la firma de una notificación de webhook de Mercado Pago (header x-signature)
+     * usando el webhook secret configurado, para confirmar que la notificación es genuina.
+     *
+     * @see https://www.mercadopago.com.ar/developers/es/docs/checkout-pro/additional-content/your-integrations/notifications/webhooks#editor_10
+     */
+    public function verifyWebhookSignature(Request $request): bool
+    {
+        $secret = config('services.mercadopago.webhook_secret');
+        $xSignature = $request->header('x-signature');
+        $xRequestId = $request->header('x-request-id');
+
+        if (!$secret || !$xSignature || !$xRequestId) {
+            return false;
+        }
+
+        $ts = null;
+        $hash = null;
+
+        foreach (explode(',', $xSignature) as $part) {
+            $part = trim($part);
+            if (str_starts_with($part, 'ts=')) {
+                $ts = substr($part, 3);
+            } elseif (str_starts_with($part, 'v1=')) {
+                $hash = substr($part, 3);
+            }
+        }
+
+        if (!$ts || !$hash) {
+            return false;
+        }
+
+        $dataId = strtolower((string) ($request->query('data_id') ?? $request->query('id', '')));
+
+        $manifest = "id:{$dataId};request-id:{$xRequestId};ts:{$ts};";
+
+        $computedHash = hash_hmac('sha256', $manifest, $secret);
+
+        return hash_equals($computedHash, $hash);
+    }
+
+    /**
+     * Obtiene el detalle de un pago desde la API de Mercado Pago usando el
+     * access_token de la PLATAFORMA (no el del seller), ya que al recibir
+     * el webhook todavía no sabemos a qué purchase/seller corresponde el pago.
+     */
+    public function getPaymentDetails(int|string $paymentId): Payment
+    {
+        MercadoPagoConfig::setAccessToken(
+            config('services.mercadopago.access_token')
+        );
+
+        $client = new PaymentClient();
+
+        return $client->get((int) $paymentId);
     }
 }

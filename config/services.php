@@ -41,6 +41,7 @@ return [
         'client_secret' => env('MERCADOPAGO_CLIENT_SECRET'),
         'redirect_uri' => env('MERCADOPAGO_REDIRECT_URI'),
         'test_mode' => env('MERCADOPAGO_TEST_MODE'),
+        'webhook_secret' => env('MERCADOPAGO_WEBHOOK_SECRET'),
     ],
 
 ];

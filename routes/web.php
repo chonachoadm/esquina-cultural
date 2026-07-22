@@ -69,6 +69,7 @@ Route::get('/payment/{purchase}/checkout',[PaymentController::class, 'checkout']
 Route::get('/payment/success',[PaymentController::class, 'success'])->name('payment.success');
 Route::get('/payment/failure',[PaymentController::class, 'failure'])->name('payment.failure');
 Route::get('/payment/pending',[PaymentController::class, 'pending'])->name('payment.pending');
+Route::post('/payment/webhook',[PaymentController::class, 'webhook'])->name('payment.webhook');
 
 // Rutas públicas de teatros
 Route::resource('/teatros', PublicTheaterController::class)->only(['index', 'show']);

@@ -12,7 +12,7 @@
             @foreach(auth()->user()->savedPlays as $play)
             <div class="col-12 col-sm-6 col-md-4 d-flex align-items-center justify-content-between p-2 rounded-3xl billboard-card">
                 <div class="w-50">
-                    <a href="{{ route('obras.show', $play) }}" class="text-black text-decoration-none"><h3 class="fw-bold">{{ $play->title }}</h3></a>
+                    <a href="{{ route('obras.show', $play) }}" class="link-hover"><h3 class="fw-bold">{{ $play->title }}</h3></a>
                     <p class="m-0">{{ $play->theater->name }}</p>
                 </div>
                 <div>

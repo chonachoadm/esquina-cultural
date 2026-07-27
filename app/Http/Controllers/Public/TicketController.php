@@ -38,7 +38,10 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        //
+        abort_if($ticket->user_id !== auth()->id(), 403);
+        $ticket->load(['purchase', 'performance.play']);
+
+        return view('public-area.tickets.show', compact('ticket'));
     }
 
     /**

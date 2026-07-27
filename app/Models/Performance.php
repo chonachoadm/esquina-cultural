@@ -40,6 +40,7 @@ class Performance extends Model
 
     public function getAvailableTicketsAttribute()
     {
-        return $this->play->theater->max_capacity - $this->purchases()->count();
+        $reserved = $this->purchases()->whereIn('status', ['pending', 'confirmed'])->sum('ticket_amount');
+        return $this->play->theater->max_capacity - $reserved;
     }
 }

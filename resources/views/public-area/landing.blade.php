@@ -2,24 +2,28 @@
 @section('content')
 <section class="section-public flex-grow-1">
     @if(session('message'))
-    <div class="alert alert-warning">
+    <div class="alert alert-warning m-4">
         <small>{{ session('message') }}</small>
     </div>
     @elseif(session('success'))
-    <div class="alert alert-success">
+    <div class="alert alert-success m-4">
         <small>{{ session('success') }}</small>
     </div>
     @elseif(session('error'))
-    <div class="alert alert-error">
+    <div class="alert alert-danger m-4">
         <small>{{ session('error') }}</small>
     </div>
     @endif
     
         <div class="d-flex align-items-center justify-content-center landing-video">
+            <!-- <video width="100%" autoplay muted playsinline poster="{{ asset('storage/images/isologo/isologo-blanco.webp') }}">
+                <source src="{{ asset('storage/videos/video-landing-mobile.mp4') }}" type="video/mp4">
+                Tu navegador no soporta el elemento de video.
+            </video> -->
             <img class="img-fluid col-10 col-md-6 col-lg-4" src="{{ asset('storage/images/isologo/isologo-blanco.webp') }}" alt="Esquina Cultural">
         </div>
 
-    <section class="my-4 pt-4 billboard-detail-copy">
+    <section class="my-4 py-4 billboard-detail-copy">
         <h1 class="billboard-detail-comment-title">
             Obras en cartelera
         </h1>
@@ -30,12 +34,12 @@
                     <div class="carousel-item {{ $loop->first ? 'active' : '' }}" data-bs-interval="10000">
                         <div class="rounded-3xl billboard-card p-2">
                             <div class="billboard-img-container">
-                                <img class="img-fluid" src="{{ asset('storage/images/plays/' . $play->cover_photo) }}" alt="{{ $play->title }}">
+                                <a href="{{ route('obras.show', $play) }}"><img class="img-fluid w-100" src="{{ asset('storage/images/plays/' . $play->cover_photo) }}" alt="{{ $play->title }}"></a>
                             </div>
                             <div class="d-flex align-items-center justify-content-between">
                                 <div class="billboard-play-text">
                                     <div>
-                                        <h2 class="landing-play-title">{{ $play->title }}</h2>
+                                        <h2 class="landing-play-title"><a class="link-hover" href="{{ route('obras.show', $play) }}">{{ $play->title }}</a></h2>
                                         <p class="m-0">{{ $play->theater->name }}</p>
                                         <small class="billboard-theater-address">{{ $play->theater->short_address }}</small>
                                     </div>
@@ -45,7 +49,7 @@
                                         @endforeach
                                     </div>
                                 </div>
-                                <a class="d-flex align-items-center justify-content-center rounded landing-ticket-button" href="{{ route('obras.show', $play) }}">Entradas</a>
+                                <a class="d-flex align-items-center justify-content-center rounded landing-ticket-button" href="{{ route('compra.create', $play) }}">Entradas</a>
                             </div>
                         </div>
                     </div>
@@ -57,12 +61,12 @@
             @foreach($plays as $play)
                 <div class="col-md-4 col-lg-3 mx-4 rounded-3xl billboard-card p-0">
                     <div class="billboard-img-container">
-                        <img class="img-fluid" src="{{ asset('storage/images/plays/' . $play->cover_photo) }}" alt="{{ $play->title }}">
+                        <a href="{{ route('obras.show', $play) }}"><img class="mx-auto img-fluid" src="{{ asset('storage/images/plays/' . $play->cover_photo) }}" alt="{{ $play->title }}"></a>
                     </div>
                     <div class="h-auto d-flex align-items-center justify-content-between p-4">
                         <div class="d-flex flex-column justify-content-between billboard-play-text">
                             <div>
-                                <h2 class="landing-play-title">{{ $play->title }}</h2>
+                                <h2 class="landing-play-title"><a class="link-hover" href="{{ route('obras.show', $play) }}">{{ $play->title }}</a></h2>
                                 <div>
                                     <p class="m-0">{{ $play->theater->name }}</p>
                                     <small class="billboard-theater-address">{{ $play->theater->short_address }}</small>
@@ -74,46 +78,38 @@
                                 @endforeach
                             </div>
                         </div>
-                        <a class="d-flex align-items-center justify-content-center rounded landing-ticket-button" href="{{ route('obras.show', $play) }}">Entradas</a>
+                        <a class="d-flex align-items-center justify-content-center rounded landing-ticket-button" href="{{ route('compra.create', $play) }}">Entradas</a>
                     </div>
                 </div>
             @endforeach
         </div>
-        <hr>
     </section>
-    <section class="my-4 billboard-detail-copy">
-        <h2 class="billboard-detail-comment-title">
-            ¿Qué es Esquina Cultural?
-        </h2>
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-6 my-4 mx-auto">
-                <p>
-                    <strong>Esquina Cultural</strong> es una plataforma digital con el objetivo de promocionar y difundir el arte escénico <strong>autogestivo</strong> e <strong>independiente</strong> bonaerense.
-                </p>
-                <ul class="landing-about-list">
-                    <li class="mb-2">
-                        <strong>Productores</strong> pueden publicar sus obras.
-                    </li>
-                    <li class="mb-2">
-                        <strong>Espectadores</strong> pueden adquirir entradas.
-                    </li>
-                    <li class="mb-2">
-                        <strong>Coordinadores</strong> o <strong>dueñxs</strong> de teatros pueden registrarlos para facilitar la administración de su cartelera.
-                    </li>
-                </ul>
+    <section class="my-4 mx-auto about-us row">
+        <div class="col-12 col-lg-6 m-0 mb-4 m-lg-4">
+            <div class="row justify-content-center">
+                <div class="m-4 mx-auto">
+                    <h2 class="h2-landing"><strong>Esquina Cultural</strong> es una plataforma digital con el objetivo de promocionar y difundir el arte escénico <strong>autogestivo</strong> e <strong>independiente</strong> bonaerense.</h2>
+                    <ul class="landing-about-list my-4">
+                        <li class="mb-2">
+                             Adquirí tus <strong>entradas</strong>.
+                        </li>
+                        <li class="mb-2">
+                            Publicá tu <strong>obra</strong>.
+                        </li>
+                        <li class="mb-2">
+                            Registrá tu <strong>sala de teatro</strong>.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row flex-column align-items-center justify-content-center mx-4">
+                <h6 class="text-center"><strong>Suscribite a nuestro newsletter para enterarte primero de lo que se viene.</strong></h6>
+                <button class="my-2 col-12 col-md-6 billboard-detail-comment-submit-button">Suscribirse</button>
+                <small class="text-center">¡Con un pequeño monto ayudamos a que el arte siga creciendo!</small>
             </div>
         </div>
-        <div class="d-flex justify-content-center my-4">
-            <img class="img-fluid w-25" src="{{ asset('storage/images/icons/isotipo-256px.png') }}" alt="Ícono de Esquina Cultural">
-        </div>
-        <div class="d-flex flex-column align-items-center justify-content-center">
-            <h6 class="text-center"><strong>Suscribite a nuestro newsletter para enterarte primero de lo que se viene.</strong></h6>
-            <button class=" my-2 w-100 rounded billboard-detail-buy-ticket-button">Suscribirse</button>
-            <small class="text-center">¡Con un pequeño monto ayudamos a que el arte siga creciendo!</small>
-        </div>
-        <hr>
     </section>
-    <section class="my-4 billboard-detail-copy">
+    <section class="my-4 py-4 billboard-detail-copy">
         <h2 class="billboard-detail-comment-title">
             ¡Enterate de teatros cerca tuyo!
         </h2>
@@ -129,7 +125,7 @@
             @endforeach
         </div>
         <div class="row justify-content-center">
-            <button class="col-6 col-sm-4 col-md-2 billboard-detail-comment-submit-button">Ver más</button>
+            <a class="col-6 col-sm-4 col-md-2 text-center billboard-detail-comment-submit-button" href="{{ route('teatros.index') }}">Ver más</a>
         </div>
         <hr>
     </section>

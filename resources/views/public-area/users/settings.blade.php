@@ -5,34 +5,34 @@
     <div class="row flex-column justify-content-center align-items-center settings-list-container">
         <div class="col-12 col-md-6">
 
-                <a class="billboard-detail-back-button" href="{{ route('teatros.index') }}">
+                <a class="billboard-detail-back-button" href="{{ route('profile') }}">
                     <img class="img-fluid" src="{{ asset('storage/images/icons/back-black-25.webp') }}" alt="Volver">
                 </a>
 
             <ul class="list-unstyled m-0">
                 <li class="mb-4">
-                    <a class="text-black text-decoration-none" href="{{ route('public.user.edit', auth()->user()) }}">Editar perfil</a>
+                    <a class="link-hover" href="{{ route('public.user.edit', auth()->user()) }}">Editar perfil</a>
                 </li>
                 <li class="mb-4">
-                    <a class="text-black text-decoration-none" href="">Cambiar contraseña</a>
+                    <a class="link-hover" href="">Cambiar contraseña</a>
                 </li>
                 @if(auth()->user()->theater)
                 <li class="mb-4">
-                    <a class="text-black text-decoration-none" href="{{ auth()->user()->theater->verification_status === 'verified' ? route('teatros.show', auth()->user()->theater) : route('teatros.index') }}">Mi teatro</a>
+                    <a class="link-hover" href="{{ auth()->user()->theater->verification_status === 'verified' ? route('teatros.show', auth()->user()->theater) : route('teatros.index') }}">Mi teatro</a>
                 </li>
                 @else
                 <li class="mb-4">
-                    <a class="text-black text-decoration-none" href="{{ route('teatros.create') }}">Registrar teatro a mi nombre</a>
+                    <a class="link-hover" href="{{ route('teatros.create') }}">Registrar teatro a mi nombre</a>
                 </li>
                 @endif
                 <li class="mb-4">
-                    <a class="text-black text-decoration-none" href="{{ route('obras.create') }}">Publicar una obra</a>
+                    <a class="link-hover" href="{{ route('obras.create') }}">Publicar una obra</a>
                 </li>
                 <li class="mb-4">
-                    <a class="text-black text-decoration-none" href="{{ route('showSavedPlays', auth()->user()) }}">Obras guardadas</a>
+                    <a class="link-hover" href="{{ route('showSavedPlays', auth()->user()) }}">Obras guardadas</a>
                 </li>
                 <li>
-                    <a class="text-black text-decoration-none" href="">Reportar un problema</a>
+                    <a class="link-hover" href="">Reportar un problema</a>
                 </li>
             </ul>
             <hr class="my-4">

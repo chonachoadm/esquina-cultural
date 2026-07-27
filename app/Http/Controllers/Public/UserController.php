@@ -37,6 +37,11 @@ class UserController extends Controller
         return redirect()->route('profile')->with('success', 'Tu información se actualizó correctamente.');
     }
 
+    public function show(User $user)
+    {
+    return view('public-area.users.user-profile', compact('user'));
+    }
+
     public function destroy(Request $request)
     {
         // Delete the account

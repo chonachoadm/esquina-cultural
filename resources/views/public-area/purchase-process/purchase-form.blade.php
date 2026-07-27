@@ -2,15 +2,15 @@
 @section('content')
 <section class="section-public flex-grow-1">
     @if(session('message'))
-    <div class="alert alert-warning">
+    <div class="alert alert-warning m-4">
         <small>{{ session('message') }}</small>
     </div>
     @elseif(session('success'))
-    <div class="alert alert-success">
+    <div class="alert alert-success m-4">
         <small>{{ session('success') }}</small>
     </div>
     @elseif(session('error'))
-    <div class="alert alert-error">
+    <div class="alert alert-danger m-4">
         <small>{{ session('error') }}</small>
     </div>
     @endif

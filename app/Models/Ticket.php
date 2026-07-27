@@ -16,6 +16,7 @@ class Ticket extends Model
     protected $fillable = [
         'purchase_id',
         'user_id',
+        'guest_id',
         'performance_id',
         'ticket_code',
         'is_scanned',
@@ -30,6 +31,11 @@ class Ticket extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function guest()
+    {
+        return $this->belongsTo(Guest::class);
     }
 
     public function performance()

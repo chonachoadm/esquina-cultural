@@ -12,7 +12,7 @@
         <small>{{ session('success') }}</small>
     </div>
     @elseif(session('error'))
-    <div class="alert alert-error">
+    <div class="alert alert-danger">
         <small>{{ session('error') }}</small>
     </div>
     @endif

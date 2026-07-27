@@ -18,25 +18,18 @@ class MercadoPagoService
             
             if (!$seller->mercadopago_access_token) {
                 throw new \Exception('El creador no tiene Mercado Pago conectado');
-                }
-                
-            // MercadoPagoConfig::setAccessToken(
-            //     config('services.mercadopago.access_token')
-            // );
+            }
+
             MercadoPagoConfig::setAccessToken(
                 $seller->mercadopago_access_token
             );
-            
             $client = new PreferenceClient();
-
-
-
             $preference = $client->create([
                 'items' => [
                     [
                         'title' => $purchase->performance->play->title,
                         'quantity' => (int) $purchase->ticket_amount,
-                        'unit_price' => (float) ($purchase->total_amount / $purchase->ticket_amount),
+                        'unit_price' => (float) $purchase->total_amount,
                         'currency_id' => 'ARS',
                         ]
                     ],
@@ -59,7 +52,7 @@ class MercadoPagoService
                 'message' => $e->getMessage(),
                 'body' => $e->getApiResponse()?->getContent(),
                 'status' => $e->getApiResponse()?->getStatusCode(),
-                'token_used' => substr($seller->mercadopago_access_token, 0, 20) . '***', // primeros 20 chars del token
+                'token_used' => substr($seller->mercadopago_access_token, 0, 20) . '***',
                 'seller_id' => $seller->id,
             ]);
 
@@ -67,12 +60,6 @@ class MercadoPagoService
         }
     }
 
-    /**
-     * Valida la firma de una notificación de webhook de Mercado Pago (header x-signature)
-     * usando el webhook secret configurado, para confirmar que la notificación es genuina.
-     *
-     * @see https://www.mercadopago.com.ar/developers/es/docs/checkout-pro/additional-content/your-integrations/notifications/webhooks#editor_10
-     */
     public function verifyWebhookSignature(Request $request): bool
     {
         $secret = config('services.mercadopago.webhook_secret');
@@ -100,19 +87,12 @@ class MercadoPagoService
         }
 
         $dataId = strtolower((string) ($request->query('data_id') ?? $request->query('id', '')));
-
         $manifest = "id:{$dataId};request-id:{$xRequestId};ts:{$ts};";
-
         $computedHash = hash_hmac('sha256', $manifest, $secret);
 
         return hash_equals($computedHash, $hash);
     }
 
-    /**
-     * Obtiene el detalle de un pago desde la API de Mercado Pago usando el
-     * access_token de la PLATAFORMA (no el del seller), ya que al recibir
-     * el webhook todavía no sabemos a qué purchase/seller corresponde el pago.
-     */
     public function getPaymentDetails(int|string $paymentId): Payment
     {
         MercadoPagoConfig::setAccessToken(

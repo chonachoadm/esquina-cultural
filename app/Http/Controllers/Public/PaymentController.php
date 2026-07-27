@@ -8,13 +8,10 @@ use Illuminate\Http\Request;
 
 use App\Models\Purchase;
 use App\Models\Payment;
+use App\Models\Ticket;
 
 class PaymentController extends Controller
 {
-    /**
-     * Mapea el status de un pago de Mercado Pago al status de la purchase.
-     * Devuelve null si el status no es reconocido (no se toca la purchase).
-     */
     private const STATUS_MAP = [
         'approved' => 'confirmed',
         'pending' => 'pending',
@@ -40,24 +37,17 @@ class PaymentController extends Controller
 
     public function success(Request $request)
     {
-        return response()->json(['status' => 'approved'], 200);
+        return view('public-area.purchase-process.payment-success');
     }
 
     public function failure(Request $request)
     {
-        \Log::error('Mercado Pago payment failure', [
-            'query' => $request->all(),
-        ]);
-
-        return response()->json([
-            'status' => 'failure',
-            'message' => 'El pago no pudo completarse',
-        ], 200);
+        return redirect()->route('billboard')->with('error', 'Ocurrió un error con el pago. Por favor intentalo de vuelta más tarde.');
     }
 
     public function pending(Request $request)
     {
-        return response()->json(['status' => 'pending'], 200);
+        return redirect()->route('billboard')->with('message', 'Pago pendiente de confirmación. En cuanto se confirme, te llegará la entrada al correo.');
     }
 
     public function webhook(Request $request)
@@ -126,6 +116,19 @@ class PaymentController extends Controller
 
             if ($newStatus && $purchase->status !== $newStatus) {
                 $purchase->update(['status' => $newStatus]);
+            }
+
+            if ($newStatus === 'confirmed') {
+                Ticket::firstOrCreate(
+                    ['purchase_id' => $purchase->id],
+                    [
+                        'user_id' => $purchase->user_id,
+                        'guest_id' => $purchase->guest_id,
+                        'performance_id' => $purchase->performance_id,
+                        'ticket_code' => (string) \Illuminate\Support\Str::uuid(),
+                        'status' => 'active',
+                    ]
+                );
             }
         });
 

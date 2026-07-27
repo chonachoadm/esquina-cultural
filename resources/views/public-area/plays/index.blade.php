@@ -1,17 +1,17 @@
 @extends('layouts.app')
 @section('content')
-<section class="py-5 section-public flex-grow-1">
+<section class="section-public flex-grow-1">
 
     @if(session('message'))
-    <div class="alert alert-warning">
+    <div class="alert alert-warning m-4">
         <small>{{ session('message') }}</small>
     </div>
     @elseif(session('success'))
-    <div class="alert alert-success">
+    <div class="alert alert-success m-4">
         <small>{{ session('success') }}</small>
     </div>
     @elseif(session('error'))
-    <div class="alert alert-error">
+    <div class="alert alert-danger m-4">
         <small>{{ session('error') }}</small>
     </div>
     @endif
@@ -30,7 +30,7 @@
                 <div class="d-flex align-items-center justify-content-between px-2 py-1">
                     <div class="billboard-play-text">
                         <div>
-                            <h2 class="billboard-play-title"><a class="text-black text-decoration-none" href="{{ route('obras.show', $play) }}">{{ $play->title }}</a></h2>
+                            <h2 class="billboard-play-title"><a class="link-hover" href="{{ route('obras.show', $play) }}">{{ $play->title }}</a></h2>
                             <p class="m-0">{{ $play->theater->name }}</p>
                             <small class="billboard-theater-address">{{ $play->theater->short_address }}</small>
                         </div>

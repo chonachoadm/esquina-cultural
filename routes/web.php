@@ -21,6 +21,7 @@ use App\Http\Controllers\Public\UsersSavePlaysController;
 use App\Http\Controllers\Public\LandingController;
 use App\Http\Controllers\Public\MercadoPagoController;
 use App\Http\Controllers\Public\PaymentController;
+use App\Http\Controllers\Public\TicketController;
 
 // Ruta de la landing
 Route::get('/', LandingController::class)->name('landing');
@@ -39,6 +40,8 @@ Route::middleware('auth')->group(function() {
     Route::delete('/perfil/eliminar', [PublicUserController::class, 'destroy'])->name('public.user.delete');
     Route::get('perfil/{user}/editar', [PublicUserController::class, 'edit'])->name('public.user.edit');
     Route::put('perfil/{user}/editar', [PublicUserController::class, 'update'])->name('public.user.update');
+
+    Route::get('/perfil/entradas/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
     
     Route::get('/obra/crear', [PublicPlayController::class, 'create'])->name('obras.create');
     Route::post('/obra/crear', [PublicPlayController::class, 'store'])->name('obras.store');
@@ -54,7 +57,6 @@ Route::middleware('auth')->group(function() {
     Route::get('/obras/{play}/revisar', [PublicPlayController::class, 'check'])->name('obras.check');
     Route::post('/obras/{play}/verificar', [PublicPlayController::class, 'verify'])->name('obras.verify');
     Route::post('/obras/{play}/rechazar', [PublicPlayController::class, 'reject'])->name('obras.reject');
-
 });
 
 // Rutas de cartelera
@@ -78,7 +80,8 @@ Route::resource('/teatros', PublicTheaterController::class)->only(['index', 'sho
 Route::post('/obra/{play}/comentario', [CommentController::class, 'store'])->name('comments.store');
 Route::delete('/obra/comentario/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
-// Rutas de usuario autenticado
+// Rutas de usuarios
+Route::get('/usuario/{user}/perfil', [PublicUserController::class, 'show'])->name('user.profile');
     
 
 // Rutas de resource ADMIN

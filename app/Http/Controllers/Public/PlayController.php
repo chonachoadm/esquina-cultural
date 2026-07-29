@@ -184,7 +184,9 @@ class PlayController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $play = Play::where('id', $id)->first();
+        $play->delete();
+        return redirect()->route('billboard')->with('success', 'Obra eliminada correctamente.');
     }
 
     public function check(Play $play)

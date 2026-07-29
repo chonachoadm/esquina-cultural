@@ -43,7 +43,6 @@ class PurchaseController extends Controller
 
         $performance = Performance::where('id', $validatedData['performance_id'])->first();
         
-        
         if($validatedData['ticket_amount'] > $performance->available_tickets) {
             return back()->withInput()->with('error', 'Quedan ' . $performance->available_tickets . ' para esa función.');
         };

@@ -3,6 +3,7 @@
 
 <section class="section-personal flex-grow-1">
     <div class="billboard-detail-copy">
+        <div id="ticket-scanner-result" class="mt-4"></div>
 
         <a class="billboard-detail-back-button" href="{{ route('profile') }}">
             <img class="img-fluid" src="{{ asset('storage/images/icons/back-black-25.webp') }}" alt="Volver">
@@ -14,7 +15,6 @@
 
                 <div id="ticket-scanner" data-scan-url="{{ route('tickets.scan') }}"></div>
 
-                <div id="ticket-scanner-result" class="mt-4"></div>
             </div>
         </div>
     </div>

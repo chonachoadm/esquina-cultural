@@ -29,7 +29,7 @@ class MercadoPagoService
                     [
                         'title' => $purchase->performance->play->title,
                         'quantity' => (int) $purchase->ticket_amount,
-                        'unit_price' => (float) $purchase->total_amount,
+                        'unit_price' => (float) $purchase->performance->play->ticket_price + ($purchase->platform_fee_amount / $purchase->ticket_amount),
                         'currency_id' => 'ARS',
                         ]
                     ],

@@ -243,6 +243,7 @@ hr {
     height: 100vh;
     box-shadow: 0px 5px 5px #00000032;
     background-color: black;
+    overflow: hidden;
 }
 
 .landing-play-title {

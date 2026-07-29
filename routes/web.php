@@ -1,8 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Mail\TestMail;
 
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Public\UserController as PublicUserController;
@@ -48,6 +50,7 @@ Route::middleware('auth')->group(function() {
     
     Route::get('/obra/crear', [PublicPlayController::class, 'create'])->name('obras.create');
     Route::post('/obra/crear', [PublicPlayController::class, 'store'])->name('obras.store');
+    Route::delete('/obra/eliminar/{play}', [PublicPlayController::class, 'destroy'])->name('obras.destroy');
     Route::post('/obras/{play}/guardar', [UsersSavePlaysController::class, 'savePlay'])->name('save.play');
     Route::post('/obras/{play}/eliminar', [UsersSavePlaysController::class, 'destroyPlay'])->name('unsave.play');
     
@@ -112,6 +115,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/plays/{play}/edit-staff', [AdminPlayController::class, 'editStaff'])->name('plays.edit-staff');
     Route::put('/plays/{play}/staff', [AdminPlayController::class, 'updateStaff'])->name('plays.update-staff');
 });
+
 
 // Ruta de Tom Select
 Route::get('/api/users/search', function (Request $request) {

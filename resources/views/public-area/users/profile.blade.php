@@ -55,7 +55,7 @@
                     @foreach($tickets as $ticket)
                     <a href="{{ route('tickets.show', $ticket) }}" class="col-12 col-md-8 px-4 py-2 d-flex align-items-center gap-4 my-2 mx-auto text-decoration-none text-black rounded billboard-detail-comment">
                         <div>
-                            {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(100)->generate($ticket->ticket_code) !!}
+                            <img src="{{ asset('storage/tickets/qr_' . $ticket->id . '.png') }}" alt="Código QR">
                         </div>
                         <div>
                             <h4 class="mb-2"><strong>{{ $ticket->performance->play->title }}</strong></h4>

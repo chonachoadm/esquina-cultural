@@ -83,6 +83,13 @@
                 </div>
             </div>
         </div>
+        @if($play->user === auth()->user())
+        <form class="pb-4 d-flex justify-content-center" action="{{ route('obras.destroy', $play->id) }}" method="post">
+            @csrf
+            @method('DELETE')
+            <button class="btn btn-danger" type="submit" onclick="return confirm('Estás segurx de querer eliminar {{ $play->title }}?')">Eliminar Obra</button>
+        </form>
+        @endif
         
         @if($play->comments)
         <hr class="billboard-detail-copy">

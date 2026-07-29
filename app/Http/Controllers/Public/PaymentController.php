@@ -5,7 +5,12 @@ namespace App\Http\Controllers\Public;
 use App\Services\MercadoPagoService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Writer\PngWriter;
 
+use App\Mail\PurchaseConfirmedMail;
 use App\Models\Purchase;
 use App\Models\Payment;
 use App\Models\Ticket;
@@ -31,7 +36,6 @@ class PaymentController extends Controller
     public function checkout(Purchase $purchase)
     {
         $preference = $this->mercadoPagoService->createPreference($purchase);
-
         return redirect($preference->sandbox_init_point);
     }
 
@@ -94,7 +98,9 @@ class PaymentController extends Controller
             return response()->noContent();
         }
 
-        \DB::transaction(function () use ($mpPayment, $purchase) {
+        $ticket = null;
+        \DB::transaction(function () use ($mpPayment, $purchase, &$ticket) {
+
             Payment::updateOrCreate(
                 [
                     'provider' => 'mercadopago',
@@ -111,15 +117,15 @@ class PaymentController extends Controller
                     ],
                 ]
             );
-
+            
             $newStatus = self::STATUS_MAP[$mpPayment->status] ?? null;
-
+            
             if ($newStatus && $purchase->status !== $newStatus) {
                 $purchase->update(['status' => $newStatus]);
             }
 
             if ($newStatus === 'confirmed') {
-                Ticket::firstOrCreate(
+                $ticket = Ticket::firstOrCreate(
                     ['purchase_id' => $purchase->id],
                     [
                         'user_id' => $purchase->user_id,
@@ -131,6 +137,18 @@ class PaymentController extends Controller
                 );
             }
         });
+
+        if($ticket) {
+            $result = Builder::create()
+                ->writer(new PngWriter())
+                ->data($ticket->ticket_code)
+                ->size(300)
+                ->build();    
+            $path = 'tickets/qr_' . $ticket->id . '.png';
+            Storage::disk('public')->put($path, $result->getString());
+
+            Mail::to($purchase->user?->email ?? $purchase->guest?->email)->send(new PurchaseConfirmedMail($ticket));
+        }
 
         return response()->noContent();
     }

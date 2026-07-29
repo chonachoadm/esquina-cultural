@@ -46,6 +46,9 @@ if (scannerEl) {
                 renderResult(ok ? 'success' : 'error', data.message, ok ? data : null);
             })
             .catch(() => {
+                console.log('Escaneado', scanUrl);
+                console.log('texto decodificado', decodedText);
+                
                 renderResult('error', 'No se pudo validar la entrada. Intentá de nuevo.');
             })
             .finally(() => {

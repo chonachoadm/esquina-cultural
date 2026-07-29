@@ -15,12 +15,17 @@
     </div>
     @endif
     
-        <div class="d-flex align-items-center justify-content-center landing-video">
-            <!-- <video width="100%" autoplay muted playsinline poster="{{ asset('storage/images/isologo/isologo-blanco.webp') }}">
+        <div class="d-flex d-md-none align-items-center justify-content-center landing-video">
+            <video width="100%" autoplay muted playsinline poster="{{ asset('storage/images/isologo/isologo-blanco.webp') }}">
                 <source src="{{ asset('storage/videos/video-landing-mobile.mp4') }}" type="video/mp4">
                 Tu navegador no soporta el elemento de video.
-            </video> -->
-            <img class="img-fluid col-10 col-md-6 col-lg-4" src="{{ asset('storage/images/isologo/isologo-blanco.webp') }}" alt="Esquina Cultural">
+            </video>
+        </div>
+        <div class="d-none d-md-flex align-items-center justify-content-center landing-video">
+            <video width="100%" autoplay muted playsinline poster="{{ asset('storage/images/isologo/isologo-blanco-6-col.webp') }}">
+                <source src="{{ asset('storage/videos/video-landing-desktop.mp4') }}" type="video/mp4">
+                Tu navegador no soporta el elemento de video.
+            </video>
         </div>
 
     <section class="my-4 py-4 billboard-detail-copy">

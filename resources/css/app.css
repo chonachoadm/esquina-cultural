@@ -114,7 +114,7 @@
 /* VARIABLES */
 :root {
     --red: rgb(220, 20, 60);
-    --yellow: rgb(239, 174, 2);
+    --yellow: #efae02;
     --black: #000;
     --white: #fff;
 }
@@ -199,10 +199,16 @@ html {
     font-weight: bold;
 }
 
+/* FOOTER */
 .footer {
     background-color: var(--red);
     color: white;
 }
+
+.footer-icon {
+    width: 25px;
+}
+/* FOOTER */
 
 hr {
     border: none;
@@ -590,6 +596,12 @@ hr {
     /* border: 1px solid black; */
 }
 
+.container-img-theater {
+    width: 100%;
+    max-height: 300px;
+    overflow: hidden;
+}
+
 /* THEATER DETAIL */
 
 /* PURCHASE CHECKOUT */
@@ -628,6 +640,19 @@ hr {
 
 .link-hover-comment:hover {
     text-decoration: underline;
+}
+
+.link-hover-footer {
+    color: white;
+    text-decoration: none;
+}
+
+.link-hover-footer:hover {
+    text-decoration: underline;
+}
+
+.footer-list-item {
+    width: fit-content;
 }
 
 /* HOVERS */

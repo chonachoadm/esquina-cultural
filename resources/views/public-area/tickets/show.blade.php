@@ -12,7 +12,8 @@
             <div class="col-12 col-md-6 text-center">
                 <h2 class="billboard-detail-comment-title">{{ $ticket->performance->play->title }}</h2>
                 <p class="mb-1">{{ $ticket->performance->start_time->locale('es')->isoFormat('dddd D [de] MMMM, H:mm') }}</p>
-                <p class="mb-4"><em>{{ $ticket->purchase->ticket_amount }} {{ $ticket->purchase->ticket_amount == 1 ? 'entrada' : 'entradas' }}</em></p>
+                <p class="mb-2"><em>{{ $ticket->purchase->ticket_amount }} {{ $ticket->purchase->ticket_amount == 1 ? 'entrada' : 'entradas' }}</em></p>
+                <p class="mb-4"><span class="badge {{ $ticket->status_badge_class }}">{{ $ticket->status_label }}</span></p>
 
                 <div class="d-flex justify-content-center my-4">
                     {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(250)->generate($ticket->ticket_code) !!}

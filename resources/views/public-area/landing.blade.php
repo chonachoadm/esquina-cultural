@@ -45,7 +45,7 @@
                                     </div>
                                     <div class="ps-3">
                                         @foreach($play->schedule_short_slots as $slot)
-                                        <small class="billboard-play-schedule">{{ $slot['day'] }} {{ $slot['time'] }}</small>
+                                        <small class="rounded-pill bg-gray-100 px-2 py-1 billboard-play-schedule">{{ $slot['day'] }} {{ $slot['time'] }}</small>
                                         @endforeach
                                     </div>
                                 </div>

@@ -35,9 +35,10 @@
                 </a>
             </div>
             @if(auth()->user()->theater && auth()->user()->theater->verification_status === 'verified')
-            <small><em>Administrador de </em><a href="{{ route('teatros.show', auth()->user()->theater->id) }}"><strong>{{ auth()->user()->theater->name }}</strong></a></small>
+            <small class="text-center my-2"><em>Administrador de </em><a href="{{ route('teatros.show', auth()->user()->theater->id) }}"><strong>{{ auth()->user()->theater->name }}</strong></a></small>
+            <a class="text-center my-2" href="{{ route('tickets.scanner') }}">Escanear entradas</a>
             @elseif(auth()->user()->theater && auth()->user()->theater->verification_status === 'pending')
-            <p><em>Esperando aprobación del registro del teatro</em></p>
+            <p class="text-center my-2"><em>Esperando aprobación del registro del teatro</em></p>
             @endif
         </div>
 
@@ -59,6 +60,7 @@
                         <div>
                             <h4 class="mb-2"><strong>{{ $ticket->performance->play->title }}</strong></h4>
                             <p class="m-0"><em>{{ $ticket->performance->start_time->locale('es')->isoFormat('dddd D [de] MMMM - H:mm') }}</em></p>
+                            <span class="badge {{ $ticket->status_badge_class }}">{{ $ticket->status_label }}</span>
                         </div>
                     </a>
                     @endforeach

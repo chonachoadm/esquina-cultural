@@ -22,6 +22,7 @@ class Theater extends Model
         'verification_status',
         'max_capacity',
         'bio',
+        'image',
     ];
 
     public function user()

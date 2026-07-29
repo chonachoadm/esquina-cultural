@@ -38,6 +38,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'mercadopago_user_id',
+        'mercadopago_access_token',
+        'mercadopago_refresh_token',
+        'mercadopago_connected_at',
     ];
 
     /**

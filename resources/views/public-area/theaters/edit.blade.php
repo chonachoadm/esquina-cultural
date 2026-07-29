@@ -8,8 +8,9 @@
         </a>
 
         <div class="row justify-content-center billboard-detail-copy">
-            <form class="col-12 col-md-6 col-lg-4d-flex flex-column align-items-center gap-4 p-4 my-4 rounded-3xl auth-forms" action="{{ route('teatros.store', auth()->user()) }}" method="POST">
+            <form class="col-12 col-md-6 col-lg-4d-flex flex-column align-items-center gap-4 p-4 my-4 rounded-3xl auth-forms" action="{{ route('teatros.update', $theater->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="d-flex flex-column w-100 mb-2">
                     <label for="name">Nombre</label>
                     <input class="p-1 rounded auth-form-input" type="text" name="name" id="name" value="{{ old('name', $theater->name) }}" />
@@ -21,6 +22,13 @@
                     <label for="bio">Biografía</label>
                     <textarea class="p-1 rounded auth-form-input" type="text" name="bio" id="bio">{{ old('bio', $theater->bio) }}</textarea>
                     @error('bio')
+                    <div><small>{{ $message }}</small></div>
+                    @enderror
+                </div>
+                <div class="d-flex flex-column mb-2">
+                    <label for="image">Imagen</label>
+                    <input class="p-1 rounded auth-form-input" type="file" name="image" id="image" value="{{ old('image', $theater->image) }}" />
+                    @error('image')
                     <div><small>{{ $message }}</small></div>
                     @enderror
                 </div>

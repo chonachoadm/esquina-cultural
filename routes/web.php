@@ -28,7 +28,7 @@ Route::get('/', LandingController::class)->name('landing');
 
 // Rutas de autenticación
 Route::get('/ingresar', [AuthController::class, 'showAuth'])->name('login');
-Route::post('/ingresar', [AuthController::class, 'login']);
+Route::post('/ingresar', [AuthController::class, 'login'])->middleware('throttle:5,1');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -42,6 +42,9 @@ Route::middleware('auth')->group(function() {
     Route::put('perfil/{user}/editar', [PublicUserController::class, 'update'])->name('public.user.update');
 
     Route::get('/perfil/entradas/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
+
+    Route::get('/entradas/escanear', [TicketController::class, 'scanner'])->name('tickets.scanner');
+    Route::post('/entradas/escanear', [TicketController::class, 'scan'])->name('tickets.scan');
     
     Route::get('/obra/crear', [PublicPlayController::class, 'create'])->name('obras.create');
     Route::post('/obra/crear', [PublicPlayController::class, 'store'])->name('obras.store');

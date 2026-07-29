@@ -11,7 +11,7 @@
             <h2 class="billboard-detail-comment-title">Registrar nuevo teatro</h2>
             
             <div class="row justify-content-center">
-                <form class="col-12 col-md-6 col-lg-4 d-flex flex-column align-items-center gap-4 p-4 my-4 rounded-3xl auth-forms" action="{{ route('teatros.store', $user) }}" method="POST">
+                <form class="col-12 col-md-6 col-lg-4 d-flex flex-column align-items-center gap-4 p-4 my-4 rounded-3xl auth-forms" action="{{ route('teatros.store', $user) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="d-flex flex-column w-100 mb-2">
                         <label for="name">Nombre</label>
@@ -25,6 +25,13 @@
                         <textarea class="p-1 rounded auth-form-input" type="text" name="bio" id="bio">{{ old('bio') }}</textarea>
                         @error('bio')
                         <div><small class="text-danger">{{ $message }}</small></div>
+                        @enderror
+                    </div>
+                    <div class="d-flex flex-column mb-2">
+                        <label for="image">Imagen</label>
+                        <input class="p-1 rounded auth-form-input" type="file" name="image" id="image" value="{{ old('image') }}" />
+                        @error('image')
+                        <div><small>{{ $message }}</small></div>
                         @enderror
                     </div>
                     <div class="d-flex flex-column w-100 mb-2">

@@ -32,7 +32,7 @@
                 <h2 class="billboard-detail-comment-title">{{ $user->name }}</h2>
             </div>
             @if($user->theater && $user->theater->verification_status === 'verified')
-            <small class="text-center"><em>Administrador de </em><a href="{{ route('teatros.show', $user->theater->id) }}"><strong>{{ $user->theater->name }}</strong></a></small>
+            <small class="text-center my-2"><em>Administrador de </em><a href="{{ route('teatros.show', $user->theater->id) }}"><strong>{{ $user->theater->name }}</strong></a></small>
             @endif
         </div>
 

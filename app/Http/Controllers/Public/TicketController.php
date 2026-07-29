@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Ticket;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Requests\UpdateTicketRequest;
+use Illuminate\Http\Request;
 
 class TicketController extends Controller
 {
@@ -42,6 +43,62 @@ class TicketController extends Controller
         $ticket->load(['purchase', 'performance.play']);
 
         return view('public-area.tickets.show', compact('ticket'));
+    }
+
+    /**
+     * Show the QR scanner page for theater owners.
+     */
+    public function scanner()
+    {
+        abort_unless(
+            auth()->user()->theater && auth()->user()->theater->verification_status === 'verified',
+            403
+        );
+
+        return view('public-area.tickets.scan');
+    }
+
+    /**
+     * Validate a scanned ticket code.
+     */
+    public function scan(Request $request)
+    {
+        $request->validate([
+            'ticket_code' => 'required|string',
+        ]);
+
+        $ticket = Ticket::where('ticket_code', $request->ticket_code)->first();
+
+        if (!$ticket) {
+            return response()->json(['status' => 'error', 'message' => 'Ticket no encontrado'], 404);
+        }
+
+        $ticket->load(['purchase', 'user', 'guest', 'performance.play.theater']);
+
+        if ($ticket->performance->play->theater->user_id !== auth()->id()) {
+            return response()->json(['status' => 'error', 'message' => 'Este ticket no pertenece a tu teatro'], 403);
+        }
+
+        if ($ticket->status === 'missed') {
+            return response()->json(['status' => 'error', 'message' => 'La función ya pasó'], 422);
+        }
+
+        if ($ticket->is_scanned) {
+            return response()->json(['status' => 'error', 'message' => 'Este ticket ya fue escaneado'], 422);
+        }
+
+        $ticket->update([
+            'is_scanned' => true,
+            'status' => 'used',
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Ticket validado correctamente',
+            'play_title' => $ticket->performance->play->title,
+            'buyer_name' => $ticket->user->name ?? $ticket->guest->name,
+            'ticket_amount' => $ticket->purchase->ticket_amount,
+        ]);
     }
 
     /**

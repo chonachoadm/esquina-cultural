@@ -3,6 +3,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import TomSelect from 'tom-select';
 import './map-view.js'
 import './navbar.js'
+import './ticket-scanner.js'
 
 function initTheaterSelector() {
     const theaterSelect = document.getElementById('theater');

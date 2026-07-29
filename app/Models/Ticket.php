@@ -42,4 +42,22 @@ class Ticket extends Model
     {
         return $this->belongsTo(Performance::class);
     }
+
+    public function getStatusLabelAttribute()
+    {
+        return match ($this->status) {
+            'used' => 'Ya utilizada',
+            'missed' => 'Vencida',
+            default => 'Válida',
+        };
+    }
+
+    public function getStatusBadgeClassAttribute()
+    {
+        return match ($this->status) {
+            'used' => 'bg-secondary',
+            'missed' => 'bg-danger',
+            default => 'bg-success',
+        };
+    }
 }

@@ -18,7 +18,6 @@
     @endif
 
 
-
     <a class="billboard-detail-back-button" href="{{ route('teatros.index') }}">
         <img class="img-fluid" src="{{ asset('storage/images/icons/back-black-25.webp') }}" alt="Volver">
     </a>
@@ -33,8 +32,11 @@
     @endauth
 
     <div class="my-4 d-flex align-items-center justify-content-center">
-        <div class="my-4 rounded-3xl p-2 billboard-detail-copy billboard-card">
-            <div class="my-4">
+        <div class="my-4 rounded-3xl billboard-detail-copy billboard-card">
+            <div class="container-img-theater">
+                <img class="w-100 img img-fluid" src="{{ asset('storage/images/theaters/' . $theater->image) }}" alt="Banner de {{ $theater->name }}">
+            </div>
+            <div class="my-4 p-2">
                 <h1 class="text-center fw-bold">{{ $theater->name }}</h1>
                 <p class="text-center">{{ $theater->bio }}</p>
             </div>
@@ -46,7 +48,8 @@
                 <input type="hidden" id="lng" value="{{ $theater->longitude }}">
             </div>
 
-            <div>
+            @if($theater->plays->count() > 0)
+            <div class="p-2">
                 <h2 class="fs-4 fw-bold text-center mt-4">
                     Obras encartelera
                 </h2>
@@ -75,7 +78,9 @@
                     @endforeach
                 </div>
             </div>
-            <div>
+            @endif
+
+            <div class="p-2">
             @if($theater->user->id === auth()->user()->id)
             @php
                 $pendingPlays = $theater->plays->where('status', 'pending');
@@ -115,7 +120,7 @@
         </div>
     </div>
     @if($theater->user->id === auth()->user()->id)
-    <form action="{{ route('teatros.destroy', $theater->id) }}" method="post">
+    <form class="pb-4 d-flex justify-content-center" action="{{ route('teatros.destroy', $theater->id) }}" method="post">
         @csrf
         @method('DELETE')
         <button class="btn btn-danger" type="submit" onclick="return confirm('Estás segurx de querer eliminar {{ $theater->nombre }}?')">Eliminar teatro</button>

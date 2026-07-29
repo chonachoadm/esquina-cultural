@@ -35,6 +35,12 @@ class TheaterController extends Controller
     {
         $user = auth()->user();
 
+        $imageName = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images/theaters', 'public');
+            $imageName = basename($imagePath);
+        }
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'bio' => 'nullable|string|max:500',
@@ -60,6 +66,7 @@ class TheaterController extends Controller
             'longitude' => $validatedData['longitude'],
             'max_capacity' => $validatedData['capacity'],
             'verification_status' => 'pending',
+            'image' => $imageName,
         ]);
         
         if($user->isAdmin()) {
@@ -116,6 +123,12 @@ class TheaterController extends Controller
 
         $theater = Theater::where('id', $id)->first();
 
+        $imageName = $theater->image;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images/theaters', 'public');
+            $imageName = basename($imagePath);
+        }
+
         $theater->update([
             'name' => $validatedData['name'],
             'bio' => $validatedData['bio'],
@@ -124,6 +137,7 @@ class TheaterController extends Controller
             'longitude' => $validatedData['longitude'],
             'capacity' => $validatedData['capacity'],
             'verification_status' => 'pending',
+            'image' => $imageName,
         ]);
 
         return redirect()->route('profile')->with('message', 'El administrador revisará los cambios hechos, te avisaremos cuando se verifique o se rechace la información del teatro.');

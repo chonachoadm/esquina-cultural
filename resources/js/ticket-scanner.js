@@ -34,6 +34,7 @@ if (scannerEl) {
 
         fetch(scanUrl, {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': csrfToken,
@@ -45,9 +46,8 @@ if (scannerEl) {
             .then(({ ok, data }) => {
                 renderResult(ok ? 'success' : 'error', data.message, ok ? data : null);
             })
-            .catch(() => {
-                console.log('Escaneado', scanUrl);
-                console.log('texto decodificado', decodedText);
+            .catch((error) => {
+                console.error(error);
                 
                 renderResult('error', 'No se pudo validar la entrada. Intentá de nuevo.');
             })

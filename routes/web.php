@@ -35,6 +35,10 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
+
+Route::post('/entradas/escanear', [TicketController::class, 'scan'])->name('tickets.scan');
+
+
 Route::middleware('auth')->group(function() {
     Route::get('/perfil', [ProfileController::class, 'index'])->name('profile');
     Route::get('/perfil/ajustes', [ProfileController::class, 'settings'])->name('settings');
@@ -46,7 +50,7 @@ Route::middleware('auth')->group(function() {
     Route::get('/perfil/entradas/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
 
     Route::get('/entradas/escanear', [TicketController::class, 'scanner'])->name('tickets.scanner');
-    Route::post('/entradas/escanear', [TicketController::class, 'scan'])->name('tickets.scan');
+
     
     Route::get('/obra/crear', [PublicPlayController::class, 'create'])->name('obras.create');
     Route::post('/obra/crear', [PublicPlayController::class, 'store'])->name('obras.store');

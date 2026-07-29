@@ -70,21 +70,29 @@ class TicketController extends Controller
         $ticket = Ticket::where('ticket_code', $request->ticket_code)->first();
 
         if (!$ticket) {
-            return redirect()->route('profile')->with('error', 'Entrada no encontrada.');
-        }
+            return response()->json([
+                'message' => 'Entrada no existente.',
+            ], 404);
+            }
             
             $ticket->load(['purchase', 'user', 'guest', 'performance.play.theater']);
             
-        if ($ticket->performance->play->theater->user_id !== auth()->id()) {
-            return redirect()->route('profile')->with('error', 'Esta entrada no es para este teatro.');
+            if ($ticket->performance->play->theater->user_id !== auth()->id()) {
+            return response()->json([
+                'message' => 'Esta entrada no es para este teatro.',
+            ], 403);
         }
             
         if ($ticket->status === 'missed') {
-            return redirect()->route('profile')->with('error', 'Esta función ya pasó.');
+            return response()->json([
+                'message' => 'Ya venció esta entrada.',
+            ], 409);
         }
             
         if ($ticket->is_scanned) {
-            return redirect()->route('profile')->with('error', 'Esta entrada ya fue escaneada.');
+            return response()->json([
+                'message' => 'Esta entrada ya fue escaneada.',
+            ], 409);
         }
 
         $ticket->update([

@@ -130,6 +130,21 @@ Route::get('/test-route', function () {
 Route::get('/check-purchase-user-column', function () {
     return DB::select("SHOW COLUMNS FROM purchases WHERE Field = 'user_id'");
 });
+Route::get('/check-user/{id}', function ($id) {
+    $user = User::findOrFail($id);
+
+    return [
+        'id' => $user->id,
+        'name' => $user->name,
+        'email' => $user->email,
+
+        'mercadopago_user_id' => $user->mercadopago_user_id,
+        'mercadopago_connected_at' => $user->mercadopago_connected_at,
+
+        'has_access_token' => !empty($user->mercadopago_access_token),
+        'has_refresh_token' => !empty($user->mercadopago_refresh_token),
+    ];
+});
 
 
 

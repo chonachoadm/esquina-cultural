@@ -25,7 +25,7 @@
                             <td scope="row">{{ $play->id }}</td>
                             <td>{{ $play->title }}</td>
                             <td>$ {{ $play->ticket_price }}</td>
-                            <td>{{ $play->user->name }}</td>
+                            <td>{{ $play->user->email }}</td>
                             <td>{{ $play->status }}</td>
                             <td><a class="rounded px-2 py-1 billboard-ticket-button"
                                     href="{{ route('plays.show', $play) }}">Ver</a></td>

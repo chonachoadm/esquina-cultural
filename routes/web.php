@@ -129,6 +129,13 @@ Route::get('/test-db', function () {
         'tickets' => \App\Models\Ticket::count(),
     ];
 });
+Route::get('/test-db-info', function () {
+    return [
+        'database' => DB::connection()->getDatabaseName(),
+        'host' => config('database.connections.mysql.host'),
+        'tables' => DB::select('SHOW TABLES'),
+    ];
+});
 
 
 

@@ -124,6 +124,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 use Illuminate\Support\Facades\DB;
 
+Route::get('/test-route', function () {
+    return 'ok';
+});
 Route::get('/check-purchase-user-column', function () {
     return DB::select("SHOW COLUMNS FROM purchases WHERE Field = 'user_id'");
 });

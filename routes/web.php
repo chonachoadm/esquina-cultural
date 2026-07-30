@@ -121,6 +121,17 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 
+
+Route::get('/test-db', function () {
+    return [
+        'users' => \App\Models\User::count(),
+        'plays' => \App\Models\Play::count(),
+        'tickets' => \App\Models\Ticket::count(),
+    ];
+});
+
+
+
 // Ruta de Tom Select
 Route::get('/api/users/search', function (Request $request) {
     $query = $request->get('q');

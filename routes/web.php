@@ -122,20 +122,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 
 
-Route::get('/check-storage', function () {
-    return [
-        'link' => is_link(public_path('storage')),
-        'public_storage' => file_exists(public_path('storage')),
-        'target' => storage_path('app/public'),
-        'target_exists' => file_exists(storage_path('app/public')),
-    ];
-});
-Route::get('/check-file', function () {
-    return [
-        'favicon' => file_exists(storage_path('app/public/images/favicon/favicon.svg')),
-        'images_folder' => is_dir(storage_path('app/public/images')),
-        'files' => glob(storage_path('app/public/images/favicon/*')),
-    ];
+use Illuminate\Support\Facades\DB;
+
+Route::get('/check-purchase-user-column', function () {
+    return DB::select("SHOW COLUMNS FROM purchases WHERE Field = 'user_id'");
 });
 
 

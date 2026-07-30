@@ -122,18 +122,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 
 
-Route::get('/test-db', function () {
+Route::get('/check-storage', function () {
     return [
-        'users' => \App\Models\User::count(),
-        'plays' => \App\Models\Play::count(),
-        'tickets' => \App\Models\Ticket::count(),
-    ];
-});
-Route::get('/test-db-info', function () {
-    return [
-        'database' => DB::connection()->getDatabaseName(),
-        'host' => config('database.connections.mysql.host'),
-        'tables' => DB::select('SHOW TABLES'),
+        'link' => is_link(public_path('storage')),
+        'public_storage' => file_exists(public_path('storage')),
+        'target' => storage_path('app/public'),
+        'target_exists' => file_exists(storage_path('app/public')),
     ];
 });
 

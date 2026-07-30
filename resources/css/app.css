@@ -268,7 +268,8 @@ hr {
 
 .about-us {
     width: 100%;
-    background-image: url(../../public/storage/images/landing/patio-desktop.webp);
+    background-image: url(../../storage/app/public/images/landing/patio-desktop.webp);
+    /* background-image: url(../../public/storage/images/landing/patio-desktop.webp); */
     background-position: left 35%;
     color: black;
     position: relative;
@@ -662,7 +663,7 @@ hr {
 @media (max-width: 992px) {
     .about-us {
         width: 100%;
-        background-image: url(../../public/storage/images/landing/patio-mobile.webp);
+    background-image: url(../../storage/app/public/images/landing/patio-mobile.webp);
         background-size: cover;
         background-position: center 60%;
         color: black;

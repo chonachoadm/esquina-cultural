@@ -34,6 +34,11 @@ class TheaterController extends Controller
      */
     public function store(StoreTheaterRequest $request)
     {
+        $imageName = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images/theaters', 'public');
+            $imageName = basename($imagePath);
+        }
 
         $theater = Theater::create([
             'user_id' => $request->user,
@@ -44,7 +49,17 @@ class TheaterController extends Controller
             'longitude' => $request->longitude,
             'max_capacity' => $request->capacity,
             'verification_status' => 'verified',
-            ]);
+            'image' => $imageName,
+        ]);
+
+        $user = User::where('id', $theater->user->id);
+
+        if ($user->isAdmin()) {
+            return redirect()->route('theaters.index')->with('success', 'Teatro creado correctamente.');
+        }
+        $user->update([
+            'role' => 2,
+        ]);
 
 
         return redirect()->route('theaters.index')->with('success', 'Teatro creado correctamente.');

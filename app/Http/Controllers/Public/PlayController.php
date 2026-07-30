@@ -37,7 +37,7 @@ class PlayController extends Controller
     {
         $user = auth()->user();
 
-        if(!$user->hasMercadoPagoConnected()) {
+        if (!$user->hasMercadoPagoConnected()) {
             return redirect()->route('mercadopago.connect')->with('info', 'Tenés que enlazar tu cuenta de MercadoPago para poder publicar una obra');
         }
         $theaters = Theater::where('verification_status', 'verified')->get();
@@ -51,7 +51,7 @@ class PlayController extends Controller
     {
         $user = auth()->user();
 
-        if(!$user->hasMercadoPagoConnected()) {
+        if (!$user->hasMercadoPagoConnected()) {
             return redirect()
                 ->route('mercadopago.connect')
                 ->with('messsage', 'Tenés que enlazar tu cuenta de MercadoPago para publicar una obra');
@@ -69,8 +69,8 @@ class PlayController extends Controller
             'staff_roles' => 'nullable|array',
             'staff_roles.*' => 'nullable|string|max:255',
             'start_date' => 'required|date|after_or_equal:today',
-            'end_date'   => 'required|date|after:start_date',
-            'day_times'   => 'required|array|min:1',
+            'end_date' => 'required|date|after:start_date',
+            'day_times' => 'required|array|min:1',
             'day_times.*' => 'required|date_format:H:i',
         ], [
             'title.required' => 'Este campo no puede quedar vacío.',
@@ -84,7 +84,7 @@ class PlayController extends Controller
             'ticket_price.required' => 'El precio de la entrada es obligatorio.',
             'ticket_price.numeric' => 'El precio debe ser un número válido.',
             'ticket_price.min' => 'El precio no puede ser negativo.',
-            'duration.min' => 'La duración debe ser al menos 1 minuto.',   
+            'duration.min' => 'La duración debe ser al menos 1 minuto.',
             'staff_ids.array' => 'Los integrantes del elenco deben ser seleccionados correctamente.',
             'staff_ids.*.integer' => 'Uno de los integrantes seleccionados no es válido.',
             'staff_ids.*.exists' => 'Uno de los integrantes seleccionados no existe en el sistema.',
@@ -118,7 +118,7 @@ class PlayController extends Controller
 
         $staffIds = $validatedData['staff_ids'] ?? [];
         $staffRoles = $validatedData['staff_roles'] ?? [];
-        
+
         foreach ($staffIds as $userId) {
             $play->users()->attach($userId, [
                 'role' => $staffRoles[$userId] ?? null
@@ -154,13 +154,13 @@ class PlayController extends Controller
     public function show(Play $play)
     {
         $play->load([
-        'theater', 
-        'comments.user', 
-        'performances' => function ($query) {
-            $query->orderBy('start_time', 'asc');
-        }
-    ]);
-    return view('public-area.plays.show', compact('play'));
+            'theater',
+            'comments.user',
+            'performances' => function ($query) {
+                $query->orderBy('start_time', 'asc');
+            }
+        ]);
+        return view('public-area.plays.show', compact('play'));
     }
 
     /**

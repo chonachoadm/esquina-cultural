@@ -24,6 +24,7 @@ class UpdatePlayStaffRequest extends FormRequest
     {
         return [
             'staff_ids' => 'nullable|array',
+            'new_staff_ids' => 'nullable|array',
             'staff_ids.*' => 'integer|exists:users,id',
             'staff_roles' => 'nullable|array',
             'staff_roles.*' => 'nullable|string|max:255',

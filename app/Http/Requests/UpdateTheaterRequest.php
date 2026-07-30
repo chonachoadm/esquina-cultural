@@ -23,14 +23,14 @@ class UpdateTheaterRequest extends FormRequest
     public function rules(): array
     {
         return [
-                'user' => 'required|integer|exists:users,id',
-                'name' => 'required|string|max:255',
-                'bio' => 'nullable|string|max:500',
-                'address' => 'required|string',
-                'latitude' => 'required|numeric',
-                'longitude' => 'required|numeric',
-                'capacity' => 'required|integer|min:1',
-            ];
+            'user' => 'required|integer|exists:users,id',
+            'name' => 'required|string|max:255',
+            'bio' => 'nullable|string|max:500',
+            'address' => 'required|string',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'capacity' => 'required|integer|min:1',
+        ];
     }
     public function messages(): array
     {

@@ -48,7 +48,7 @@ if (scannerEl) {
             })
             .catch((error) => {
                 console.error(error);
-                
+
                 renderResult('error', 'No se pudo validar la entrada. Intentá de nuevo.');
             })
             .finally(() => {

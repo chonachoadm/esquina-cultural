@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -70,8 +69,8 @@ class User extends Authenticatable
     public function plays()
     {
         return $this->belongsToMany(Play::class, 'plays_have_users')
-                    ->withPivot('role')
-                    ->withTimestamps();
+            ->withPivot('role')
+            ->withTimestamps();
     }
 
     public function createdPlays()
@@ -82,7 +81,7 @@ class User extends Authenticatable
     public function savedPlays()
     {
         return $this->belongsToMany(Play::class, 'users_save_plays')
-                    ->withTimestamps();
+            ->withTimestamps();
     }
 
     public function tickets()

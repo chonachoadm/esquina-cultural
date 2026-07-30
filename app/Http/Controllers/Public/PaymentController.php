@@ -28,9 +28,9 @@ class PaymentController extends Controller
         'charged_back' => 'cancelled',
     ];
 
-    public function __construct(private MercadoPagoService $mercadoPagoService) 
+    public function __construct(private MercadoPagoService $mercadoPagoService)
     {
-        
+
     }
 
     public function checkout(Purchase $purchase)
@@ -117,9 +117,9 @@ class PaymentController extends Controller
                     ],
                 ]
             );
-            
+
             $newStatus = self::STATUS_MAP[$mpPayment->status] ?? null;
-            
+
             if ($newStatus && $purchase->status !== $newStatus) {
                 $purchase->update(['status' => $newStatus]);
             }
@@ -138,12 +138,12 @@ class PaymentController extends Controller
             }
         });
 
-        if($ticket) {
+        if ($ticket) {
             $result = Builder::create()
                 ->writer(new PngWriter())
                 ->data($ticket->ticket_code)
                 ->size(300)
-                ->build();    
+                ->build();
             $path = 'tickets/qr_' . $ticket->id . '.png';
             Storage::disk('public')->put($path, $result->getString());
 

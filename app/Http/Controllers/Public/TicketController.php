@@ -73,22 +73,22 @@ class TicketController extends Controller
             return response()->json([
                 'message' => 'Entrada no existente.',
             ], 404);
-            }
-            
-            $ticket->load(['purchase', 'user', 'guest', 'performance.play.theater']);
-            
-            if ($ticket->performance->play->theater->user_id !== auth()->id()) {
+        }
+
+        $ticket->load(['purchase', 'user', 'guest', 'performance.play.theater']);
+
+        if ($ticket->performance->play->theater->user_id !== auth()->id()) {
             return response()->json([
                 'message' => 'Esta entrada no es para este teatro.',
             ], 403);
         }
-            
+
         if ($ticket->status === 'missed') {
             return response()->json([
                 'message' => 'Ya venció esta entrada.',
             ], 409);
         }
-            
+
         if ($ticket->is_scanned) {
             return response()->json([
                 'message' => 'Esta entrada ya fue escaneada.',

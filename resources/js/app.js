@@ -13,7 +13,7 @@ function initTheaterSelector() {
     if (selectedOption.getAttribute('data-capacity')) {
         capacityValue.textContent = "Capacidad: " + selectedOption.getAttribute('data-capacity') + " localidades";
     }
-    theaterSelect.addEventListener('change', function() {
+    theaterSelect.addEventListener('change', function () {
         const selectedOption = theaterSelect.options[theaterSelect.selectedIndex];
         const capacity = selectedOption.getAttribute('data-capacity');
         if (capacity) {
@@ -31,7 +31,7 @@ function initPerformanceGeneratorAdmin() {
     const timeContainer = document.getElementById('perf-times-container');
 
     function generatePerformanceList() {
-        timeContainer.innerHTML = '';   
+        timeContainer.innerHTML = '';
         const start = new Date(startDateInput.value);
         const end = new Date(endDateInput.value);
         if (isNaN(start) || isNaN(end)) return;
@@ -61,10 +61,8 @@ function initPerformanceGeneratorPublic() {
     if (!startDateInput || !endDateInput) return;
 
     const days = document.querySelectorAll('[id^="day-"]');
-    // const timeContainer = document.getElementById('perf_times_container');
 
     function generatePerformanceList() {
-        // timeContainer.innerHTML = '';   
         const start = new Date(startDateInput.value);
         const end = new Date(endDateInput.value);
         if (isNaN(start) || isNaN(end)) return;
@@ -84,7 +82,7 @@ function initPerformanceGeneratorPublic() {
             }
         });
     }
-    days.forEach(day => 
+    days.forEach(day =>
         day.addEventListener('change', generatePerformanceList)
     );
     startDateInput.addEventListener('change', generatePerformanceList);
@@ -117,15 +115,19 @@ function initPerformanceEditor() {
             performancesToAdd.append(li);
         });
         if (newPerformances.length > 0) {
-            newPerformancesListDiv.style.display = 'block';
-            submitPerformancesBtn.style.display = 'block';
+            newPerformancesListDiv.classList.remove('d-none');
+            newPerformancesListDiv.classList.add('d-block');
+            submitPerformancesBtn.classList.remove('d-none');
+            submitPerformancesBtn.classList.add('d-block');
         } else {
-            newPerformancesListDiv.style.display = 'none';
-            submitPerformancesBtn.style.display = 'none';
+            newPerformancesListDiv.classList.add('d-block');
+            newPerformancesListDiv.classList.add('d-none');
+            submitPerformancesBtn.classList.remove('d-block');
+            submitPerformancesBtn.classList.add('d-none');
         }
     }
 
-    addPerformanceBtn.addEventListener('click', function() {
+    addPerformanceBtn.addEventListener('click', function () {
         const date = perfDateInput.value;
         const time = perfTimeInput.value;
         if (!date || !time) {
@@ -144,7 +146,7 @@ function initPerformanceEditor() {
         perfTimeInput.value = '';
     });
 
-    performancesToAdd.addEventListener('click', function(event) {
+    performancesToAdd.addEventListener('click', function (event) {
         if (event.target.classList.contains('remove-perf-btn')) {
             const index = parseInt(event.target.dataset.index);
             newPerformances.splice(index, 1);
@@ -152,7 +154,7 @@ function initPerformanceEditor() {
         }
     });
 
-    addPerformancesForm.addEventListener('submit', function(event) {
+    addPerformancesForm.addEventListener('submit', function (event) {
         event.preventDefault();
         newPerformances.forEach((perf, index) => {
             const hiddenInput = document.createElement('input');
@@ -171,14 +173,14 @@ document.addEventListener('DOMContentLoaded', function () {
     initPerformanceGeneratorPublic();
     initPerformanceEditor();
     const el = document.getElementById('staff-search');
-    
+
     if (el) {
         const tomSelectInstance = new TomSelect(el, {
             valueField: 'id',
             labelField: 'name',
             searchField: 'name',
             clearValueOnItemAdd: true,
-            load: function(query, callback) {
+            load: function (query, callback) {
                 const url = '/api/users/search?q=' + encodeURIComponent(query);
                 fetch(url)
                     .then(response => response.json())
@@ -189,18 +191,18 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
             },
             render: {
-                option: function(item, escape) {
+                option: function (item, escape) {
                     return `<div>
                                 <img src="${escape(item.avatar)}" alt="">
                                 <span>${escape(item.name)}</span>
                             </div>`;
                 },
-                item: function(item, escape) {
+                item: function (item, escape) {
                     return `<div class="selected-staff-item">${escape(item.name)}</div>`;
                 }
             }
         });
-        tomSelectInstance.on('item_add', function(value, item) {
+        tomSelectInstance.on('item_add', function (value, item) {
             const container = document.getElementById('staff-roles-container');
             const itemData = tomSelectInstance.options[value];
             const itemName = itemData ? itemData.name : 'Staff Member';
@@ -218,14 +220,14 @@ document.addEventListener('DOMContentLoaded', function () {
             `;
             container.append(roleInput);
             tomSelectInstance.setTextboxValue('');
-            
+
             const removeButton = roleInput.querySelector('.remove-role-btn');
 
             removeButton.addEventListener('click', () => {
                 tomSelectInstance.removeItem(value);
             });
         });
-        tomSelectInstance.on('item_remove', function(value) {
+        tomSelectInstance.on('item_remove', function (value) {
             const wrapper = document.getElementById(`role-wrapper-${value}`);
             if (wrapper) wrapper.remove();
         });
@@ -234,40 +236,13 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 document.querySelectorAll('.remove-user-btn').forEach(button => {
-    button.addEventListener('click', function(event) {
-        const id = this.dataset.userId; 
-        if (confirm('¿Estás seguro?')) {
-            const listItem = document.querySelector(`li[data-user-id="${id}"]`);
-            if (listItem) listItem.remove();
-            const select = document.getElementById('staff-search');
-            const option = select.querySelector(`option[value="${id}"]`);
-            if (option) {
-                option.remove();
-            }
-        }
+    button.addEventListener('click', function (event) {
+        const id = this.dataset.userId;
+        if (!confirm('¿Estás seguro?')) return;
+
+        this.closest('tr').remove();
     });
 });
-const staffForm = document.getElementById('staff-form');
-if (staffForm) {
-    staffForm.addEventListener('submit', function(event) {
-        const staffList = document.getElementById('current-staff-list');
-        const staffItems = staffList.querySelectorAll('li[data-user-id]');
-        staffItems.forEach(item => {
-            const userId = item.dataset.userId;
-            const role = item.querySelector('small').textContent;
-            const hiddenId = document.createElement('input');
-            hiddenId.type = 'hidden';
-            hiddenId.name = 'staff_ids[]';
-            hiddenId.value = userId;
-            this.append(hiddenId);
-            const hiddenRole = document.createElement('input');
-            hiddenRole.type = 'hidden';
-            hiddenRole.name = `staff_roles[${userId}]`;
-            hiddenRole.value = role;
-            this.append(hiddenRole);
-        });
-    });
-}
 
 // Manejo de cambio de formulario de auth
 const loginTab = document.getElementById('login-tab');

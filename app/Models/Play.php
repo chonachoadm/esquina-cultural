@@ -47,8 +47,8 @@ class Play extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'plays_have_users')
-                    ->withPivot('role')
-                    ->withTimestamps();
+            ->withPivot('role')
+            ->withTimestamps();
     }
 
     public function user()
@@ -59,7 +59,7 @@ class Play extends Model
     public function savedByUsers()
     {
         return $this->belongsToMany(User::class, 'users_save_plays')
-                    ->withTimestamps();
+            ->withTimestamps();
     }
 
     public function tickets()
@@ -75,7 +75,7 @@ class Play extends Model
                 'day' => $performance->start_time->locale('es')->isoFormat('ddd'),
                 'time' => $performance->start_time->format('H:i'),
             ])
-            ->unique(fn($item) => $item['day'].'-'.$item['time'])
+            ->unique(fn($item) => $item['day'] . '-' . $item['time'])
             ->values();
     }
     public function getScheduleSlotsAttribute()
@@ -86,7 +86,7 @@ class Play extends Model
                 'day' => $performance->start_time->locale('es')->isoFormat('dddd'),
                 'time' => $performance->start_time->format('H:i'),
             ])
-            ->unique(fn($item) => $item['day'].'-'.$item['time'])
+            ->unique(fn($item) => $item['day'] . '-' . $item['time'])
             ->values();
     }
 

@@ -40,15 +40,22 @@ class PurchaseController extends Controller
     public function store(StorePurchaseRequest $request)
     {
         $play = Play::where('id', $request->play_id)->first();
-        $totalAmount = $request->ticket_amount * $play->ticket_price;
+
+        $subtotal = $request->ticket_amount * $play->ticket_price;
+        $feeRate = 10;
+        $feeAmount = $feeRate * $subtotal / 100;
+        $totalAmount = $subtotal + $feeAmount;
 
         Purchase::create([
             'user_id' => $request->user_id,
             'performance_id' => $request->performance_id,
             'ticket_amount' => $request->ticket_amount,
+            'subtotal' => $subtotal,
+            'platform_fee_rate' => $feeRate,
+            'platform_fee_amount' => $feeAmount,
             'total_amount' => $totalAmount,
-            'payment_status' => $request->payment_status,
-            'payment_gateway_id' => fake()->numerify('###########'),
+            'status' => $request->status,
+
         ]);
 
         return redirect()->route('purchases.index')->with('success', 'Compra creada correctamente.');
@@ -82,7 +89,7 @@ class PurchaseController extends Controller
         $play = Play::where('id', $request->play_id)->first();
         $totalAmount = $request->ticket_amount * $play->ticket_price;
 
-        if($purchase->user) {
+        if ($purchase->user) {
             $purchase->update([
                 'user_id' => $request->user_id,
                 'guest_id' => null,
@@ -109,8 +116,8 @@ class PurchaseController extends Controller
                 'payment_status' => $request->payment_status,
                 'play_id' => $play->id,
             ]);
-        } 
-        
+        }
+
         return redirect()->route('purchases.index')->with('success', 'Compra actualizada correctamente.');
     }
 

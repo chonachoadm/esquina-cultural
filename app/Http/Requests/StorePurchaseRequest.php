@@ -23,11 +23,11 @@ class StorePurchaseRequest extends FormRequest
     public function rules(): array
     {
         return [
-                'user_id' => 'required|exists:users,id',
-                'performance_id' => 'required|exists:performances,id',
-                'ticket_amount' => 'required|min:1',
-                'payment_status' => 'required|string|max:255',
-            ];
+            'user_id' => 'required|exists:users,id',
+            'performance_id' => 'required|exists:performances,id',
+            'ticket_amount' => 'required|min:1',
+            'status' => 'required|string|max:255',
+        ];
     }
     public function messages(): array
     {
@@ -38,7 +38,7 @@ class StorePurchaseRequest extends FormRequest
             'user_id.exists' => 'Debe seleccionarse un usuario existente.',
             'ticket_amount.required' => 'Este campo no puede quedar vacío.',
             'ticket_amount.min' => 'Debe haber al menos 1 entrada por compra.',
-            'payment_status.required' => 'Debe seleccionar una de las opciones.',
+            'status.required' => 'Debe seleccionar una de las opciones.',
         ];
     }
 }

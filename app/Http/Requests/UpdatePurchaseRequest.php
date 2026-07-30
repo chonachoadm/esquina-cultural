@@ -23,14 +23,14 @@ class UpdatePurchaseRequest extends FormRequest
     public function rules(): array
     {
         return [
-                'performance_id' => 'required|exists:performances,id',
-                'user_id' => 'exists:users,id',
-                'name' => 'string|max:255', 
-                'email' => 'email|max:255', 
-                'ticket_amount' => 'required|min:1',
-                'payment_status' => 'required|string|max:255',
-                'play_id' => 'required|exists:plays,id',
-            ];
+            'performance_id' => 'required|exists:performances,id',
+            'user_id' => 'exists:users,id',
+            'name' => 'string|max:255',
+            'email' => 'email|max:255',
+            'ticket_amount' => 'required|min:1',
+            'status' => 'required|string|max:255',
+            'play_id' => 'required|exists:plays,id',
+        ];
     }
     public function messages(): array
     {
@@ -40,7 +40,7 @@ class UpdatePurchaseRequest extends FormRequest
             'user_id.exists' => 'Debe seleccionarse un usuario existente.',
             'ticket_amount.required' => 'Este campo no puede quedar vacío.',
             'ticket_amount.min' => 'Debe haber al menos 1 entrada por compra.',
-            'payment_status.required' => 'Debe seleccionar una de las opciones.',
+            'status.required' => 'Debe seleccionar una de las opciones.',
             'play_id.required' => 'Debe seleccionar una de las opciones.',
             'play_id.exists' => 'Debe seleccionar una obra que se encuentre en nuestra plataforma.',
         ];

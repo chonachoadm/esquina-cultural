@@ -15,7 +15,7 @@ class MercadoPagoService
     {
         try {
             $seller = $purchase->performance->play->user;
-            
+
             if (!$seller->mercadopago_access_token) {
                 throw new \Exception('El creador no tiene Mercado Pago conectado');
             }
@@ -31,8 +31,8 @@ class MercadoPagoService
                         'quantity' => (int) $purchase->ticket_amount,
                         'unit_price' => (float) $purchase->performance->play->ticket_price + ($purchase->platform_fee_amount / $purchase->ticket_amount),
                         'currency_id' => 'ARS',
-                        ]
-                    ],
+                    ]
+                ],
                 'marketplace' => 'MP-MKT-' . config('services.mercadopago.client_id'),
                 'marketplace_fee' => (float) $purchase->platform_fee_amount,
                 'external_reference' => (string) $purchase->id,
@@ -45,7 +45,7 @@ class MercadoPagoService
 
                 'auto_return' => 'approved',
             ]);
-                
+
             return $preference;
         } catch (\MercadoPago\Exceptions\MPApiException $e) {
             \Log::error('Mercado Pago preference error', [

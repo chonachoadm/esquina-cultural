@@ -3,10 +3,6 @@
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
-
-use App\Models\Profile;
-use App\Http\Requests\StoreProfileRequest;
-use App\Http\Requests\UpdateProfileRequest;
 use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
@@ -16,7 +12,7 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         $savedPlays = auth()->user()->savedPlays()->get();
-        $tickets = $user->tickets()->with('performance.play')->get()->sortBy(fn ($ticket) => $ticket->performance->start_time);
+        $tickets = $user->tickets()->with('performance.play')->get()->sortBy(fn($ticket) => $ticket->performance->start_time);
         return view('public-area.users.profile', compact('user', 'savedPlays', 'tickets'));
     }
 

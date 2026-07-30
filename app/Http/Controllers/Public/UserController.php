@@ -39,15 +39,12 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-    return view('public-area.users.user-profile', compact('user'));
+        return view('public-area.users.user-profile', compact('user'));
     }
 
     public function destroy(Request $request)
     {
-        // Delete the account
         Auth::user()->delete();
-
-        // Logout the user
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

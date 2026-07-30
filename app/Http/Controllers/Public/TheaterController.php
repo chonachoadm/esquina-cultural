@@ -25,7 +25,7 @@ class TheaterController extends Controller
     public function create()
     {
         $user = auth()->user();
-        return view('public-area.theaters.create', compact('user'));    
+        return view('public-area.theaters.create', compact('user'));
     }
 
     /**
@@ -68,8 +68,8 @@ class TheaterController extends Controller
             'verification_status' => 'pending',
             'image' => $imageName,
         ]);
-        
-        if($user->isAdmin()) {
+
+        if ($user->isAdmin()) {
             return redirect()->route('theaterConfirmation');
         }
         $user->update([

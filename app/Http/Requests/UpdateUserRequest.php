@@ -23,11 +23,11 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:users,email',
-                'image' => 'nullable|image|max:2048', // 2MB Max
-                'bio' => 'nullable|string|max:500',
-            ];
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'image' => 'nullable|image',
+            'bio' => 'nullable|string|max:500',
+        ];
     }
     public function messages(): array
     {
@@ -36,7 +36,6 @@ class UpdateUserRequest extends FormRequest
             'name.max' => 'El nombre no puede superar los 255 caracteres.',
             'email.required' => 'Este campo no puede quedar vacío.',
             'email.unique' => 'Ya tenemos una cuenta registrada con este correo.',
-            'image.max' => 'Esta imagen es muy pesada, el máximo son 2mb.',
             'bio.max' => 'La biografía no puede superar los 500 caracteres.',
         ];
     }

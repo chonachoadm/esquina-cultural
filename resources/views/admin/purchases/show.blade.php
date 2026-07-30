@@ -1,46 +1,80 @@
 @extends('layouts.app')
 
 @section('content')
-<section>
-    <h2>Compra nro. {{ $purchase->id }}</h2>
-    <ul>
-        <li>
-            <p><strong>ID de la transacción:</strong> {{ $purchase->payment_gateway_id }}</p>
-        </li>
-        <li>
-            <p><strong>Estado de la transacción:</strong> {{ $purchase->payment_status }}</p>
-        </li>
-        <li>
-            @if($purchase->user)
-            <p><strong>Usuario:</strong> {{ $purchase->user->name }} ({{ $purchase->user->email }})</p>
-            @elseif($purchase->guest)
-            <p><strong>Invitado:</strong> {{ $purchase->guest->name }} ({{ $purchase->guest->email }})</p>
-            @endif
-        </li>
-        <li>
-            <p><strong>Cantidad de entradas adquiridas:</strong> {{ $purchase->ticket_amount }}</p>
-        </li>
-        <li>
-            <p><strong>Total abonado:</strong> $ {{ $purchase->ticket_amount * $purchase->performance->play->ticket_price }}</p>
-        </li>
-        <li>
-            <p><strong>Obra:</strong> {{ $purchase->performance->play->title }}</p>
-        </li>
-        <li>
-            <p><strong>Función:</strong> {{ $purchase->performance->start_time }}</p>
-        </li>
-        <li>
-            <p><strong>Fecha de la transacción:</strong> {{ $purchase->created_at }}</p>
-        </li>
-    </ul>
-    
-    <a href="{{ route('purchases.edit', $purchase) }}">Editar</a>
+    <section class="section-personal">
+        <div class="m-4">
+            <a class="billboard-detail-back-button" href="{{ route('purchases.index') }}">
+                <img class="img-fluid" src="{{ asset('storage/images/icons/back-black-25.webp') }}" alt="Volver">
+            </a>
+        </div>
 
-    <form action="{{ route('purchases.destroy', $purchase) }}" method="POST">
-        @csrf
-        @method('DELETE')
-        <button type="submit" onclick="return confirm('¿Estás seguro de querer eliminar esta compra?')">Eliminar</button>
-    </form>
-</section>
+        <div>
+            <div class="d-flex justify-content-center align-items-center gap-4">
+                <h1 class="billboard-detail-comment-title">Compra Nro. {{ $purchase->id }}</h1>
+                <div class="m-4 d-flex gap-2">
+                    <a class="btn btn-primary" href="{{ route('purchases.edit', $purchase) }}">Editar</a>
 
+                    <form action="{{ route('purchases.destroy', $purchase) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-danger" type="submit"
+                            onclick="return confirm('¿Estás seguro de querer eliminar esta compra?')">Eliminar</button>
+                    </form>
+                </div>
+            </div>
+            <div class="rounded-3xl p-4 mb-4 billboard-detail-copy auth-form-input">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>Estado de la compra</td>
+                            <td>{{ $purchase->status }}</td>
+                        </tr>
+                        <tr>
+                            @if ($purchase->user)
+                                <td>Usuario</td>
+                                <td>{{ $purchase->user->name }} ({{ $purchase->user->email }})</td>
+                            @else
+                                <td>Usuario</td>
+                                <td>{{ $purchase->guest->name }} ({{ $purchase->guest->email }})</td>
+                            @endif
+                        </tr>
+                        <tr>
+                            <td>Precio de la entrada</td>
+                            <td>$ {{ $purchase->performance->play->ticket_price }}</td>
+                        </tr>
+                        <tr>
+                            <td>Cantidad de entradas adquiridas</td>
+                            <td>{{ $purchase->ticket_amount }}</td>
+                        </tr>
+                        <tr>
+                            <td>Porcentaje de comisión</td>
+                            <td>{{ $purchase->platform_fee_rate }}%</td>
+                        </tr>
+                        <tr>
+                            <td>Subtotal</td>
+                            <td>$ {{ $purchase->subtotal }}</td>
+                        </tr>
+                        <tr>
+                            <td>Total abonado</td>
+                            <td>{{ $purchase->total_amount }}</td>
+                        </tr>
+                        <tr>
+                            <td>Obra</td>
+                            <td>{{ $purchase->performance->play->title }}</td>
+                        </tr>
+                        <tr>
+                            <td>Función</td>
+                            <td>{{ $purchase->performance->start_time->translatedFormat('l d/m/Y - H:i') }}</td>
+                        </tr>
+                        <tr>
+                            <td>Fecha de la transacción</td>
+                            <td>{{ $purchase->created_at }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </section>
 @endsection

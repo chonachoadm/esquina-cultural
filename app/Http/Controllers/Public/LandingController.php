@@ -14,8 +14,8 @@ class LandingController extends Controller
     {
         $theaters = Theater::where('verification_status', 'verified')->take(3)->get();
 
-        $plays = Play::with('performances')  
-            ->withCount('comments')          
+        $plays = Play::with('performances')
+            ->withCount('comments')
             ->where('status', 'verified')
             ->whereHas('performances', function ($query) {
                 $query->where('start_time', '>', now());

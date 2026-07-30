@@ -44,7 +44,7 @@ class Theater extends Model
     {
         $parts = collect(explode(',', $this->address))
             ->map(fn($p) => trim($p));
-    
+
         return collect([
             ($parts[1] ?? null) . ' ' . ($parts[0] ?? null),
             $parts[2] ?? null

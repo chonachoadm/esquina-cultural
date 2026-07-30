@@ -57,15 +57,12 @@ class PlayController extends Controller
 
         $staffIds = $request->input('staff_ids', []);
         $staffRoles = $request->input('staff_roles', []);
-        
+
         foreach ($staffIds as $userId) {
             $play->users()->attach($userId, [
                 'role' => $staffRoles[$userId] ?? null
             ]);
         }
-        // $play->users()->attach(auth()->user()->id, [
-        //     'role' => 'Productor'
-        // ]);
         $start = \Carbon\Carbon::parse($request->start_date);
         $end = \Carbon\Carbon::parse($request->end_date);
         $performances = [];
@@ -94,12 +91,12 @@ class PlayController extends Controller
      */
     public function show(Play $play)
     {
-    $play->load([
-            'theater', 
+        $play->load([
+            'theater',
             'performances' => function ($query) {
                 $query->orderBy('start_time', 'asc');
             }
-    ]);
+        ]);
         return view('admin.plays.show', compact('play'));
     }
 
@@ -156,7 +153,7 @@ class PlayController extends Controller
     {
         $performances = [];
         $newPerformances = $request->input('new_performances', []);
-        
+
         foreach ($newPerformances as $startTime) {
             $performances[] = [
                 'play_id' => $play->id,
@@ -165,7 +162,7 @@ class PlayController extends Controller
                 'updated_at' => now(),
             ];
         }
-        
+
         if (!empty($performances)) {
             Performance::insert($performances);
         }
@@ -189,7 +186,11 @@ class PlayController extends Controller
     public function updateStaff(UpdatePlayStaffRequest $request, Play $play)
     {
         $syncData = [];
-        $staffIds = $request->input('staff_ids', []);
+        $staffIds = array_merge(
+            $request->input('staff_ids', []),
+            $request->input('new_staff_ids', [])
+        );
+
         $staffRoles = $request->input('staff_roles', []);
 
         foreach ($staffIds as $userId) {
@@ -211,7 +212,7 @@ class PlayController extends Controller
     }
 
 
-        public function verify(Play $play)
+    public function verify(Play $play)
     {
         $play->update([
             'status' => 'verified',

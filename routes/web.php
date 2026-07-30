@@ -130,6 +130,13 @@ Route::get('/check-storage', function () {
         'target_exists' => file_exists(storage_path('app/public')),
     ];
 });
+Route::get('/check-file', function () {
+    return [
+        'favicon' => file_exists(storage_path('app/public/images/favicon/favicon.svg')),
+        'images_folder' => is_dir(storage_path('app/public/images')),
+        'files' => glob(storage_path('app/public/images/favicon/*')),
+    ];
+});
 
 
 

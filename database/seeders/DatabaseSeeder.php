@@ -7,6 +7,8 @@ use App\Models\Theater;
 use App\Models\Play;
 use App\Models\Performance;
 use App\Models\Profile;
+use App\Models\Purchase;
+use App\Models\Payment;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -33,6 +35,10 @@ class DatabaseSeeder extends Seeder
             'email' => 'juan.perez@example.com',
             'password' => Hash::make('password'),
             'role' => 3,
+            'mercadopago_user_id' => config('services.mercadopago.seed_user_id'),
+            'mercadopago_access_token' => config('services.mercadopago.seed_access_token'),
+            'mercadopago_refresh_token' => config('services.mercadopago.seed_refresh_token'),
+            'mercadopago_connected_at' => config('services.mercadopago.seed_connected_at'),
         ]);
 
         $user3 = User::create([
@@ -61,6 +67,10 @@ class DatabaseSeeder extends Seeder
             'email' => 'martin.lopez@example.com',
             'password' => Hash::make('password'),
             'role' => 3,
+            'mercadopago_user_id' => config('services.mercadopago.seed_user_id'),
+            'mercadopago_access_token' => config('services.mercadopago.seed_access_token'),
+            'mercadopago_refresh_token' => config('services.mercadopago.seed_refresh_token'),
+            'mercadopago_connected_at' => config('services.mercadopago.seed_connected_at'),
         ]);
 
         $user7 = User::create([
@@ -124,6 +134,10 @@ class DatabaseSeeder extends Seeder
             'email' => 'florencia.medina@example.com',
             'password' => Hash::make('password'),
             'role' => 3,
+            'mercadopago_user_id' => config('services.mercadopago.seed_user_id'),
+            'mercadopago_access_token' => config('services.mercadopago.seed_access_token'),
+            'mercadopago_refresh_token' => config('services.mercadopago.seed_refresh_token'),
+            'mercadopago_connected_at' => config('services.mercadopago.seed_connected_at'),
         ]);
 
         $user16 = User::create([
@@ -203,12 +217,17 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // OBRAS
+        // Solo estos usuarios tienen MercadoPago conectado (ver arriba), por eso son
+        // los únicos candidatos a 'publicante' (user_id) de una obra.
+        $mpUsers = [$user2->id, $user6->id, $user15->id];
+
         $play1 = Play::create([
             'title' => 'Las Horas Quietas',
             'description' => 'Un drama íntimo sobre los vínculos familiares y los secretos que atraviesan generaciones.',
             'theater_id' => $theater1->id,
+            'user_id' => fake()->randomElement($mpUsers),
             'ticket_price' => 12000.00,
-            'cover_photo' => 'https://placehold.co/600x400',
+            'cover_photo' => 'Mns59QgCyQzyUYok9ZwjSaLylw10VZRzbGbdwIqv.jpg',
             'duration' => 85,
             'is_published' => true,
             'status' => 'verified',
@@ -218,8 +237,9 @@ class DatabaseSeeder extends Seeder
             'title' => 'La Última Función',
             'description' => 'Una compañía teatral se enfrenta a su despedida definitiva.',
             'theater_id' => $theater1->id,
+            'user_id' => fake()->randomElement($mpUsers),
             'ticket_price' => 14000.00,
-            'cover_photo' => 'https://placehold.co/600x400',
+            'cover_photo' => 'zfmi3oUcyXuUw2hgZ7lTdJTcYQL4pqwYmzZ4S1F1.webp',
             'duration' => 100,
             'is_published' => true,
             'status' => 'verified',
@@ -229,8 +249,9 @@ class DatabaseSeeder extends Seeder
             'title' => 'Habitación 23',
             'description' => 'Suspenso psicológico ambientado en un viejo hotel porteño.',
             'theater_id' => $theater1->id,
+            'user_id' => fake()->randomElement($mpUsers),
             'ticket_price' => 13000.00,
-            'cover_photo' => 'https://placehold.co/600x400',
+            'cover_photo' => 'cUwy83AnEUYBPxjoFa8khydyC9T1dGVYm6B8DwHf.jpg',
             'duration' => 95,
             'is_published' => true,
             'status' => 'verified',
@@ -240,8 +261,9 @@ class DatabaseSeeder extends Seeder
             'title' => 'El Silencio de las Cosas',
             'description' => 'Una obra poética sobre la memoria y el paso del tiempo.',
             'theater_id' => $theater1->id,
+            'user_id' => fake()->randomElement($mpUsers),
             'ticket_price' => 11000.00,
-            'cover_photo' => 'https://placehold.co/600x400',
+            'cover_photo' => 'mggV6i0i4UhappRYmBhpF9WJc3wTd4XL4FSocV7d.jpg',
             'duration' => 75,
             'is_published' => true,
             'status' => 'pending',
@@ -251,8 +273,9 @@ class DatabaseSeeder extends Seeder
             'title' => 'Crónicas de un Ascensor',
             'description' => 'Historias cruzadas de vecinos atrapados en un edificio.',
             'theater_id' => $theater1->id,
+            'user_id' => fake()->randomElement($mpUsers),
             'ticket_price' => 12500.00,
-            'cover_photo' => 'https://placehold.co/600x400',
+            'cover_photo' => 'siNj1RWgAX3REY9S1hhEdjAzPh1O9CLHOGDDgX7K.jpg',
             'duration' => 80,
             'is_published' => true,
             'status' => 'verified',
@@ -262,8 +285,9 @@ class DatabaseSeeder extends Seeder
             'title' => 'Manual para Perderse',
             'description' => 'Comedia contemporánea sobre la búsqueda de identidad.',
             'theater_id' => $theater2->id,
+            'user_id' => fake()->randomElement($mpUsers),
             'ticket_price' => 10000.00,
-            'cover_photo' => 'https://placehold.co/600x400',
+            'cover_photo' => 'KUJIkwZh5SJVhG5JBAIesupOHbMWfnVBk1t6dtR9.jpg',
             'duration' => 70,
             'is_published' => true,
             'status' => 'verified',
@@ -273,8 +297,9 @@ class DatabaseSeeder extends Seeder
             'title' => 'Después del Ensayo',
             'description' => 'Las tensiones de un elenco salen a la luz tras una función.',
             'theater_id' => $theater2->id,
+            'user_id' => fake()->randomElement($mpUsers),
             'ticket_price' => 11500.00,
-            'cover_photo' => 'https://placehold.co/600x400',
+            'cover_photo' => 'pR8GsV7xjFMMgrnnKtseGgL8JAKudUuwila0uncD.jpg',
             'duration' => 85,
             'is_published' => true,
             'status' => 'verified',
@@ -284,8 +309,9 @@ class DatabaseSeeder extends Seeder
             'title' => 'El Club de los Martes',
             'description' => 'Cinco desconocidos comparten historias inesperadas.',
             'theater_id' => $theater2->id,
+            'user_id' => fake()->randomElement($mpUsers),
             'ticket_price' => 10500.00,
-            'cover_photo' => 'https://placehold.co/600x400',
+            'cover_photo' => 'esEKl6cOD1RKhfxKc8Q2fgTcqgTC5QZr68nQzAjd.webp',
             'duration' => 90,
             'is_published' => true,
             'status' => 'verified',
@@ -295,8 +321,9 @@ class DatabaseSeeder extends Seeder
             'title' => 'Pequeñas Catástrofes',
             'description' => 'Comedia negra sobre las crisis cotidianas de una familia.',
             'theater_id' => $theater2->id,
+            'user_id' => fake()->randomElement($mpUsers),
             'ticket_price' => 12000.00,
-            'cover_photo' => 'https://placehold.co/600x400',
+            'cover_photo' => 'jMnHWncuoxilsQ39OD6kdpQ6ZzLP41sf6KjIRU7Z.webp',
             'duration' => 95,
             'is_published' => true,
             'status' => 'verified',
@@ -306,8 +333,9 @@ class DatabaseSeeder extends Seeder
             'title' => 'La Noche del Meteorito',
             'description' => 'Una historia fantástica ambientada en un barrio porteño.',
             'theater_id' => $theater2->id,
+            'user_id' => fake()->randomElement($mpUsers),
             'ticket_price' => 13000.00,
-            'cover_photo' => 'https://placehold.co/600x400',
+            'cover_photo' => 'KvQxL3fS0Np6ip7hFgWa7YmJKOfsz5QKFesoWJ7M.jpg',
             'duration' => 100,
             'is_published' => true,
             'status' => 'pending',
@@ -317,8 +345,9 @@ class DatabaseSeeder extends Seeder
             'title' => 'Bajo la Misma Lluvia',
             'description' => 'Drama coral sobre encuentros y despedidas.',
             'theater_id' => $theater3->id,
+            'user_id' => fake()->randomElement($mpUsers),
             'ticket_price' => 13500.00,
-            'cover_photo' => 'https://placehold.co/600x400',
+            'cover_photo' => '8eMye5jiEAArnQJwEmmzfFBw736Z6epOBg2GBxQq.jpg',
             'duration' => 95,
             'is_published' => true,
             'status' => 'verified',
@@ -328,8 +357,9 @@ class DatabaseSeeder extends Seeder
             'title' => 'Los Días de Invierno',
             'description' => 'Un relato sensible sobre amistades que sobreviven al tiempo.',
             'theater_id' => $theater3->id,
+            'user_id' => fake()->randomElement($mpUsers),
             'ticket_price' => 12500.00,
-            'cover_photo' => 'https://placehold.co/600x400',
+            'cover_photo' => 'VnYQQUsGJBtCwEWCpE29eQvVGZ7cVQNWLZV82X63.webp',
             'duration' => 85,
             'is_published' => true,
             'status' => 'verified',
@@ -339,8 +369,9 @@ class DatabaseSeeder extends Seeder
             'title' => 'El Inventor de Recuerdos',
             'description' => 'Ficción dramática sobre la memoria y la imaginación.',
             'theater_id' => $theater3->id,
+            'user_id' => fake()->randomElement($mpUsers),
             'ticket_price' => 14500.00,
-            'cover_photo' => 'https://placehold.co/600x400',
+            'cover_photo' => '217nNAM5szmSgrRa9B1lff2jxSDlqqlJklBViZzu.jpg',
             'duration' => 100,
             'is_published' => true,
             'status' => 'verified',
@@ -350,8 +381,9 @@ class DatabaseSeeder extends Seeder
             'title' => 'La Ciudad Invisible',
             'description' => 'Una mirada fantástica sobre la vida urbana.',
             'theater_id' => $theater3->id,
+            'user_id' => fake()->randomElement($mpUsers),
             'ticket_price' => 15000.00,
-            'cover_photo' => 'https://placehold.co/600x400',
+            'cover_photo' => 'n121R6HKQCG7pQJAV0oLWTDy5MSkLzqLC7gh0FgG.webp',
             'duration' => 110,
             'is_published' => true,
             'status' => 'verified',
@@ -361,8 +393,9 @@ class DatabaseSeeder extends Seeder
             'title' => 'Final de Temporada',
             'description' => 'Comedia dramática sobre un grupo de artistas en crisis.',
             'theater_id' => $theater3->id,
+            'user_id' => fake()->randomElement($mpUsers),
             'ticket_price' => 12000.00,
-            'cover_photo' => 'https://placehold.co/600x400',
+            'cover_photo' => 'WmVy7FmqzJPOgZKlrrJi7G2421LaluFwEAaFZYRL.jpg',
             'duration' => 90,
             'is_published' => true,
             'status' => 'verified',
@@ -528,15 +561,17 @@ class DatabaseSeeder extends Seeder
             ],
         ];
 
+        $performancesByPlay = [];
         foreach ($schedules as $playId => $slots) {
+
+            $performancesByPlay[$playId] = [];
 
             foreach ($slots as [$day, $hour, $minute]) {
 
                 $firstDate = now()->next($day);
+                for ($i = -2; $i < 8; $i++) {
 
-                for ($i = 0; $i < 8; $i++) {
-
-                    Performance::create([
+                    $performance = Performance::create([
                         'play_id' => $playId,
                         'start_time' => $firstDate
                             ->copy()
@@ -545,7 +580,71 @@ class DatabaseSeeder extends Seeder
                             ->setMinute($minute),
                         'status' => 'scheduled',
                     ]);
+
+                    $performancesByPlay[$playId][] = $performance;
                 }
+            }
+        }
+
+        // PURCHASES Y PAYMENTS
+        // (Sin Tickets: la creación real de tickets genera también un QR en
+        // storage/app/public/tickets/, ver PaymentController@webhook. Sin esa
+        // imagen generada, un ticket seedeado quedaría con el QR roto.)
+        $buyerUserIds = [
+            $user1->id, $user2->id, $user3->id, $user4->id, $user5->id,
+            $user6->id, $user7->id, $user8->id, $user9->id, $user10->id,
+            $user11->id, $user12->id, $user13->id, $user14->id, $user15->id,
+            $user16->id, $user17->id, $user18->id, $user19->id, $user20->id,
+            $user21->id,
+        ];
+        $paymentStatusByPurchaseStatus = [
+            'pending' => 'pending',
+            'confirmed' => 'approved',
+            'cancelled' => 'cancelled',
+            'expired' => 'rejected',
+        ];
+        $plays = [
+            $play1, $play2, $play3, $play4, $play5,
+            $play6, $play7, $play8, $play9, $play10,
+            $play11, $play12, $play13, $play14, $play15,
+        ];
+
+        foreach ($plays as $play) {
+            $performances = collect($performancesByPlay[$play->id])->random(min(3, count($performancesByPlay[$play->id])));
+
+            foreach ($performances as $performance) {
+                $isPast = $performance->start_time->isPast();
+
+                $ticketAmount = rand(1, 4);
+                $subtotal = $ticketAmount * $play->ticket_price;
+                $feeRate = 10;
+                $feeAmount = $feeRate * $subtotal / 100;
+                $totalAmount = $subtotal + $feeAmount;
+
+                $status = $isPast
+                    ? 'confirmed'
+                    : fake()->randomElement(['pending', 'confirmed', 'cancelled', 'expired']);
+
+                $purchase = Purchase::create([
+                    'user_id' => fake()->randomElement($buyerUserIds),
+                    'guest_id' => null,
+                    'performance_id' => $performance->id,
+                    'ticket_amount' => $ticketAmount,
+                    'subtotal' => $subtotal,
+                    'platform_fee_rate' => $feeRate,
+                    'platform_fee_amount' => $feeAmount,
+                    'total_amount' => $totalAmount,
+                    'status' => $status,
+                ]);
+
+                Payment::create([
+                    'purchase_id' => $purchase->id,
+                    'provider' => 'mercadopago',
+                    'external_id' => 'MP-' . fake()->unique()->numberBetween(100000000, 999999999),
+                    'status' => $paymentStatusByPurchaseStatus[$status],
+                    'amount' => $totalAmount,
+                    'metadata' => ['seeded' => true],
+                ]);
             }
         }
 

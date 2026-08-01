@@ -25,7 +25,7 @@ class UpdatePlayInfoRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'desc' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:8192',
             'theater' => 'required|integer|exists:theaters,id',
             'ticket_price' => 'required|numeric|min:0',
             'duration' => 'required|integer|min:1',
@@ -40,7 +40,7 @@ class UpdatePlayInfoRequest extends FormRequest
             'desc.required' => 'Este campo no puede quedar vacío.',
             'image.image' => 'El archivo debe ser una imagen válida.',
             'image.mimes' => 'El archivo debe ser una imagen válida (jpeg, png, jpg, gif, webp).',
-            'image.max' => 'El archivo no puede superar los 2 MB.',
+            'image.max' => 'El archivo no puede superar los 8 MB.',
             'theater.required' => 'Debes seleccionar un teatro.',
             'theater.exists' => 'El teatro seleccionado no existe.',
             'ticket_price.required' => 'El precio es requerido.',

@@ -9,9 +9,14 @@ use App\Models\Theater;
 use App\Models\Play;
 use App\Models\Comment;
 use App\Models\Performance;
+use App\Services\ImageUploadService;
 
 class PlayController extends Controller
 {
+    public function __construct(protected ImageUploadService $imageUploader)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -60,7 +65,7 @@ class PlayController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'desc' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:8192',
             'theater_id' => 'required|integer|exists:theaters,id',
             'ticket_price' => 'required|numeric|min:0',
             'duration' => 'required|integer|min:1',
@@ -101,8 +106,7 @@ class PlayController extends Controller
 
         $imageName = null;
         if (isset($validatedData['image'])) {
-            $imagePath = $validatedData['image']->store('images/plays', 'public');
-            $imageName = basename($imagePath);
+            $imageName = $this->imageUploader->storeBannerImage($validatedData['image'], 'images/plays');
         }
 
         $play = Play::create([

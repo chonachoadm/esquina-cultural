@@ -21,7 +21,7 @@
                                     alt="Foto de perfil de {{ $user->name }}">
                             @endif
                             <label for="image">Cambiar foto de perfil</label>
-                            <input class="p-1 rounded auth-form-input" type="file" name="image" id="image">
+                            <input class="p-1 rounded auth-form-input" type="file" name="image" id="image" accept="image/jpeg,image/png,image/gif,image/webp" data-cropper-aspect="1" data-cropper-width="500" data-cropper-height="500">
                             @error('image')
                                 <div><small class="text-danger">{{ $message }}</small></div>
                             @enderror

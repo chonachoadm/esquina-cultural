@@ -15,6 +15,16 @@
     object-fit: cover;
 }
 
+.image-cropper-wrapper {
+    max-height: 60vh;
+    overflow: hidden;
+}
+
+.image-cropper-wrapper img {
+    max-width: 100%;
+    display: block;
+}
+
 @import 'tailwindcss';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -495,6 +505,11 @@ hr {
 /* PROFILE */
 .profile-play-container:not(:last-child) {
     border-bottom: 1px solid black;
+}
+
+.profile-img {
+    width: 15%;
+    border-radius: 50%;
 }
 
 /* PROFILE */

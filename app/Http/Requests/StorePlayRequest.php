@@ -25,7 +25,7 @@ class StorePlayRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'desc' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:8192',
             'theater' => 'required|integer|exists:theaters,id',
             'ticket_price' => 'required|numeric|min:0',
             'duration' => 'required|integer|min:1',

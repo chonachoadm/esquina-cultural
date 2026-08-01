@@ -30,6 +30,7 @@ class StoreTheaterRequest extends FormRequest
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'capacity' => 'required|integer|min:1',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:8192',
         ];
     }
     public function messages(): array
@@ -43,6 +44,8 @@ class StoreTheaterRequest extends FormRequest
             'address.required' => 'Este campo no puede quedar vacío.',
             'capacity.required' => 'Este campo no puede quedar vacío.',
             'capacity.min' => 'La capacidad de la sala no puede ser menos que 1.',
+            'image.image' => 'El archivo debe ser una imagen válida.',
+            'image.mimes' => 'Los formatos de imagen aceptados son: .jpeg, .png, .jpg, .gif y .webp.',
         ];
     }
 }

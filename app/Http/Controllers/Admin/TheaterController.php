@@ -8,9 +8,14 @@ use App\Models\Theater;
 use App\Models\User;
 use App\Http\Requests\StoreTheaterRequest;
 use App\Http\Requests\UpdateTheaterRequest;
+use App\Services\ImageUploadService;
 
 class TheaterController extends Controller
 {
+    public function __construct(protected ImageUploadService $imageUploader)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -36,8 +41,7 @@ class TheaterController extends Controller
     {
         $imageName = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images/theaters', 'public');
-            $imageName = basename($imagePath);
+            $imageName = $this->imageUploader->storeBannerImage($request->file('image'), 'images/theaters');
         }
 
         $theater = Theater::create([

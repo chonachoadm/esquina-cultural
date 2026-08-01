@@ -16,6 +16,7 @@
     },
     "dependencies": {
         "bootstrap": "^5.3.8",
+        "cropperjs": "^1.6.2",
         "html5-qrcode": "^2.3.8",
         "tom-select": "^2.6.0"
     }

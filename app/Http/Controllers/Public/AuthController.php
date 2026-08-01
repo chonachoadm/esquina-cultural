@@ -9,9 +9,14 @@ use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Services\ImageUploadService;
 
 class AuthController extends Controller
 {
+    public function __construct(protected ImageUploadService $imageUploader)
+    {
+    }
+
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -38,9 +43,8 @@ class AuthController extends Controller
 
         $imageName = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images/profiles', 'public');
+            $imageName = $this->imageUploader->storeProfileImage($request->file('image'));
         }
-        $imageName = basename($imagePath);
 
         $user->profile()->create([
             'bio' => $request->bio,

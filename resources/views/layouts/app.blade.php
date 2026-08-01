@@ -28,6 +28,7 @@
     <footer>
         @include('partials.footer')
     </footer>
+    @include('components.image-cropper-modal')
 </body>
 
 </html>

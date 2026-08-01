@@ -12,9 +12,14 @@ use App\Http\Requests\StorePlayRequest;
 use App\Http\Requests\UpdatePlayInfoRequest;
 use App\Http\Requests\UpdatePlayPerformancesRequest;
 use App\Http\Requests\UpdatePlayStaffRequest;
+use App\Services\ImageUploadService;
 
 class PlayController extends Controller
 {
+    public function __construct(protected ImageUploadService $imageUploader)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -41,8 +46,7 @@ class PlayController extends Controller
     {
         $imageName = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images/plays', 'public');
-            $imageName = basename($imagePath);
+            $imageName = $this->imageUploader->storeBannerImage($request->file('image'), 'images/plays');
         }
 
         $play = Play::create([
@@ -117,8 +121,7 @@ class PlayController extends Controller
     {
         $imageName = $play->cover_photo;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images/plays', 'public');
-            $imageName = basename($imagePath);
+            $imageName = $this->imageUploader->storeBannerImage($request->file('image'), 'images/plays');
         }
 
         $play->update([

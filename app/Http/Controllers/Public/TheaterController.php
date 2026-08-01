@@ -6,9 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Theater;
+use App\Services\ImageUploadService;
 
 class TheaterController extends Controller
 {
+    public function __construct(protected ImageUploadService $imageUploader)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -35,12 +40,6 @@ class TheaterController extends Controller
     {
         $user = auth()->user();
 
-        $imageName = null;
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images/theaters', 'public');
-            $imageName = basename($imagePath);
-        }
-
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'bio' => 'nullable|string|max:500',
@@ -48,6 +47,7 @@ class TheaterController extends Controller
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'capacity' => 'required|integer|min:1',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:8192',
         ], [
             'name.required' => 'Este campo no puede quedar vacío.',
             'name.max' => 'El nombre no puede superar los 255 caracteres.',
@@ -55,7 +55,14 @@ class TheaterController extends Controller
             'address.required' => 'Este campo no puede quedar vacío.',
             'capacity.required' => 'Este campo no puede quedar vacío.',
             'capacity.min' => 'La capacidad de la sala no puede ser menos que 1.',
+            'image.image' => 'El archivo debe ser una imagen válida.',
+            'image.mimes' => 'Los formatos de imagen aceptados son: .jpeg, .png, .jpg, .gif y .webp.',
         ]);
+
+        $imageName = null;
+        if ($request->hasFile('image')) {
+            $imageName = $this->imageUploader->storeBannerImage($request->file('image'), 'images/theaters');
+        }
 
         $theater = Theater::create([
             'user_id' => $user->id,
@@ -112,6 +119,7 @@ class TheaterController extends Controller
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'capacity' => 'required|integer|min:1',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:8192',
         ], [
             'name.required' => 'Este campo no puede quedar vacío.',
             'name.max' => 'El nombre no puede superar los 255 caracteres.',
@@ -119,14 +127,15 @@ class TheaterController extends Controller
             'address.required' => 'Este campo no puede quedar vacío.',
             'capacity.required' => 'Este campo no puede quedar vacío.',
             'capacity.min' => 'La capacidad de la sala no puede ser menos que 1.',
+            'image.image' => 'El archivo debe ser una imagen válida.',
+            'image.mimes' => 'Los formatos de imagen aceptados son: .jpeg, .png, .jpg, .gif y .webp.',
         ]);
 
         $theater = Theater::where('id', $id)->first();
 
         $imageName = $theater->image;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images/theaters', 'public');
-            $imageName = basename($imagePath);
+            $imageName = $this->imageUploader->storeBannerImage($request->file('image'), 'images/theaters');
         }
 
         $theater->update([

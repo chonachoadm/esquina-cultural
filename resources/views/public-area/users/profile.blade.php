@@ -22,7 +22,7 @@
                 @if (!auth()->user()->profile->image)
                     <p><em>Sin foto de perfil</em></p>
                 @else
-                    <img class="w-25 img-fluid" src="{{ asset('storage/images/profiles/' . auth()->user()->profile->image) }}"
+                    <img class="img-fluid profile-img" src="{{ asset('storage/images/profiles/' . auth()->user()->profile->image) }}"
                         alt="Foto de perfil de {{ auth()->user()->name }}">
                 @endif
             </div>

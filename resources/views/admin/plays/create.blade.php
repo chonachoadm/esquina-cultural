@@ -31,7 +31,7 @@
                         </div>
                         <div class="d-flex flex-column w-100 mb-2">
                             <label for="image">Imagen a utilizar</label>
-                            <input class="p-1 rounded auth-form-input" type="file" name="image" id="image">
+                            <input class="p-1 rounded auth-form-input" type="file" name="image" id="image" accept="image/jpeg,image/png,image/gif,image/webp" data-cropper-aspect="1.7778" data-cropper-width="1200" data-cropper-height="675">
                             @error('image')
                                 <div><small class="text-danger">{{ $message }}</small></div>
                             @enderror

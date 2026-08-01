@@ -6,9 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Services\ImageUploadService;
 
 class UserController extends Controller
 {
+    public function __construct(protected ImageUploadService $imageUploader)
+    {
+    }
 
     public function edit(User $user)
     {
@@ -24,8 +28,7 @@ class UserController extends Controller
             'bio' => $request->bio,
         ];
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images/profiles', 'public');
-            $profileData['image'] = basename($imagePath);
+            $profileData['image'] = $this->imageUploader->storeProfileImage($request->file('image'));
         }
 
         $user->update([

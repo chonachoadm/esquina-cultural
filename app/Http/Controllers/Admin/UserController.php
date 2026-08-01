@@ -7,9 +7,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Services\ImageUploadService;
 
 class UserController extends Controller
 {
+    public function __construct(protected ImageUploadService $imageUploader)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -41,9 +46,8 @@ class UserController extends Controller
 
         $imageName = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images/profiles', 'public');
+            $imageName = $this->imageUploader->storeProfileImage($request->file('image'));
         }
-        $imageName = basename($imagePath);
 
         $user->profile()->create([
             'bio' => $request->bio,
@@ -80,8 +84,7 @@ class UserController extends Controller
             'bio' => $request->bio,
         ];
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images/profiles', 'public');
-            $profileData['image'] = basename($imagePath);
+            $profileData['image'] = $this->imageUploader->storeProfileImage($request->file('image'));
         }
 
         $user->update([

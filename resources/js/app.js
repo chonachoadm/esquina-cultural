@@ -4,6 +4,7 @@ import TomSelect from 'tom-select';
 import './map-view.js'
 import './navbar.js'
 import './ticket-scanner.js'
+import { initImageCropper } from './image-cropper.js'
 
 function initTheaterSelector() {
     const theaterSelect = document.getElementById('theater');
@@ -172,6 +173,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initPerformanceGeneratorAdmin();
     initPerformanceGeneratorPublic();
     initPerformanceEditor();
+    initImageCropper();
     const el = document.getElementById('staff-search');
 
     if (el) {

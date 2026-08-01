@@ -26,7 +26,7 @@ class RegisterRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'image' => 'nullable|image',
             'bio' => 'nullable|string|max:500',
         ];
     }
@@ -40,8 +40,6 @@ class RegisterRequest extends FormRequest
             'password.required' => 'La contraseña es obligatoria.',
             'password.min' => 'Esta contraseña es muy corta, debe tener por lo menos 6 caracteres.',
             'password.confirmed' => 'Las contraseñas no coinciden.',
-            'image.max' => 'Esta imagen es muy pesada, el máximo son 2mb.',
-            'image.mimes' => 'Los formatos de imagen aceptados son: jpeg, png, jpg, gif y webp.',
             'bio.max' => 'La biografía no puede superar los 500 caracteres.',
         ];
     }

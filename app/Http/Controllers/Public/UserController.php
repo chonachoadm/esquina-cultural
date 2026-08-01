@@ -43,7 +43,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         if($user === Auth::user()){
-            return view('profile');
+            return redirect()->route('profile');
         }
         return view('public-area.users.user-profile', compact('user'));
     }

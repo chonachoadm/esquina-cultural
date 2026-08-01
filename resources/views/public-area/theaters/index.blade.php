@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="section-public flex-grow-1">
+    <section class="section-public py-4 flex-grow-1">
         <div class="my-4 billboard-detail-copy">
             <h1 class="billboard-detail-comment-title">Teatros</h1>
             <div class="row justify-content-center mb-4">

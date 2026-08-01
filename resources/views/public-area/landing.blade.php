@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <section class="section-public flex-grow-1">
+    <section class="section-public py-4 flex-grow-1">
         @if (session('message'))
             <div class="alert alert-warning m-4">
                 <small>{{ session('message') }}</small>

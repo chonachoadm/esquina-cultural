@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="section-public">
+    <section class="section-public py-4">
         <a class="billboard-detail-back-button" href="{{ route('teatros.show', $play->theater) }}">
             <img class="img-fluid" src="{{ asset('storage/images/icons/back-black-25.webp') }}" alt="Volver">
         </a>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <section class="section-personal flex-grow-1">
+    <section class="section-personal py-4 flex-grow-1">
         <div class="billboard-detail-copy">
             <div id="ticket-scanner-result" class="mt-4"></div>
 

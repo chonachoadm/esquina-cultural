@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="section-personal">
+    <section class="section-personal py-4">
         <div class="my-4">
             <a class="billboard-detail-back-button" href="{{ route('users.index') }}">
                 <img class="img-fluid" src="{{ asset('storage/images/icons/back-black-25.webp') }}" alt="Volver">

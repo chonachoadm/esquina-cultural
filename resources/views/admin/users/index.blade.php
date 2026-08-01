@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="section-personal">
+    <section class="section-personal py-4">
         <div class="m-4">
             <h1 class="mb-4">Usuarios</h1>
             <a class="rounded px-4 py-2 btn btn-success" href="{{ route('users.create') }}">Crear usuario</a>

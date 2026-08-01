@@ -2,7 +2,7 @@
 @section('content')
 
 
-    <section class="section-personal">
+    <section class="section-personal py-4">
 
         @if (session('message'))
             <div class="alert alert-warning">

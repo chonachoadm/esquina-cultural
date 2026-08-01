@@ -21,15 +21,7 @@
         <a class="billboard-detail-back-button" href="{{ route('teatros.index') }}">
             <img class="img-fluid" src="{{ asset('storage/images/icons/back-black-25.webp') }}" alt="Volver">
         </a>
-        @auth
-            <div>
-                @if ($theater->user_id === auth()->id())
-                    <a class="billboard-detail-save-play-button" href="{{ route('teatros.edit', $theater->id) }}">
-                        <img class="img-fluid" src="{{ asset('storage/images/icons/edit-icon-25.webp') }}" alt="Editar teatro">
-                    </a>
-                @endif
-            </div>
-        @endauth
+
 
         <div class="my-4 d-flex align-items-center justify-content-center">
             <div class="my-4 rounded-3xl billboard-detail-copy billboard-card">
@@ -38,8 +30,19 @@
                         alt="Banner de {{ $theater->name }}">
                 </div>
                 <div class="my-4 p-2">
-                    <h1 class="text-center fw-bold">{{ $theater->name }}</h1>
-                    <p class="text-center">{{ $theater->bio }}</p>
+                    <div class="d-flex align-items-center justify-content-center gap-4">
+                        <h1 class="m-0 text-center fw-bold">{{ $theater->name }}</h1>
+                        @auth
+                        <div>
+                            @if ($theater->user_id === auth()->id())
+                                <a href="{{ route('teatros.edit', $theater->id) }}">
+                                    <img class="img-fluid" src="{{ asset('storage/images/icons/edit-icon-25.webp') }}" alt="Editar teatro">
+                                </a>
+                            @endif
+                        </div>
+                        @endauth
+                    </div>
+                        <p class="text-center">{{ $theater->bio }}</p>
                 </div>
                 <div class="row flex-column align-items-center py-4">
                     <small class="fst-italic text-center">{{ $theater->short_address }}</small>

@@ -26,7 +26,7 @@
         <div class="my-4 d-flex align-items-center justify-content-center">
             <div class="my-4 rounded-3xl billboard-detail-copy billboard-card">
                 <div class="container-img-theater">
-                    <img class="w-100 img img-fluid" src="{{ asset('storage/images/theaters/' . $theater->image) }}"
+                    <img class="img img-fluid" src="{{ asset('storage/images/theaters/' . $theater->image) }}"
                         alt="Banner de {{ $theater->name }}">
                 </div>
                 <div class="my-4 p-2">
@@ -47,6 +47,7 @@
                     </div>
                     <p class="text-center">{{ $theater->bio }}</p>
                     @if ($theater->verification_status === 'pending')
+                    <div class="d-flex justify-content-center gap-4">
                         <form action="{{ route('theaters.verify', $theater) }}" method="post">
                             @csrf
                             <button type="submit" class="btn btn-success">Aprobar</button>
@@ -55,6 +56,7 @@
                             @csrf
                             <button type="submit" class="btn btn-danger">Rechazar</button>
                         </form>
+                    </div>
                     @endif
                 </div>
                 <div class="row flex-column align-items-center py-4">

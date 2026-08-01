@@ -91,6 +91,13 @@ class TheaterController extends Controller
      */
     public function update(UpdateTheaterRequest $request, Theater $theater)
     {
+
+
+        $imageName = $theater->image;
+        if ($request->hasFile('image')) {
+            $imageName = $this->imageUploader->storeBannerImage($request->file('image'), 'images/theaters');
+        }
+
         $theater->update([
             'user_id' => $request->user,
             'name' => $request->name,
@@ -99,6 +106,7 @@ class TheaterController extends Controller
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
             'max_capacity' => $request->capacity,
+            'image' => $imageName,
         ]);
 
         return redirect()->route('theaters.index')->with('success', 'Teatro actualizado correctamente.');

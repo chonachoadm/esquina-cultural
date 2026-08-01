@@ -42,8 +42,6 @@ return [
         'redirect_uri' => env('MERCADOPAGO_REDIRECT_URI'),
         'test_mode' => env('MERCADOPAGO_TEST_MODE'),
         'webhook_secret' => env('MERCADOPAGO_WEBHOOK_SECRET'),
-        // Cuenta de prueba usada únicamente por database/seeders/DatabaseSeeder.php
-        // para simular usuarios con MercadoPago ya conectado.
         'seed_user_id' => env('MERCADOPAGO_SEED_USER_ID'),
         'seed_access_token' => env('MERCADOPAGO_SEED_ACCESS_TOKEN'),
         'seed_refresh_token' => env('MERCADOPAGO_SEED_REFRESH_TOKEN'),

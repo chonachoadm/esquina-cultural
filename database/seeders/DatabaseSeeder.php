@@ -217,8 +217,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // OBRAS
-        // Solo estos usuarios tienen MercadoPago conectado (ver arriba), por eso son
-        // los únicos candidatos a 'publicante' (user_id) de una obra.
         $mpUsers = [$user2->id, $user6->id, $user15->id];
 
         $play1 = Play::create([
@@ -587,9 +585,6 @@ class DatabaseSeeder extends Seeder
         }
 
         // PURCHASES Y PAYMENTS
-        // (Sin Tickets: la creación real de tickets genera también un QR en
-        // storage/app/public/tickets/, ver PaymentController@webhook. Sin esa
-        // imagen generada, un ticket seedeado quedaría con el QR roto.)
         $buyerUserIds = [
             $user1->id, $user2->id, $user3->id, $user4->id, $user5->id,
             $user6->id, $user7->id, $user8->id, $user9->id, $user10->id,

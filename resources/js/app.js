@@ -244,7 +244,7 @@ document.querySelectorAll('.remove-user-btn').forEach(button => {
     });
 });
 
-// Manejo de cambio de formulario de auth
+
 const loginTab = document.getElementById('login-tab');
 const registerTab = document.getElementById('register-tab');
 

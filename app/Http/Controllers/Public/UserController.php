@@ -42,8 +42,7 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        $authUser = Auth::user();
-        if($user === $authUser){
+        if($user === Auth::user()){
             return view('profile');
         }
         return view('public-area.users.user-profile', compact('user'));

@@ -35,7 +35,10 @@ class PlayController extends Controller
     public function create()
     {
         $theaters = Theater::all();
-        $users = User::all();
+        $users = User::whereNotNull('mercadopago_access_token')
+            ->whereNotNull('mercadopago_user_id')
+            ->whereNotNull('mercadopago_connected_at')
+            ->get();
         return view('admin.plays.create', compact('theaters', 'users'));
     }
 
@@ -54,6 +57,7 @@ class PlayController extends Controller
             'description' => $request->desc,
             'cover_photo' => $imageName,
             'theater_id' => $request->theater,
+            'user_id' => $request->user_id,
             'ticket_price' => $request->ticket_price,
             'duration' => $request->duration,
             'is_published' => false,
@@ -110,8 +114,12 @@ class PlayController extends Controller
     public function editInfo(Play $play)
     {
         $theaters = Theater::all();
+        $users = User::whereNotNull('mercadopago_access_token')
+            ->whereNotNull('mercadopago_user_id')
+            ->whereNotNull('mercadopago_connected_at')
+            ->get();
         $play->load('theater');
-        return view('admin.plays.edit-info', compact('play', 'theaters'));
+        return view('admin.plays.edit-info', compact('play', 'theaters', 'users'));
     }
 
     /**
@@ -129,6 +137,7 @@ class PlayController extends Controller
             'description' => $request->desc,
             'cover_photo' => $imageName,
             'theater_id' => $request->theater,
+            'user_id' => $request->user_id,
             'ticket_price' => $request->ticket_price,
             'duration' => $request->duration,
         ]);

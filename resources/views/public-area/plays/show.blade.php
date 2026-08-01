@@ -21,7 +21,7 @@
             <img class="img-fluid" src="{{ asset('storage/images/icons/back-black-25.webp') }}" alt="Volver">
         </a>
 
-        <img class="mx-auto mt-4 img-fluid" src="{{ asset('storage/images/plays/' . $play->cover_photo) }}"
+        <img class="mx-auto mt-4 img-fluid play-img" src="{{ asset('storage/images/plays/' . $play->cover_photo) }}"
             alt="{{ $play->title }}">
 
         <div class="row justify-content-center billboard-detail-copy">

@@ -56,6 +56,19 @@
                             @enderror
                         </div>
                         <div class="d-flex flex-column w-100 mb-2">
+                            <label for="user_id">Usuario creador</label>
+                            <select class="p-1 rounded auth-form-input" name="user_id" id="user_id">
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}"
+                                        {{ old('user_id', $play->user_id) == $user->id ? 'selected' : '' }}>
+                                        {{ $user->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('user_id')
+                                <div><small class="text-danger">{{ $message }}</small></div>
+                            @enderror
+                        </div>
+                        <div class="d-flex flex-column w-100 mb-2">
                             <label for="ticket_price">Precio de la entrada</label>
                             <input class="p-1 rounded auth-form-input" type="number" name="ticket_price" id="ticket_price"
                                 value="{{ old('ticket_price', $play->ticket_price) }}" />

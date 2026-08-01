@@ -27,6 +27,7 @@ class StorePlayRequest extends FormRequest
             'desc' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:8192',
             'theater' => 'required|integer|exists:theaters,id',
+            'user_id' => 'required|integer|exists:users,id',
             'ticket_price' => 'required|numeric|min:0',
             'duration' => 'required|integer|min:1',
             'staff_ids' => 'nullable|array',
@@ -54,6 +55,10 @@ class StorePlayRequest extends FormRequest
             'theater.required' => 'Debe seleccionar un teatro.',
             'theater.integer' => 'Este teatro no es válido.',
             'theater.exists' => 'Este teatro no está registrado en nuestra plataforma.',
+
+            'user_id.required' => 'Debe seleccionar un usuario creador.',
+            'user_id.integer' => 'Este usuario no es válido.',
+            'user_id.exists' => 'Este usuario no está registrado en nuestra plataforma.',
 
             'ticket_price.required' => 'El precio de la entrada es obligatorio.',
             'ticket_price.numeric' => 'El precio debe ser un número válido.',

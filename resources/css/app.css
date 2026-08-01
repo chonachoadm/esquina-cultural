@@ -414,6 +414,10 @@ hr {
     z-index: 1;
 }
 
+.play-img {
+    max-height: 500px;
+}
+
 .billboard-detail-save-play-button {
     background-color: rgba(220, 20, 60);
     padding: .8em;

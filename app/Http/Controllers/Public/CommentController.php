@@ -33,9 +33,10 @@ class CommentController extends Controller
      */
     public function store(StoreCommentRequest $request, Play $play)
     {
+        $user = Auth::user();
         $comment = Comment::create([
             'play_id' => $play->id,
-            'user_id' => Auth::id(),
+            'user_id' => $user->id,
             'comment_body' => $request->body,
         ]);
 

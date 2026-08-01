@@ -139,7 +139,7 @@
                                     <div class="d-flex justify-content-between">
                                         @if ($comment->user)
                                             <span class="billboard-detail-comment-owner"><a class="link-hover-comment"
-                                                    href="{{ route('user.profile', $user) }}">{{ $comment->user->name }}</a></span>
+                                                    href="{{ route('user.profile', $comment->user) }}">{{ $comment->user->name }}</a></span>
                                         @else
                                             <span class="billboard-detail-comment-owner"><em>Usuario inexistente</em></span>
                                         @endif

@@ -42,7 +42,7 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        if($user === Auth::user()){
+        if($user->is(Auth::user())){
             return redirect()->route('profile');
         }
         return view('public-area.users.user-profile', compact('user'));

@@ -89,7 +89,7 @@
                 @endif
 
                 <div class="p-2">
-                    @if ($theater->user->id === auth()->user()->id)
+                    @if ($theater->user === auth()->user())
                         @php
                             $pendingPlays = $theater->plays->where('status', 'pending');
                         @endphp
@@ -133,7 +133,7 @@
                 </div>
             </div>
         </div>
-        @if ($theater->user->id === auth()->user()->id)
+        @if ($theater->user === auth()->user())
             <form class="pb-4 d-flex justify-content-center" action="{{ route('teatros.destroy', $theater->id) }}"
                 method="post">
                 @csrf

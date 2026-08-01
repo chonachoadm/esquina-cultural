@@ -3,7 +3,7 @@
 @section('content')
     <section class="section-personal py-4 flex-grow-1">
         <div class="my-4">
-            <a class="billboard-detail-back-button" href="{{ route('teatros.index') }}">
+            <a class="billboard-detail-back-button" href="{{ route('teatros.show', $theater) }}">
                 <img class="img-fluid" src="{{ asset('storage/images/icons/back-black-25.webp') }}" alt="Volver">
             </a>
 

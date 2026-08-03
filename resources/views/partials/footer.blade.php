@@ -1,7 +1,7 @@
 <div class="py-2 footer">
     <div class="row w-100 align-items-center justify-content-around gap-4 mx-auto">
         <div class="col-10 col-sm-4 col-lg-3 row justify-content-center my-2">
-            <a class="d-flex justify-content-center" href="{{ route('landing') }}">
+            <a class="p-0" href="{{ route('landing') }}">
                 <img class="w-75 img-fluid" src="{{ asset('storage/images/isologo/isologo-amarillo-blanco.svg') }}"
                     alt="Logo Esquina Cultural">
             </a>

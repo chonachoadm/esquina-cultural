@@ -45,7 +45,7 @@
                     <form action="{{ route('public.user.delete') }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button class="text-danger" type="submit"
+                        <button class="btn btn-danger" type="submit"
                             onclick="return confirm('Estás seguro de querer eliminar tu cuenta?')"><strong>Eliminar
                                 cuenta</strong></button>
                     </form>

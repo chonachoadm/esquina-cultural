@@ -219,6 +219,10 @@ html {
     width: 25px;
 }
 
+.footer-img-link {
+    max-width: 200px;
+}
+
 /* FOOTER */
 
 hr {

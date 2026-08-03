@@ -29,7 +29,7 @@
                 @if(!$theater->image)
                     <p class="text-center mt-4"><em>Sin foto de portada</em></p>
                 @else
-                    <img class="w-100 img img-fluid" src="{{ asset('storage/images/theaters/' . $theater->image) }}"
+                    <img class="w-100 img img-fluid" src="{{ upload_asset('images/theaters/' . $theater->image) }}"
                         alt="Banner de {{ $theater->name }}">
                     @endif
                 </div>
@@ -68,7 +68,7 @@
                                     <div class="col-11 col-sm-6 col-md-4 col-lg-3 m-4 p-0 rounded-3xl billboard-card">
                                         <div class="billboard-img-container">
                                             <img class="img-fluid"
-                                                src="{{ asset('storage/images/plays/' . $play->cover_photo) }}"
+                                                src="{{ upload_asset('images/plays/' . $play->cover_photo) }}"
                                                 alt="{{ $play->title }}">
                                         </div>
                                         <div class="p-2 d-flex align-items-center justify-content-between">

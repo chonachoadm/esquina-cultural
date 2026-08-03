@@ -145,7 +145,7 @@ class PaymentController extends Controller
                 ->size(300)
                 ->build();
             $path = 'tickets/qr_' . $ticket->id . '.png';
-            Storage::disk('public')->put($path, $result->getString());
+            Storage::disk(config('filesystems.uploads_disk', 'public'))->put($path, $result->getString());
 
             Mail::to($purchase->user?->email ?? $purchase->guest?->email)->send(new PurchaseConfirmedMail($ticket));
         }

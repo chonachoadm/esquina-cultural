@@ -12,7 +12,7 @@
                 @csrf
                 @method('PUT')
                 @if ($user->profile->image)
-                    <img class="w-25" src="{{ asset('storage/images/profiles/' . $user->profile->image) }}"
+                    <img class="w-25" src="{{ upload_asset('images/profiles/' . $user->profile->image) }}"
                         alt="Foto de perfil de {{ $user->name }}">
                 @endif
                 <div class="d-flex flex-column w-100 mb-2">

@@ -23,7 +23,7 @@
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3 mx-1 p-0 rounded-3xl billboard-card">
                         <div class="billboard-img-container">
                             <a href="{{ route('obras.show', $play) }}"><img class="mx-auto img-fluid"
-                                    src="{{ asset('storage/images/plays/' . $play->cover_photo) }}"
+                                    src="{{ upload_asset('images/plays/' . $play->cover_photo) }}"
                                     alt="{{ $play->title }}"></a>
                         </div>
                         <div class="d-flex align-items-center justify-content-between p-4">

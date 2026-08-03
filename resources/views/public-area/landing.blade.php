@@ -42,7 +42,7 @@
                                 <div class="rounded-3xl billboard-card p-2">
                                     <div class="billboard-img-container">
                                         <a href="{{ route('obras.show', $play) }}"><img class="img-fluid w-100"
-                                                src="{{ asset('storage/images/plays/' . $play->cover_photo) }}"
+                                                src="{{ upload_asset('images/plays/' . $play->cover_photo) }}"
                                                 alt="{{ $play->title }}"></a>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-between">

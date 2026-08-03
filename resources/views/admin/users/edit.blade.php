@@ -17,7 +17,7 @@
                         @method('PUT')
                         <div class="d-flex flex-column w-100 mb-2">
                             @if ($user->profile->image)
-                                <img src="{{ asset('storage/images/profiles/' . $user->profile->image) }}"
+                                <img src="{{ upload_asset('images/profiles/' . $user->profile->image) }}"
                                     alt="Foto de perfil de {{ $user->name }}">
                             @endif
                             <label for="image">Cambiar foto de perfil</label>

@@ -17,6 +17,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Uploads Disk
+    |--------------------------------------------------------------------------
+    |
+    | Disk used to store user-generated content (profile pictures, play/theater
+    | banners, ticket QR codes). Locally this stays on the "public" disk, but in
+    | production (e.g. Laravel Cloud) it should point to an object storage disk
+    | such as "s3" so uploads survive redeploys, since the local filesystem is
+    | not persisted between deployments.
+    |
+    */
+
+    'uploads_disk' => env('FILESYSTEM_UPLOADS_DISK', 'public'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Filesystem Disks
     |--------------------------------------------------------------------------
     |
@@ -39,10 +54,18 @@ return [
         ],
 
         'public' => [
-            'driver' => 'local',
+            'driver' => env('AWS_BUCKET') ? 's3' : 'local',
             'root' => storage_path('app/public'),
-            'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
             'visibility' => 'public',
+            'key' => env('AWS_ACCESS_KEY_ID'),
+            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            'region' => env('AWS_DEFAULT_REGION'),
+            'bucket' => env('AWS_BUCKET'),
+            'endpoint' => env('AWS_ENDPOINT'),
+            'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
+            'url' => env('AWS_BUCKET')
+                ? env('AWS_URL')
+                : rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
             'throw' => false,
             'report' => false,
         ],

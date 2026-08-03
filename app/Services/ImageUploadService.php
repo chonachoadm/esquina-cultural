@@ -26,8 +26,10 @@ class ImageUploadService
      * Recorta al centro, redimensiona y comprime una imagen subida, la guarda
      * en el disco indicado y devuelve el nombre de archivo generado.
      */
-    public function storeResized(UploadedFile $file, string $directory, int $width, int $height, string $disk = 'public'): string
+    public function storeResized(UploadedFile $file, string $directory, int $width, int $height, ?string $disk = null): string
     {
+        $disk ??= config('filesystems.uploads_disk', 'public');
+
         $encoded = $this->manager->read($file->getRealPath())
             ->cover($width, $height)
             ->toWebp(quality: 82);

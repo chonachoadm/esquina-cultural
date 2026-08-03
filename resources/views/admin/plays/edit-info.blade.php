@@ -32,7 +32,7 @@
                         </div>
                         <div class="d-flex flex-column w-100 mb-2">
                             @if ($play->cover_photo)
-                                <img src="{{ asset('storage/images/plays/' . $play->cover_photo) }}"
+                                <img src="{{ upload_asset('images/plays/' . $play->cover_photo) }}"
                                     alt="Banner de {{ $play->title }}">
                             @endif
                             <label for="image">Imagen a utilizar</label>

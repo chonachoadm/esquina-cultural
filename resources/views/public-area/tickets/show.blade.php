@@ -22,7 +22,7 @@
                             class="badge {{ $ticket->status_badge_class }}">{{ $ticket->status_label }}</span></p>
 
                     <div class="d-flex justify-content-center my-4">
-                        <img src="{{ asset('storage/tickets/qr_' . $ticket->id . '.png') }}" alt="Código QR">
+                        <img src="{{ upload_asset('tickets/qr_' . $ticket->id . '.png') }}" alt="Código QR">
                     </div>
 
                     <p class="text-center"><small>{{ $ticket->ticket_code }}</small></p>

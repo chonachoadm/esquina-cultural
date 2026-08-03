@@ -10,7 +10,7 @@
                 {{ $ticket->purchase->ticket_amount == 1 ? 'entrada' : 'entradas' }}</em></p>
 
         <div>
-            <img src="{{ asset('storage/tickets/qr_' . $ticket->id . '.png') }}" alt="Código QR">
+            <img src="{{ upload_asset('tickets/qr_' . $ticket->id . '.png') }}" alt="Código QR">
         </div>
 
         <p class="text-center"><small>{{ $ticket->ticket_code }}</small></p>

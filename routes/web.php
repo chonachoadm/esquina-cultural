@@ -125,7 +125,7 @@ Route::get('/api/users/search', function (Request $request) {
                 'id' => $user->id,
                 'name' => $user->name,
                 'avatar' => $user->profile?->image
-                    ? asset('storage/images/profiles/' . $user->profile->image)
+                    ? upload_asset('images/profiles/' . $user->profile->image)
                     : 'https://api.dicebear.com/7.x/avataaars/svg?seed=' . $user->name,
             ];
         });

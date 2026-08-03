@@ -136,7 +136,7 @@
 }
 
 html {
-    max-width: 1920px;
+    /* max-width: 1920px; */
 }
 
 .nav {
@@ -512,6 +512,7 @@ hr {
 }
 
 .profile-img {
+    min-width: 150px;
     width: 15%;
     border-radius: 50%;
 }

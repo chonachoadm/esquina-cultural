@@ -1,9 +1,8 @@
-<div class="footer">
-
+<div class="py-2 footer">
     <div class="row w-100 align-items-center justify-content-around gap-4 mx-auto">
         <div class="col-10 col-sm-4 col-lg-3 row justify-content-center my-2">
-            <a href="{{ route('landing') }}">
-                <img class="w-75" src="{{ asset('storage/images/isologo/isologo-amarillo-blanco.svg') }}"
+            <a class="d-flex justify-content-center" href="{{ route('landing') }}">
+                <img class="w-75 img-fluid" src="{{ asset('storage/images/isologo/isologo-amarillo-blanco.svg') }}"
                     alt="Logo Esquina Cultural">
             </a>
         </div>
@@ -35,7 +34,7 @@
             <ul class="p-0">
                 <li class="d-flex align-items-center gap-2 mb-4 footer-list-item"><img class="img-fluid footer-icon"
                         src="{{ asset('storage/images/icons/phone-icon.svg') }}" alt="Teléfono">
-                    <p class="m-0">+54 9 11 5329-7379</p>
+                    <p class="m-0 text-white text-decoration-none">+54 9 11 5329-7379</p>
                 </li>
                 <li class="footer-list-item">
                     <a class="d-flex align-items-center gap-2 mb-4 link-hover-footer"

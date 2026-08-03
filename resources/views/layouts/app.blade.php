@@ -12,7 +12,7 @@
     <title>Esquina Cultural</title>
 </head>
 
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100 ">
     <header>
         @if (auth()->user()?->isAdmin())
             @include('partials.nav-admin')

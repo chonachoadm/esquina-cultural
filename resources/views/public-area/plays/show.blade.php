@@ -54,9 +54,9 @@
                             </form>
                         @endif
                     </div>
-                @endauth
-            </div>
-            <div class="row justify-content-around my-4 w-100">
+                </div>
+            @endauth
+            <div class="row justify-content-around my-4 w-100 px-0 px-md-2">
                 <div class="col-12 col-lg-4 d-flex flex-column align-items-center my-4">
                     <h1 class="billboard-detail-h1">{{ $play->title }}</h1>
                     <small>{{ $play->duration }} minutos</small>
@@ -68,7 +68,7 @@
                     </div>
                     <div class="d-flex gap-4">
                         @foreach ($play->schedule_slots as $slot)
-                            <p class="rounded-pill border p-2 billboard-detail-play-schedule">{{ $slot['day'] }}
+                            <p class="rounded-pill border p-2 text-center billboard-detail-play-schedule">{{ $slot['day'] }}
                                 {{ $slot['time'] }}</p>
                         @endforeach
                     </div>

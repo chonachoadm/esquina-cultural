@@ -13,7 +13,7 @@
                 <div class="row justify-content-center">
                     <form
                         class="col-12 col-md-6 col-lg-4 d-flex flex-column align-items-center gap-4 p-4 my-4 rounded-3xl auth-forms"
-                        action="{{ route('theaters.update', $theater) }}" method="POST">
+                        action="{{ route('theaters.update', $theater) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="d-flex flex-column w-100 mb-2">

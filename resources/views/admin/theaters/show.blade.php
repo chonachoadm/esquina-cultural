@@ -26,8 +26,12 @@
         <div class="my-4 d-flex align-items-center justify-content-center">
             <div class="my-4 rounded-3xl billboard-detail-copy billboard-card">
                 <div class="container-img-theater">
-                    <img class="img img-fluid" src="{{ upload_asset('images/theaters/' . $theater->image) }}"
-                        alt="Banner de {{ $theater->name }}">
+                    @if(!$theater->image)
+                        <p class="text-center mt-4"><em>Sin foto de portada</em></p>
+                    @else
+                        <img class="w-100 img img-fluid" src="{{ upload_asset('images/theaters/' . $theater->image) }}"
+                            alt="Banner de {{ $theater->name }}">
+                    @endif
                 </div>
                 <div class="my-4 p-2">
                     <div class="row justify-content-center align-items-center mb-4">

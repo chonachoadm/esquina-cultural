@@ -47,16 +47,16 @@
                     </div>
                     <p class="text-center">{{ $theater->bio }}</p>
                     @if ($theater->verification_status === 'pending')
-                    <div class="d-flex justify-content-center gap-4">
-                        <form action="{{ route('theaters.verify', $theater) }}" method="post">
-                            @csrf
-                            <button type="submit" class="btn btn-success">Aprobar</button>
-                        </form>
-                        <form action="{{ route('theaters.reject', $theater) }}" method="post">
-                            @csrf
-                            <button type="submit" class="btn btn-danger">Rechazar</button>
-                        </form>
-                    </div>
+                        <div class="d-flex justify-content-center gap-4">
+                            <form action="{{ route('theaters.verify', $theater) }}" method="post">
+                                @csrf
+                                <button type="submit" class="btn btn-success">Aprobar</button>
+                            </form>
+                            <form action="{{ route('theaters.reject', $theater) }}" method="post">
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Rechazar</button>
+                            </form>
+                        </div>
                     @endif
                 </div>
                 <div class="row flex-column align-items-center py-4">
@@ -77,14 +77,15 @@
                                 @if ($play->status === 'verified')
                                     <div class="col-11 col-sm-6 col-md-4 col-lg-3 m-4 p-0 rounded-3xl billboard-card">
                                         <div class="billboard-img-container">
-                                            <img class="img-fluid"
-                                                src="{{ upload_asset('images/plays/' . $play->cover_photo) }}"
-                                                alt="{{ $play->title }}">
+                                            <a href="{{ route('obras.show', $play) }}"><img class="mx-auto img-fluid"
+                                                    src="{{ upload_asset('images/plays/' . $play->cover_photo) }}"
+                                                    alt="{{ $play->title }}"></a>
                                         </div>
-                                        <div class="p-2 d-flex align-items-center justify-content-between">
+                                        <div class="p-4 d-flex align-items-center justify-content-between">
                                             <div class="d-flex flex-column billboard-play-text">
                                                 <div>
-                                                    <h2 class="fs-4 fw-bold">{{ $play->title }}</h2>
+                                                    <h2 class="fs-4 fw-bold"><a class="link-hover"
+                                                            href="{{ route('obras.show', $play) }}">{{ $play->title }}</a></h2>
                                                 </div>
                                                 <div class="ps-3">
                                                     @foreach ($play->schedule_short_slots as $slot)
@@ -94,7 +95,7 @@
                                                 </div>
                                             </div>
                                             <a class="d-flex align-items-center justify-content-center rounded billboard-ticket-button"
-                                                href="{{ route('obras.show', $play) }}">Entradas</a>
+                                                href="{{ route('compra.create', $play) }}">Entradas</a>
                                         </div>
                                     </div>
                                 @endif

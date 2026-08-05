@@ -26,11 +26,11 @@
         <div class="my-4 d-flex align-items-center justify-content-center">
             <div class="my-4 rounded-3xl billboard-detail-copy billboard-card">
                 <div class="container-img-theater">
-                @if(!$theater->image)
-                    <p class="text-center mt-4"><em>Sin foto de portada</em></p>
-                @else
-                    <img class="w-100 img img-fluid" src="{{ upload_asset('images/theaters/' . $theater->image) }}"
-                        alt="Banner de {{ $theater->name }}">
+                    @if(!$theater->image)
+                        <p class="text-center mt-4"><em>Sin foto de portada</em></p>
+                    @else
+                        <img class="w-100 img img-fluid" src="{{ upload_asset('images/theaters/' . $theater->image) }}"
+                            alt="Banner de {{ $theater->name }}">
                     @endif
                 </div>
 
@@ -38,16 +38,17 @@
                     <div class="d-flex align-items-center justify-content-center gap-4">
                         <h1 class="m-0 text-center fw-bold">{{ $theater->name }}</h1>
                         @auth
-                        <div>
-                            @if ($theater->user_id === auth()->id())
-                                <a href="{{ route('teatros.edit', $theater->id) }}">
-                                    <img class="img-fluid" src="{{ asset('storage/images/icons/edit-icon-25.webp') }}" alt="Editar teatro">
-                                </a>
-                            @endif
-                        </div>
+                            <div>
+                                @if ($theater->user_id === auth()->id())
+                                    <a href="{{ route('teatros.edit', $theater->id) }}">
+                                        <img class="img-fluid" src="{{ asset('storage/images/icons/edit-icon-25.webp') }}"
+                                            alt="Editar teatro">
+                                    </a>
+                                @endif
+                            </div>
                         @endauth
                     </div>
-                        <p class="text-center">{{ $theater->bio }}</p>
+                    <p class="text-center">{{ $theater->bio }}</p>
                 </div>
                 <div class="row flex-column align-items-center py-4">
                     <small class="fst-italic text-center">{{ $theater->short_address }}</small>
@@ -67,14 +68,15 @@
                                 @if ($play->status === 'verified')
                                     <div class="col-11 col-sm-6 col-md-4 col-lg-3 m-4 p-0 rounded-3xl billboard-card">
                                         <div class="billboard-img-container">
-                                            <img class="img-fluid"
-                                                src="{{ upload_asset('images/plays/' . $play->cover_photo) }}"
-                                                alt="{{ $play->title }}">
+                                            <a href="{{ route('obras.show', $play) }}"><img class="mx-auto img-fluid"
+                                                    src="{{ upload_asset('images/plays/' . $play->cover_photo) }}"
+                                                    alt="{{ $play->title }}"></a>
                                         </div>
-                                        <div class="p-2 d-flex align-items-center justify-content-between">
+                                        <div class="p-4 d-flex align-items-center justify-content-between">
                                             <div class="d-flex flex-column billboard-play-text">
                                                 <div>
-                                                    <h2 class="fs-4 fw-bold">{{ $play->title }}</h2>
+                                                    <h2 class="fs-4 fw-bold"><a class="link-hover"
+                                                            href="{{ route('obras.show', $play) }}">{{ $play->title }}</a></h2>
                                                 </div>
                                                 <div class="ps-3">
                                                     @foreach ($play->schedule_short_slots as $slot)
@@ -84,7 +86,7 @@
                                                 </div>
                                             </div>
                                             <a class="d-flex align-items-center justify-content-center rounded billboard-ticket-button"
-                                                href="{{ route('obras.show', $play) }}">Entradas</a>
+                                                href="{{ route('compra.create', $play) }}">Entradas</a>
                                         </div>
                                     </div>
                                 @endif
@@ -104,24 +106,19 @@
                             </h2>
                             @foreach ($theater->plays as $play)
                                 @if ($play->status === 'pending')
-                                    <div
-                                        class="w-100 d-flex flex-column flex-lg-row align-items-center justify-content-between my-4">
+                                    <div class="w-100 d-flex flex-column flex-lg-row align-items-center justify-content-between my-4">
                                         <h4 class="col-12 col-lg-2 mb-2 m-lg-0 text-center">{{ $play->title }}</h4>
-                                        <div
-                                            class="w-100 row flex-column flex-lg-row align-items-center justify-content-center gap-4">
-                                            <form class="col-12 col-lg-2" action="{{ route('obras.check', $play) }}"
-                                                method="get">
+                                        <div class="w-100 row flex-column flex-lg-row align-items-center justify-content-center gap-4">
+                                            <form class="col-12 col-lg-2" action="{{ route('obras.check', $play) }}" method="get">
                                                 @csrf
                                                 <button type="submit"
                                                     class="w-100 d-flex align-items-center justify-content-center rounded py-2 theater-check-button">Revisar</button>
                                             </form>
-                                            <form class="col-12 col-lg-2" action="{{ route('obras.verify', $play) }}"
-                                                method="post">
+                                            <form class="col-12 col-lg-2" action="{{ route('obras.verify', $play) }}" method="post">
                                                 @csrf
                                                 <button type="submit" class="w-100 btn btn-success py-2">Aprobar</button>
                                             </form>
-                                            <form class="col-12 col-lg-2" action="{{ route('obras.reject', $play) }}"
-                                                method="post">
+                                            <form class="col-12 col-lg-2" action="{{ route('obras.reject', $play) }}" method="post">
                                                 @csrf
                                                 <button type="submit" class="w-100 btn btn-danger py-2">Rechazar</button>
                                             </form>

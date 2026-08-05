@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="section-public py-4">
-        <a class="billboard-detail-back-button" href="{{ route('teatros.show', $play->theater) }}">
+        <a class="billboard-detail-back-button" href="{{ route('plays.index') }}">
             <img class="img-fluid" src="{{ asset('storage/images/icons/back-black-25.webp') }}" alt="Volver">
         </a>
 
@@ -20,7 +20,7 @@
                     </div>
                     <div class="d-flex gap-4">
                         @foreach ($play->schedule_slots as $slot)
-                            <p class="rounded-pill border p-2 billboard-detail-play-schedule">{{ $slot['day'] }}
+                            <p class="rounded-pill border p-2 text-center billboard-detail-play-schedule">{{ $slot['day'] }}
                                 {{ $slot['time'] }}</p>
                         @endforeach
                     </div>

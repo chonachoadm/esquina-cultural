@@ -56,7 +56,7 @@ class TheaterController extends Controller
             'image' => $imageName,
         ]);
 
-        $user = User::where('id', $theater->user->id);
+        $user = $theater->user;
 
         if ($user->isAdmin()) {
             return redirect()->route('theaters.index')->with('success', 'Teatro creado correctamente.');

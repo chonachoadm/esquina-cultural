@@ -5,15 +5,15 @@
         <div class="billboard-detail-copy">
             @if (session('message'))
                 <div class="mt-4 alert alert-warning">
-                    <small>{{ session('message') }}</small>
+                    <small class="mx-4">{{ session('message') }}</small>
                 </div>
             @elseif(session('success'))
                 <div class="mt-4 alert alert-success">
-                    <small>{{ session('success') }}</small>
+                    <small class="mx-4">{{ session('success') }}</small>
                 </div>
             @elseif(session('error'))
                 <div class="mt-4 alert alert-danger">
-                    <small>{{ session('error') }}</small>
+                    <small class="mx-4">{{ session('error') }}</small>
                 </div>
             @endif
 
@@ -85,12 +85,14 @@
                     <div class="rounded-3xl p-4 billboard-detail-tech-container">
                         <div>
                             @foreach (auth()->user()->plays as $play)
+                            @if($play->status === 'verified')
                                 <div class="my-4 profile-play-container">
                                     <h4><a class="link-hover"
                                             href="{{ route('obras.show', $play) }}"><strong>{{ $play->title }}</strong></a>
                                     </h4>
                                     <p><em>{{ $play->pivot->role }}</em></p>
                                 </div>
+                                @endif
                             @endforeach
                         </div>
                     </div>

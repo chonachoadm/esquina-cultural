@@ -2,6 +2,20 @@
 
 @section('content')
     <section class="section-personal py-4">
+        @if (session('message'))
+            <div class="mt-4 alert alert-warning">
+                <small class="mx-4">{{ session('message') }}</small>
+            </div>
+        @elseif(session('success'))
+            <div class="mt-4 alert alert-success">
+                <small class="mx-4">{{ session('success') }}</small>
+            </div>
+        @elseif(session('error'))
+            <div class="mt-4 alert alert-danger">
+                <small class="mx-4">{{ session('error') }}</small>
+            </div>
+        @endif
+
         <div class="m-4">
             <a class="billboard-detail-back-button" href="{{ route('purchases.index') }}">
                 <img class="img-fluid" src="{{ asset('storage/images/icons/back-black-25.webp') }}" alt="Volver">
@@ -56,7 +70,7 @@
                         </tr>
                         <tr>
                             <td>Total abonado</td>
-                            <td>{{ $purchase->total_amount }}</td>
+                            <td>$ {{ $purchase->total_amount }}</td>
                         </tr>
                         <tr>
                             <td>Obra</td>

@@ -4,15 +4,15 @@
 
         @if (session('message'))
             <div class="alert alert-warning m-4">
-                <small>{{ session('message') }}</small>
+                <small class="mx-4">{{ session('message') }}</small>
             </div>
         @elseif(session('success'))
             <div class="alert alert-success m-4">
-                <small>{{ session('success') }}</small>
+                <small class="mx-4">{{ session('success') }}</small>
             </div>
         @elseif(session('error'))
             <div class="alert alert-danger m-4">
-                <small>{{ session('error') }}</small>
+                <small class="mx-4">{{ session('error') }}</small>
             </div>
         @endif
 

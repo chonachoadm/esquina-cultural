@@ -3,15 +3,15 @@
     <section class="section-public pb-4 flex-grow-1">
         @if (session('message'))
             <div class="alert alert-warning m-4">
-                <small>{{ session('message') }}</small>
+                <small class="mx-4">{{ session('message') }}</small>
             </div>
         @elseif(session('success'))
             <div class="alert alert-success m-4">
-                <small>{{ session('success') }}</small>
+                <small class="mx-4">{{ session('success') }}</small>
             </div>
         @elseif(session('error'))
             <div class="alert alert-danger m-4">
-                <small>{{ session('error') }}</small>
+                <small class="mx-4">{{ session('error') }}</small>
             </div>
         @endif
 
@@ -77,7 +77,7 @@
                     <div class="col-md-4 col-lg-3 mx-4 rounded-3xl billboard-card p-0">
                         <div class="billboard-img-container">
                             <a href="{{ route('obras.show', $play) }}"><img class="mx-auto img-fluid"
-                                    src="{{ asset('storage/images/plays/' . $play->cover_photo) }}"
+                                    src="{{ upload_asset('images/plays/' . $play->cover_photo) }}"
                                     alt="{{ $play->title }}"></a>
                         </div>
                         <div class="h-auto d-flex align-items-center justify-content-between p-4">

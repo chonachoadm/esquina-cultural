@@ -6,15 +6,15 @@
         <div class="billboard-detail-copy">
             @if (session('message'))
                 <div class="mt-4 alert alert-warning">
-                    <small>{{ session('message') }}</small>
+                    <small class="mx-4">{{ session('message') }}</small>
                 </div>
             @elseif(session('success'))
                 <div class="mt-4 alert alert-success">
-                    <small>{{ session('success') }}</small>
+                    <small class="mx-4">{{ session('success') }}</small>
                 </div>
             @elseif(session('error'))
                 <div class="mt-4 alert alert-danger">
-                    <small>{{ session('error') }}</small>
+                    <small class="mx-4">{{ session('error') }}</small>
                 </div>
             @endif
 

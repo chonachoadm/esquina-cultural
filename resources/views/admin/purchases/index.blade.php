@@ -2,6 +2,20 @@
 
 @section('content')
     <section class="section-personal py-4">
+        @if (session('message'))
+            <div class="mt-4 alert alert-warning">
+                <small class="mx-4">{{ session('message') }}</small>
+            </div>
+        @elseif(session('success'))
+            <div class="mt-4 alert alert-success">
+                <small class="mx-4">{{ session('success') }}</small>
+            </div>
+        @elseif(session('error'))
+            <div class="mt-4 alert alert-danger">
+                <small class="mx-4">{{ session('error') }}</small>
+            </div>
+        @endif
+
         <div class="m-4">
             <h1 class="mb-4">Compras</h1>
             <a class="rounded px-4 py-2 btn btn-success" href="{{ route('purchases.create') }}">Crear compra</a>

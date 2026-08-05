@@ -30,8 +30,8 @@
                                 <td>{{ $purchase->guest->name }} <em>(Invitado)</em></td>
                             @endif
                             <td>{{ $purchase->performance?->play?->title ?? 'Obra eliminada'}}</td>
-                            <td>{{ $purchase->performance?->start_time ?? '-'}}</td>
-                            <td>$ {{ $purchase->performance?->play?->ticket_price * $purchase->ticket_amount ?? '-'}} ARS</td>
+                            <td>{{ $purchase->performance?->start_time}}</td>
+                            <td>$ {{ $purchase->performance?->play?->ticket_price * $purchase->ticket_amount}} ARS</td>
                             <td>{{ $purchase->status }}</td>
                             <td>
                                 <a class="rounded px-2 py-1 billboard-ticket-button"

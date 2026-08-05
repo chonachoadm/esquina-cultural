@@ -25,7 +25,7 @@ class Performance extends Model
 
     public function play()
     {
-        return $this->belongsTo(Play::class);
+        return $this->belongsTo(Play::class)->withTrashed();
     }
 
     public function tickets()

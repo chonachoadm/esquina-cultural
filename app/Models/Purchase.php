@@ -27,7 +27,7 @@ class Purchase extends Model
 
     public function performance()
     {
-        return $this->belongsTo(Performance::class);
+        return $this->belongsTo(Performance::class)->withTrashed();
     }
 
     public function user()

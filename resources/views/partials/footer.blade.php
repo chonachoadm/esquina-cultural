@@ -32,11 +32,11 @@
         </div>
         <div class="col-10 col-sm-4 col-lg-3 m-2">
             <ul class="p-0">
-                <li class="d-flex align-items-center gap-2 mb-4 footer-list-item"><img class="img-fluid footer-icon"
+                <li class="m-2 d-flex align-items-center gap-2 mb-4 footer-list-item"><img class="img-fluid footer-icon"
                         src="{{ asset('storage/images/icons/phone-icon.svg') }}" alt="Teléfono">
                     <p class="m-0 text-white text-decoration-none">+54 9 11 5329-7379</p>
                 </li>
-                <li class="footer-list-item">
+                <li class="m-2 footer-list-item">
                     <a class="d-flex align-items-center gap-2 mb-4 link-hover-footer"
                         href="https://mail.google.com/mail/?view=cm&fs=1&to=ignacio.lopez01@davinci.edu.ar"
                         target="_blank" rel="noopener noreferrer">
@@ -45,7 +45,7 @@
                         <p class="m-0">esquinacultural@gmail.com</p>
                     </a>
                 </li>
-                <li class="footer-list-item">
+                <li class="m-2 footer-list-item">
                     <a class="d-flex align-items-center gap-2 mb-4 link-hover-footer"
                         href="https://www.instagram.com/chonachin?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
                         target="_blank" rel="noopener noreferrer">

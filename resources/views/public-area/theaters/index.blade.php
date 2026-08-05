@@ -7,7 +7,7 @@
             <div class="row justify-content-center mb-4">
                 @foreach ($theaters as $theater)
                     <a href="{{ route('teatros.show', $theater->id) }}"
-                        class="col-12 col-md-6 col-lg-4 text-black text-decoration-none">
+                        class="col-12 col-md-6 col-lg-4 text-black text-decoration-none p-2">
                         <div class="rounded-3xl my-2 p-2 billboard-card">
                             <h2 class="fw-bold">{{ $theater->name }}</h2>
                             <p><em>{{ $theater->short_address }}</em></p>

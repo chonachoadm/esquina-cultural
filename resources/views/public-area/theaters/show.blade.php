@@ -58,10 +58,10 @@
                     <input type="hidden" id="lng" value="{{ $theater->longitude }}">
                 </div>
 
-                @if ($theater->plays->count() > 0)
+                @if ($theater->plays->where('status', 'verified')->count() > 0)
                     <div class="p-2">
                         <h2 class="fs-4 fw-bold text-center mt-4">
-                            Obras encartelera
+                            Obras en cartelera
                         </h2>
                         <div class="row justify-content-center">
                             @foreach ($theater->plays as $play)
@@ -96,7 +96,7 @@
                 @endif
 
                 <div class="p-2">
-                    @if ($theater->user === auth()->user())
+                    @if ($theater->user_id === auth()->id())
                         @php
                             $pendingPlays = $theater->plays->where('status', 'pending');
                         @endphp
@@ -135,7 +135,7 @@
                 </div>
             </div>
         </div>
-        @if ($theater->user === auth()->user())
+        @if ($theater->user_id === auth()->id())
             <form class="pb-4 d-flex justify-content-center" action="{{ route('teatros.destroy', $theater->id) }}"
                 method="post">
                 @csrf

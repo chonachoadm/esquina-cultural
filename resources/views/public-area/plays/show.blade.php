@@ -61,11 +61,16 @@
                     <h1 class="billboard-detail-h1">{{ $play->title }}</h1>
                     <small>{{ $play->duration }} minutos</small>
                     <div class="text-center my-4">
+                        @if($play->theater)
                         <a class="text-black link-hover" href="{{ route('teatros.show', $play->theater) }}">
                             <p class="m-0">{{ $play->theater->name }}</p>
                         </a>
                         <small class="billboard-detail-theater-address">{{ $play->theater->short_address }}</small>
+                        @else
+                        <p><em>El teatro fue eliminado de la plataforma</em></p>
+                        @endif
                     </div>
+
                     <div class="d-flex gap-4">
                         @foreach ($play->schedule_slots as $slot)
                             <p class="rounded-pill border p-2 text-center billboard-detail-play-schedule">{{ $slot['day'] }}

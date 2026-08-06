@@ -15,13 +15,18 @@
                     <h1 class="billboard-detail-h1">{{ $play->title }}</h1>
                     <small>{{ $play->duration }} minutos</small>
                     <div class="text-center my-4">
-                        <p class="m-0">{{ $play->theater->name }}</p>
-                        <small class="billboard-detail-theater-address">{{ $play->theater->short_address }}</small>
+                        @if($play->theater)
+                            <p class="m-0">{{ $play->theater->name }}</p>
+                            <small class="billboard-detail-theater-address">{{ $play->theater->short_address }}</small>
+                        @else
+                            <p><em>El teatro fue eliminado</em></p>
+                        @endif
                     </div>
                     <div class="d-flex gap-4">
                         @foreach ($play->schedule_slots as $slot)
                             <p class="rounded-pill border p-2 text-center billboard-detail-play-schedule">{{ $slot['day'] }}
-                                {{ $slot['time'] }}</p>
+                                {{ $slot['time'] }}
+                            </p>
                         @endforeach
                     </div>
                     <p><strong>Precio por entrada:</strong> $ {{ $play->ticket_price }}</p>
@@ -55,8 +60,8 @@
                             información</a>
                         <a class="rounded px-2 py-1 btn btn-primary" href="{{ route('plays.edit-staff', $play) }}">Editar
                             integrantes</a>
-                        <a class="rounded px-2 py-1 btn btn-primary"
-                            href="{{ route('plays.edit-performances', $play) }}">Editar fechas y funciones</a>
+                        <a class="rounded px-2 py-1 btn btn-primary" href="{{ route('plays.edit-performances', $play) }}">Editar
+                            fechas y funciones</a>
                     </div>
                 @elseif($play->status === 'pending')
                     <div class="d-flex justify-content-center gap-4 my-4">
@@ -70,8 +75,7 @@
                         </form>
                     </div>
                 @endif
-                <form class="pb-4 d-flex justify-content-center" action="{{ route('plays.destroy', $play) }}"
-                    method="post">
+                <form class="pb-4 d-flex justify-content-center" action="{{ route('plays.destroy', $play) }}" method="post">
                     @csrf
                     @method('DELETE')
                     <button class="btn btn-danger" type="submit"

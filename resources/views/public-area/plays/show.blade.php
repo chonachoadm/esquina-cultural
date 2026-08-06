@@ -62,19 +62,20 @@
                     <small>{{ $play->duration }} minutos</small>
                     <div class="text-center my-4">
                         @if($play->theater)
-                        <a class="text-black link-hover" href="{{ route('teatros.show', $play->theater) }}">
-                            <p class="m-0">{{ $play->theater->name }}</p>
-                        </a>
-                        <small class="billboard-detail-theater-address">{{ $play->theater->short_address }}</small>
+                            <a class="text-black link-hover" href="{{ route('teatros.show', $play->theater) }}">
+                                <p class="m-0">{{ $play->theater->name }}</p>
+                            </a>
+                            <small class="billboard-detail-theater-address">{{ $play->theater->short_address }}</small>
                         @else
-                        <p><em>El teatro fue eliminado de la plataforma</em></p>
+                            <p><em>El teatro fue eliminado</em></p>
                         @endif
                     </div>
 
                     <div class="d-flex gap-4">
                         @foreach ($play->schedule_slots as $slot)
                             <p class="rounded-pill border p-2 text-center billboard-detail-play-schedule">{{ $slot['day'] }}
-                                {{ $slot['time'] }}</p>
+                                {{ $slot['time'] }}
+                            </p>
                         @endforeach
                     </div>
                     <p><strong>Precio por entrada:</strong> $ {{ $play->ticket_price }}</p>
@@ -100,8 +101,7 @@
                 </div>
             </div>
             @if ($play->user === auth()->user())
-                <form class="pb-4 d-flex justify-content-center" action="{{ route('obras.destroy', $play->id) }}"
-                    method="post">
+                <form class="pb-4 d-flex justify-content-center" action="{{ route('obras.destroy', $play->id) }}" method="post">
                     @csrf
                     @method('DELETE')
                     <button class="btn btn-danger" type="submit"
@@ -122,7 +122,8 @@
                             @csrf
                             <div class="d-flex flex-column">
                                 <textarea aria-label="Escribí tu comentario acá" name="body" id="body"
-                                    class="p-2 w-100 rounded-2xl billboard-detail-comment-input" placeholder="Escribí tu comentario acá..."></textarea>
+                                    class="p-2 w-100 rounded-2xl billboard-detail-comment-input"
+                                    placeholder="Escribí tu comentario acá..."></textarea>
                                 <button type="submit"
                                     class="align-self-end billboard-detail-comment-submit-button">Enviar</button>
                             </div>
@@ -167,12 +168,12 @@
                                 </li>
                             @endforeach
                         </ul>
-                    @else
+                @else
                         <h3 class="text-center py-4 m-0"><em>No hay comentarios aún.</em></h3>
-                @endif
-            </div>
+                    @endif
+                </div>
 
-        </div>
+            </div>
         </div>
     </section>
 

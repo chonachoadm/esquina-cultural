@@ -22,10 +22,6 @@ class ImageUploadService
         $this->manager = ImageManager::gd();
     }
 
-    /**
-     * Recorta al centro, redimensiona y comprime una imagen subida, la guarda
-     * en el disco indicado y devuelve el nombre de archivo generado.
-     */
     public function storeResized(UploadedFile $file, string $directory, int $width, int $height, ?string $disk = null): string
     {
         $disk ??= config('filesystems.uploads_disk', 'public');
@@ -41,17 +37,11 @@ class ImageUploadService
         return $filename;
     }
 
-    /**
-     * Foto de perfil (usuario): cuadrada.
-     */
     public function storeProfileImage(UploadedFile $file, string $directory = 'images/profiles'): string
     {
         return $this->storeResized($file, $directory, self::PROFILE_WIDTH, self::PROFILE_HEIGHT);
     }
 
-    /**
-     * Imagen panorámica (obra o teatro).
-     */
     public function storeBannerImage(UploadedFile $file, string $directory): string
     {
         return $this->storeResized($file, $directory, self::BANNER_WIDTH, self::BANNER_HEIGHT);

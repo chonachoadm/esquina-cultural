@@ -24,9 +24,9 @@ class PlayController extends Controller
     {
         $plays = Play::with('performances')
             ->where('status', 'verified')
-            ->whereHas('performances', function ($query) {
-                $query->where('start_time', '>', now());
-            })
+            // ->whereHas('performances', function ($query) {
+            //     $query->where('start_time', '>', now());
+            // })
             ->whereHas('theater', function ($query) {
                 $query->whereNull('deleted_at');
             })
